@@ -1,0 +1,158 @@
+\RequirePackage{tcolorbox}
+	\tcbuselibrary{theorems, listings, breakable, most, skins,skins,breakable}
+	\tcbsetforeverylayer{shield externalize}
+
+\newtcolorbox[auto counter, number within=chapter, number freestyle={\noexpand\arabic{\tcbcounter}}]{task}[1]{parbox=false, blanker, enhanced, breakable, before skip = 8mm, after skip = 5mm, left=0.3mm, right=0.8mm, top=5mm, bottom=3mm, colback=white, colframe=cor2!70, width=162mm,
+	%borderline west={3mm}{0pt}{white}, 
+	toprule=0pt,
+	bottomrule=0.5pt,
+	rightrule=-1pt,
+	leftrule=-1pt,
+	outer arc = 3mm,
+	arc = 3mm,
+	sharp corners = northeast,
+	sharp corners = southeast,
+	sharp corners = southwest,
+	fontupper=\fontsize{11}{15.5}\boxexample, % Should be 11 pt.
+	fonttitle=\boxtitlefont\large,  % Should be 9 pt. Don't know how to set this. Tried \fontsize{9pt}{}, but didn't work.
+	coltitle=\currentcolor,
+	title=\makefirstuc{#1\hfill},
+	boxed title style={empty,arc=1pt,outer arc=1pt,boxrule=1pt},
+	attach boxed title to top left={xshift=-1 mm, yshift=-0.1mm},
+	underlay boxed title ={
+			% Draw the small arc on the top left.
+			\draw[cor2!70, line width = 1pt] ($(title.south west)+(3mm,0mm)$) coordinate (LU) arc [start angle=90, end angle=180, y radius=2mm, x radius=2mm] --++ (0mm , -2mm);
+			% Draw the top line from the left to the right.
+			\draw[cor2!70,  line width=1pt] (LU) --++ (158mm,0mm) coordinate (R);
+			% Think on the Atividade box as an ABCD rectangle (clockwise, A is top left), now you see the coordinates. 
+			\fill [cor2!70] ($(R)+(0mm,-.3mm)$) --++ (-25.00mm,0mm) coordinate (D) --++ (0mm, 5mm) arc [start angle=180, end angle=90, x radius=2.00mm, y radius=2.00mm] --++ (25.00mm,0mm) coordinate (B) --++ (0.00mm,-5mm)  arc [start angle=0, end angle=-90, y radius=2.00mm, x radius=2.00mm] -- cycle;
+			\node[font=\titlefont\large,white] at ($(B)!0.5!(D)$) {\small Atividade \thetcbcounter};
+		}
+}
+
+
+% Makes the "To think about" box.
+% It is missing to set title font and font size. After that should check if the title is centralized in the title box.
+\newtcolorbox{reflection}{parbox=false, blanker, enhanced, breakable, before skip = 5mm, after skip = 5mm, left=3mm, right=3mm, top=7mm, bottom=3mm, colback=white, colframe=box1, borderline west={3mm}{0pt}{white}, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=-1pt, outer arc = 3mm, arc = 3mm,
+	fonttitle=\bfseries\large\boxtitlefont,  % Should be 12 pt. Don't know how to set this.
+	title=PARA REFLETIR,
+	boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+	attach boxed title to top left={xshift=3mm, yshift=-2.5mm},
+	underlay boxed title={
+			\filldraw [draw=box1, fill=box1] ($(title.north west) + (0 mm,-2.50mm)$) --++(0.00mm,1.50mm) arc [start angle=180, end angle=90, y radius=2.00mm, x radius=2.00mm] -| ++ (34.00mm,-5.00mm) arc [start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm] -| cycle;}
+}
+
+
+
+% Observation Box
+
+\newtcolorbox{observationtitle}[1]{
+	parbox=false, enhanced, breakable, left=3mm, right=3mm,bottom=2mm, colback=box2!50, colframe=box2!50, arc=3mm, sharp corners=uphill, pad at break=2mm, drop fuzzy shadow, title={\parbox{.8\linewidth}{\bfseries\textcolor{\currentcolor}{ #1}}}, boxed title style ={empty},top=8mm, attach boxed title to top center={xshift=0mm, yshift=-7.5mm}
+}
+
+\newtcolorbox{observation}{parbox=false, enhanced, breakable, left=3mm, right=3mm, top=3mm, bottom=2mm, colback=box2!50, colframe=box2!50, arc=3mm, sharp corners=uphill, pad at break=2mm, drop fuzzy shadow}
+
+
+\newtcolorbox[auto counter, number within=chapter, number freestyle={\noexpand\arabic{\tcbcounter}}]{example}[1]{parbox=false, blanker, enhanced, breakable, before skip = 5mm, after skip = 5mm, left=3mm, right=3mm, top=10mm, bottom=3mm, colback=white, colframe=cor1, width=162mm, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=1pt, outer arc = 8mm, arc = 8mm, sharp corners = northwest, sharp corners = southeast, sharp corners = southwest,
+	title={
+			%{\boxfont EXEMPLO}\hspace{3.5mm} 
+			\textcolor{cor2}{\large\extitlefont\makefirstuc{#1}\phantom{ç}}
+		},
+	boxed title style={empty, sharp corners},
+	attach boxed title to top left={xshift=22mm , yshift=-7.5mm},
+	underlay boxed title ={
+			% Draw the title underlay rectangle
+			\def\temp{#1}\ifx\temp\empty
+				%
+			\else
+				\fill[cor1!30] ($(frame.north west)+(0,-1pt)$) rectangle ($(title.south east)+(3mm,0mm)$) coordinate (R);
+			\fi
+			%)
+			%;
+			% Filldraw the darker fancy in front of the rectangle and behind the Example. The coordinates should be better chosen.
+
+
+			\fill[cor1] (frame.north west) -- ($(frame.north west)+(0,-1.4pt)+(0,-7mm)$) -- ++ (22mm,0mm) arc [start angle=-90, end angle=0, x radius = 2mm, y radius = 2mm] -- ($(frame.north west) + (24mm,0)$) --  cycle;
+			\node [white] at ($(frame.north west) + (12mm,-3.5mm)$) {\boxfont EXEMPLO \thetcbcounter};
+
+		},
+	before upper={\def\currentcolor{cor1}}
+}
+
+\newtcolorbox{research}{parbox=false, blanker, enhanced, breakable, before skip = 5mm, after skip = 5mm, left=3mm, right=3mm, top=6mm, bottom=3mm, colback=white, colframe=box3, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=1pt, outer arc = 3mm, arc = 3mm, sharp corners = northwest,
+	fonttitle=\normalsize\boxtitlefont,
+	title= PARA PESQUISAR,
+	boxed title style={empty, colback = box3, colframe = box3, sharp corners},
+	attach boxed title to top left={xshift=-2.5mm , yshift=-6.2mm},
+	underlay boxed title={
+			\filldraw [fill=box3, draw=box3] ($(frame.north west)$) rectangle +(36.00mm,-5.00mm);% the rectangle where the title fits.
+			\coordinate (A) at ($(frame.north west) + (36.00mm,0.00mm)$);
+			%\filldraw [cor1] ($(A) + (-4.7mm,0mm)$) rectangle ++(-7mm,-6.4mm);%green rectangle within ? inside.
+			%\fill [box3] ($(A) + (-11.9mm,-3.5mm)$) -- ++(4.8 mm,2.6 mm) arc [start angle=20, end angle=-60, x radius=1.00mm, y radius=2.35mm] --++ (0,-2mm)-- ($(title.south east) + (-1.1mm,0.20mm)$) -- ($(title.south east) + (-2mm,0.20mm)$) -- cycle; % the fancy thing in the ?
+			\node [white] at ($(A) + (-2.40mm,-1.6mm)$) {\includegraphics[height=7mm]{lupa}};% just the ?
+		}
+}
+
+
+
+\newtcolorbox{knowledge}{parbox=false, blanker, enhanced, breakable, before skip = 5mm, after skip = 5mm, left=3mm, right=3mm, top=6mm, bottom=3mm, colback=white, colframe=box3, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=1pt, outer arc = 3mm, arc = 3mm, sharp corners = northwest,
+fonttitle=\normalsize\boxtitlefont,
+title= VOC\^{E} SABIA,
+boxed title style={empty, colback = box3, colframe = box3, sharp corners},
+attach boxed title to top left={xshift=-2.3mm , yshift=-5.5mm},
+underlay boxed title={
+		\filldraw [fill=box3, draw=box3] ($(frame.north west) + (.4mm,0mm)$) rectangle ++(24.00mm,-5.00mm);% the rectangle where the title fits.
+		\coordinate (A) at ($(frame.north west) + (24.00mm,-2mm)$);
+		\node at (A) {\includegraphics[scale=1]{interrogacao.png}};
+		}
+		}
+
+
+
+
+
+\NewEnviron{project}{%
+	\setlist[itemize]{label=\protect\itemcoloredsquare, }
+	\def\currentcolor{cor2}
+	\newpage
+	\tikzset{external/export next=false}
+	\begin{tikzpicture}[remember picture, overlay, external/export=false]
+		\coordinate (border1) at ($(current page text area.south east) + (0.00mm,8.00mm)$);
+		\coordinate (border1a) at ($(border1) + (-5.00mm,2.00mm)$);
+		\coordinate (border1b) at ($(current page text area.south west) + (11.00mm,10.00mm)$);
+		\coordinate (border1c) at ($(current page text area.north west) + (11.00mm,-13.00mm)$);
+		\coordinate (border1d) at ($(current page text area.south west) + (11.00mm,13.00mm)$);
+		\coordinate (heading) at ($(current page text area.north west) + (32.50mm,-5.00mm)$);
+		\coordinate (corner1) at ($(current page text area.north west) + (6.00mm,-10.00mm)$);
+		\coordinate (corner2) at ($(current page text area.north east) + (-4.00mm,-10.00mm)$);
+		\coordinate (corner3) at ($(current page text area.south east) + (0.00mm,10.00mm)$);
+		\coordinate (corner4) at ($(current page text area.south west) + (10.00mm,6.00mm)$);
+		\coordinate (text1) at ($(current page text area.north west) + (11.00,-12.50mm)$);
+		\coordinate (text2) at ($(current page text area.south east) + (-2.50mm,8.50mm)$);
+		\coordinate (bodytextpos) at ($(border1c) + (5.00mm,-3.00mm)$);
+
+		\begin{pgfonlayer}{background}
+			\draw [draw=base1, fill=base1] (current page text area.south west) rectangle (current page text area.north east);
+		\end{pgfonlayer}
+
+		\begin{pgfonlayer}{main}
+			\draw [fill=cor2, draw=cor2] (current page text area.north west) -- ++(0.00mm,-8.00mm) arc [start angle=180, end angle=270, x radius=2.00mm, y radius=2.00mm] -| ++(63.00mm,8.00mm) arc [start angle=0, end angle=90, x radius=2.00mm, y radius=2.00mm] -- cycle;
+			\draw [fill=base1!30, draw=base1!30] (corner1) -- (corner2) arc [start angle=90, end angle=0, x radius=4.00mm, y radius=4.00mm] -- (corner3) arc [start angle=0, end angle=-90, x radius=4.00mm, y radius=4.00mm] -- (corner4) arc [start angle=270, end angle=180, x radius=4.00mm, y radius=4.00mm] -- cycle;
+			% \draw [green] (text1) rectangle (text2);
+			\draw [black] (border1a) -- (border1b) -- (border1c) -| cycle;
+
+		\end{pgfonlayer}
+
+		\begin{pgfonlayer}{foreground}
+			\node [color=base1!30, font=\titlefont\bfseries\fontsize{13pt}{0}\selectfont] (title) at (heading) {PROJETO APLICADO};
+			\node [box, below right] (bodytext) at (border1c){%
+				\begin{minipage}{0.85\textwidth}
+					\BODY
+				\end{minipage}
+			};
+		\end{pgfonlayer}
+
+
+	\end{tikzpicture}
+	\clearpage
+}
