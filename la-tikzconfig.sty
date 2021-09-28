@@ -1,0 +1,39 @@
+\def\input@path{{definitions/}}
+
+\@ifclassloaded{livroabertoem}{}{\input{la-color-fonts.def}}
+
+\RequirePackage{tikz}
+
+\def\currentcolor{session1}
+\newcommand{\tikzcolor}{\currentcolor!80}
+
+\RequirePackage{tikzpagenodes} % Precisa para o ambiente de projeto aplicado
+\RequirePackage{tikzscale}
+\usetikzlibrary{
+	calc,
+	external
+}
+
+\newcommand{\includetikzpicture}[2][]{
+	\includegraphics#1{#2.tikz}
+}
+
+\tikzset{
+	vetor/.style = {->,line width=0.8pt,color=primario,>=latex},
+	ponto/.style = {circle, minimum size=2pt, inner sep=0, draw=black, fill=black, shift only, label={}},
+	eixos/.style = {->},
+	curvafun/.style = {very thick, color=primario},
+	grafica/.style = {line cap=round,line join=round,color=terciario, very thick}
+}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfdeclarelayer{top}
+\pgfdeclarelayer{bottom}
+\pgfsetlayers{
+	bottom,
+	background,
+	main,
+	foreground,
+	top
+}

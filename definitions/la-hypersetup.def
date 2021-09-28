@@ -1,0 +1,9 @@
+\RequirePackage{hyperref}
+	\hypersetup{
+		colorlinks = true,
+		colorlinks = true,
+		linkcolor = linkscolor,
+		filecolor = linkscolor,
+		urlcolor = linkscolor,
+		citecolor = linkscolor
+	}

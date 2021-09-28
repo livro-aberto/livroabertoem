@@ -1,0 +1,116 @@
+\RequirePackage{tikz}
+\RequirePackage{enumitem}
+
+\pgfdeclareshape{enumbox}{%
+	\inheritsavedanchors[from=rectangle]
+	\inheritanchorborder[from=rectangle]
+
+	\inheritanchor[from=rectangle]{center}
+	\inheritanchor[from=rectangle]{south}
+	\inheritanchor[from=rectangle]{west}
+	\inheritanchor[from=rectangle]{north}
+	\inheritanchor[from=rectangle]{east}
+	\inheritanchor[from=rectangle]{base}
+
+	\backgroundpath{%
+		\southwest\pgf@xa = \pgf@x\pgf@ya = \pgf@y
+		\northeast\pgf@xb = \pgf@x\pgf@yb = \pgf@y
+
+		% Construct main path
+		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya+2pt}}
+		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+		\pgfpathlineto{\pgfpoint{\pgf@xb-2pt}{\pgf@yb}}
+		\pgfpatharc{90}{0}{2.0pt}
+		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+		\pgfpathlineto{\pgfpoint{\pgf@xa+2pt}{\pgf@ya}}
+		\pgfpatharc{270}{180}{2.0pt}
+		%        \pgfpathcurveto{\pgfpoint{\pgf@xc}{\pgf@ya}\pgfpoint{\pgf@xa}{\pgf@ya}\pgfpoint{\pgf@xa}{\pgf@yc}}
+		\pgfpathclose
+	}
+}
+
+\pgfdeclareshape{itembox}{%
+	\inheritsavedanchors[from=rectangle]
+	\inheritanchorborder[from=rectangle]
+
+	\inheritanchor[from=rectangle]{center}
+	\inheritanchor[from=rectangle]{south}
+	\inheritanchor[from=rectangle]{west}
+	\inheritanchor[from=rectangle]{north}
+	\inheritanchor[from=rectangle]{east}
+	\inheritanchor[from=rectangle]{base}
+
+	\backgroundpath{%
+		\southwest\pgf@xa = \pgf@x\pgf@ya = \pgf@y
+		\northeast\pgf@xb = \pgf@x\pgf@yb = \pgf@y
+
+		% Construct main path
+		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+		\pgfpathclose
+	}
+}
+
+\newcommand{\enumbox}[1]{%
+	\tikzset{external/export next = false}
+	\tikz[baseline = (numbereditem.base)]{%
+		\node[shape = enumbox,text = white, font = \bfseries\fontsize{11pt}{0}\selectfont, draw = black,
+			fill = cor1,
+			minimum width = 6.00mm, minimum height = 6.00mm] (numbereditem) {#1};
+	}
+}
+
+\newcommand{\enumdefault}[1]{%
+	\tikzset{external/export next = false}
+	\tikz[baseline = (numbereditem.base)]{%
+		\node[shape = enumbox, font = \bfseries\fontsize{11pt}{0}\selectfont, draw = black, minimum width = 6.00mm, minimum height = 6.00mm] (numbereditem) {#1};
+	}
+}
+
+
+% Defining an alternative shape for itemize, where the bullets are actually squares.
+\newcommand{\itembox}{%
+	\tikzset{external/export next = false}
+	\tikz[baseline = (boxitem.base)] {%
+		\node[shape = rectangle, draw = black, minimum width = 6.00mm, minimum height = 6.00mm] (boxitem) {};
+	}
+}
+
+% Defining an alternative shape for itemize, where the bullets are actually colored squares.
+\newcommand{\itemcoloredsquare}{%
+	\tikzset{external/export next = false}
+	\tikz{%
+		\node[shape = rectangle, fill = \currentcolor, minimum width = 1.50mm, minimum height = 1.50mm] (boxitem) {};
+	}
+}
+
+\newcommand{\la@defaultlist}{
+	\setlist[enumerate]{%
+		label = \protect\enumbox{\alph*)}, %chktex 9
+	} %chktex 10
+	\setlist[itemize]{%
+		label = \protect\itemcoloredsquare%
+	}
+}
+
+\newcommand{\exerciselist}{%
+	\setlist[enumerate]{%
+		label = \protect\enumbox{\arabic*}
+	}
+	\setlist[enumerate,2]{%
+		label = \textit{\alph*)} %chktex 9
+	}
+	\setlist[enumerate,3]{%
+		label = \textit{\roman*)} %chktex 9
+	} %chktex 10
+} %chktex 10
+
+\@ifpackageloaded{tasks}{%
+\settasks{%
+	label = \titem{\alph*)}, %chktex 9
+	label-width = 14pt
+} %chktex 17	
+}{}
+

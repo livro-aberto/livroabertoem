@@ -1,0 +1,24 @@
+\RequirePackage{amsmath,amssymb,amsfonts,amsthm,amstext,mathtools}
+	\DeclareMathOperator{\sen}{sen}
+	\DeclareMathOperator{\tg}{tg}
+	\DeclareMathOperator{\cotg}{cotg}
+	\DeclareMathOperator{\cosec}{cosec}
+	\DeclareMathOperator{\arcsen}{arcsen}
+	\DeclareMathOperator{\arctg}{arctg}
+	\DeclareMathOperator{\senh}{senh}
+	\DeclareMathOperator{\tgh}{tgh}
+	\DeclareMathOperator{\mdc}{mdc}
+	\DeclareMathOperator{\mmc}{mmc}
+	\DeclareMathOperator{\med}{med}
+	\DeclareMathOperator{\rad}{rad}
+	% \DeclareMathOperator{\si}{Si}
+	\DeclareMathOperator{\dirac}{\delta}
+	\DeclareMathOperator{\mmu}{\mu}
+	\renewcommand{\Im}{\operatorname{Im}}
+	\DeclareMathOperator{\D}{D}
+	\DeclareMathOperator{\CD}{CD}
+	\DeclareMathOperator{\area}{\text{Area}\,}
+	\newcommand{\R}{\mathbb{R}}
+	\newcommand{\Q}{\mathbb{Q}}
+	\newcommand{\Z}{\mathbb{Z}}
+	\newcommand{\N}{\mathbb{N}}

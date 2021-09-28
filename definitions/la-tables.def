@@ -1,0 +1,42 @@
+
+
+\newcolumntype{d}[1]{>{\vspace{2.5pt}}m{#1}<{\vspace{2.5pt}}}
+\newcolumntype{e}[1]{>{\vspace{2.5pt}\centering\arraybackslash}m{#1}<{\vspace{2.5pt}}}
+\newcolumntype{f}{>{\(}c<{\)}}
+\newcolumntype{g}[1]{>{\(}e{#1}<{\)}}
+
+\RequirePackage{colortbl}
+	\newcommand{\tmat}[1]{%
+		\cellcolor{%
+			\currentcolor!80
+		}
+		\textcolor{white}{%
+			\bm{#1}
+		}
+	}
+
+	\newcommand{\tcolor}[1]{%
+		\cellcolor{%
+			\currentcolor!80
+		}
+		\textcolor{white}{%
+			\textbf{#1}
+		}
+	}
+
+	\newcommand{\tmcol}[3]{%
+		\multicolumn{#1}{#2}{%
+			\cellcolor{%
+				\currentcolor!80
+			}
+			\textcolor{white}{%
+				\textbf{#3}
+			}
+		}
+	}
+
+	\newcommand{\titem}[1]{%
+		\textcolor{\currentcolor}{%
+			\textbf{#1)} % chktex 9
+		}
+	} % chktex 10 chktex 17
