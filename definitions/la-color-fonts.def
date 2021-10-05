@@ -66,3 +66,4 @@
 	\newfontfamily{\boxfont}{Roboto-Regular.ttf}
 	\newfontfamily{\extitlefont}{Exo2-SemiBold.ttf}
 
+\fontsize{11pt}{0}

@@ -13,7 +13,7 @@
 		\begin{pgfonlayer}{foreground}
 			\node [text=white, font=\bfseries](page_number) at ($(bottom)!0.5!(corner)$) {\thepage};
 		\end{pgfonlayer}
-	\end{tikzpicture}
+		\end{tikzpicture}
 }
 
 \newcommand{\rightpagenumber}{%
@@ -29,8 +29,6 @@
 		\end{pgfonlayer}
 	\end{tikzpicture}
 }
-
-
 
 % Draw headers. This places the tabs on the side of the page
 \newcommand{\leftpagetab}{%
@@ -73,6 +71,27 @@
 	\end{tikzpicture}
 }
 
+\newcommand{\notarodape}[1]{
+	\footnotemark\footnotetext{
+		\belowbaseline[-\ht\strutbox]{
+			\begin{tcolorbox}[
+				colback=grafite!90!white,
+				colbacktitle=grafite!90!white,
+				colframe=grafite!90!white,
+				colupper=white, 
+				left=0pt, 
+				right=0pt,
+				top=-2pt,
+				bottom=-2pt, 
+				hbox, 
+				sharp corners = northeast, 
+				sharp corners = southwest
+			]{\textbf{#1}}
+			\end{tcolorbox}
+		}
+	}
+}
+
 %% Set Page Size
 \setstocksize{275mm}{204mm}
 \settrimmedsize{275mm}{204mm}{*}
@@ -83,10 +102,10 @@
 
 \setcolsepandrule{8.00mm}{0mm}
 
+\checkandfixthelayout%
+
 \setlength{\parindent}{0em}
 \setlength{\parskip}{6pt}
-
-\checkandfixthelayout
 
 \makepagestyle{plain}
 \makeevenfoot{plain}{}{\leftpagenumber}{}
