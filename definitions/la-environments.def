@@ -1,3 +1,5 @@
+\RequirePackage{mfirstuc} %To capitalize just the inicial letter of each word. There is a command to exclude specific words to captalize such like a, an, the, etc.
+
 \RequirePackage{tcolorbox}
 	\tcbuselibrary{theorems, listings, breakable, most, skins,skins,breakable}
 	\tcbsetforeverylayer{shield externalize}
@@ -160,8 +162,8 @@
 	underlay boxed title ={%
 		% Draw the title underlay rectangle
 		\def\temp{#1}
-		\ifx
-			\temp\empty
+		\ifx%
+			\temp\empty%
 		\else
 			\fill[cor1!30] ($(frame.north west)+(0,-1pt)$) rectangle ($(title.south east)+(3mm,0mm)$) coordinate (R); %chktex 46
 		\fi		

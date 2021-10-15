@@ -26,7 +26,6 @@
 \RequirePackage{marginfix}
 \RequirePackage{multicol}
 \RequirePackage{xstring}
-\RequirePackage{mfirstuc} %To capitalize just the inicial letter of each word. There is a command to exclude specific words to captalize such like a, an, the, etc.
 \RequirePackage{endnotes}
 \RequirePackage{comment} % Comando excludecomment para remover os comandos do material do professor
 \RequirePackage{xpatch}
@@ -74,7 +73,6 @@
 
 		
 
-% Define asymptote picture preamble
 
 
 

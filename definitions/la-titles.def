@@ -1,198 +1,161 @@
 \RequirePackage[explicit]{titlesec}
-\RequirePackage{needspace}
+% \RequirePackage{needspace}
+
+
+% Defines the banner used for the sections
+
+\newcommand{\la@bannerstyle}[1]{
+	\tikzset{external/export next = false}
+
+	\begin{tikzpicture}[remember picture, scale=1.3]
+		\filldraw [\currentcolor] 
+			(-3.00mm,0.00mm) coordinate (a) -- ++(30.00mm,0.00mm) 
+			arc [
+				start angle=90, end angle=0, x radius=2.00mm, y radius=2.00mm
+			] coordinate (a1) -- ++(0.00mm,-2.00mm) coordinate (b1) 
+			arc [
+				start angle=180, end angle=270, x radius=2.00mm, y radius=2.00mm
+			] coordinate (b) -- ++(-30.00mm, 0.00mm) 
+			arc [
+				start angle=270, end angle=180, x radius=2.00mm, y radius=2.00mm
+			] -- ++(0.00mm,2.00mm) 
+			arc [
+				start angle=0, end angle=90, x radius=2.00mm, y radius=2.00mm
+			] -- cycle;
+
+		\node (explore) at ($(a)!0.5!(b)$) [white] {\titlefont\MakeUppercase{\la@banner@title}};
+
+		\draw [\currentcolor, thick] (b) --++ ($(\textwidth,0.00mm)+(-72 mm,0 mm)$); % changed
+		\node (title) at ($(a1)!0.5!(b1)$) [right] {\MakeUppercase{#1}};
+	\end{tikzpicture}
+}
+
+
+\newcommand{\la@exercisebanner}{
+	\tikzset{external/export next=false}
+
+	\begin{tikzpicture}[remember picture, external/export=false]
+		\draw [draw=cor2, very thick] (-3.00mm,0.00mm) -- ++(0.00mm,2.00mm) 
+			-- ++(\textwidth , 0.00mm) -- ++(0mm,-2mm);% line
+
+		\fill [draw=cor2, very thick , fill=cor1] 
+			($(\textwidth/2 , 0mm) + (19mm,6mm)$) -- ++(0.00mm,-5.5 mm) coordinate (line1) 
+			arc [
+				start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm
+			] -| ++(-38.00mm , 0.00mm) -- ++ (0mm, 5.5 mm) coordinate (line2) 
+			arc [
+				start angle=180, end angle=90, x radius=2.00mm, y radius=2.00mm
+			] -- cycle;
+
+		\node (exercise) at ($(line1)!0.5!(line2) + (0 mm, .8 mm)$) [text=white, font=\thirdtitlefont\Large] {EXERCÍCIOS};%\fontsize{13pt}{0}
+	\end{tikzpicture}
+}
+
+
+
+\titleclass{\la@banner}{straight}[\section]
+	\providecommand*{\toclevel@la@banner}{1}
+	\titlespacing{\la@banner}{0pt}{8mm}{3pt}
+	\titleformat{\la@banner}[hang]{\bannerfont}{\la@bannercounter}{0pt}{%
+		\la@bannerstyle{#1}
+		\la@defaultlist%
+	}	
+
+\titleclass{\la@exercise}{straight}[\chapter]
+	\providecommand*{\toclevel@la@exercise}{1}
+	\titlespacing{\la@exercise}{0pt}{8mm}{1mm}
+	\titleformat{\la@exercise}[hang]{\bannerfont}{\theexercise}{0pt}{
+		\la@exercisebanner		
+	}[\exerciselist]
+
 
 
 % Formatação dos comandos \section e \subsection
-%Cor atual
+
 \titleformat{\section}{
 	\color{\currentcolor}\normalfont\semihuge\bfseries
-}{\thesection}{1em}{#1 \phantomsection}
+	}{\thesection}{1em}{#1 \phantomsection}
 
-\titlespacing*{\section}{0pt}{2mm}{1mm}
-% \providecommand*{\toclevel@section}{2}
-
+	\titlespacing*{\section}{0pt}{2mm}{1mm}
+	\renewcommand{\toclevel@section}{1}
 
 \titleformat{\subsection}{
 	\color{\currentcolor}\normalfont\Large\bfseries
-}{\thesection}{1em}{#1}
+	}{\thesection}{1em}{#1}
 
-\titlespacing*{\subsection}{0pt}{2mm}{1mm}
+	\titlespacing*{\subsection}{0pt}{2mm}{1mm}
+	\renewcommand{\toclevel@subsection}{4}
 
 \titleformat{\paragraph}{
 	\color{\currentcolor}\normalfont\large\bfseries
-}{\thesubsection}{1em}{#1}
-
-\titlespacing*{\paragraph}{0pt}{1mm}{1mm}
-
-
-
-\renewcommand{\toclevel@section}{1}
-\renewcommand{\toclevel@subsection}{4}
-\renewcommand{\toclevel@paragraph}{5}
-\renewcommand{\toclevel@subparagraph}{6}
-
-\providecommand*{\toclevel@exploresec}{1}
-\providecommand*{\toclevel@practicesec}{1}
-\providecommand*{\toclevel@arrangesec}{1}
-\providecommand*{\toclevel@knowsec}{1}
-\providecommand*{\toclevel@exercisesec}{1}
-
-\titleclass{\exploresec}{straight}[\section]
-	\newcounter{exploresec}
-	% \counterwithin{exploresec}{chapter}
-	\renewcommand{\theexploresec}{\arabic{exploresec}}
+	}{\thesubsection}{1em}{#1}
+		
+	\titlespacing*{\paragraph}{0pt}{1mm}{1mm}
+	\renewcommand{\toclevel@paragraph}{5}
 
 
-	\titleformat{\exploresec}[hang]{%
-		\large\color{session1}\secondtitlefont%
-	}{\theexploresec}{0pt}{
-		\phantomsection
-		\tikzset{external/export next=false}
-		\begin{tikzpicture}[remember picture, scale=1.3, external/export=false]
-			\filldraw [fill=session1, draw=session1] (-3.00mm,0.00mm) coordinate (a) -- ++(30.00mm,0.00mm) arc [start angle=90, end angle=0, x radius=2.00mm, y radius=2.00mm] coordinate (a1) -- ++(0.00mm,-2.00mm) coordinate (b1) arc [start angle=180, end angle=270, x radius=2.00mm, y radius=2.00mm] coordinate (b) -- ++(-30.00mm, 0.00mm) arc [start angle=270, end angle=180, x radius=2.00mm, y radius=2.00mm] -- ++(0.00mm,2.00mm) arc [start angle=0, end angle=90, x radius=2.00mm, y radius=2.00mm] -- cycle;
-			\node (explore) at ($(a)!0.5!(b)$) [white] {\titlefont EXPLORANDO};
-			\draw [session1, thick] (b) --++ ($(\textwidth,0.00mm)+(-72 mm,0 mm)$); % changed
-			\node (title) at ($(a1)!0.5!(b1)$) [right] {\MakeUppercase{#1}};
-		\end{tikzpicture}
+
+% Custom section titles definitions
+
+\newcounter{explore}
+
+\newcommand{\explore}[1]{%
+	\def\currentcolor{session1}
+	\def\la@banner@title{Explorando}
+	\def\la@bannercounter{\theexplore}
+	\cleardoublepage%
+	\la@banner{%
+		\texorpdfstring{}{\la@banner@title: }#1
 	}
-
-	\titlespacing*{\exploresec}{0pt}{8mm}{3pt}
-
-
-	\newcommand{\explore}[1]
-	{
-		\cleardoublepage
-		\stepcounter{exploresec}
-		\exploresec{\texorpdfstring{}{Explorando: }#1}
-		\def\currentcolor{session1}		
-	}
+	\la@defaultlist
+}
 
 
+\newcounter{practice}
 
-
-%Praticando
-
-\titleclass{\practicesec}{straight}[\section]
-	\newcounter{practicesec}
-	\renewcommand{\thepracticesec}{\arabic{practicesec}}
-
-	\titleformat{\practicesec}[hang]{
-		\large\color{session2}\secondtitlefont
-	}{\thepracticesec}{0pt}{
-		\phantomsection
-		\tikzset{external/export next=false}
-		\begin{tikzpicture}[remember picture, scale=1.3, external/export=false]% overlay removed from original, otherwise the stays behind the text, scale.
-			\filldraw [fill=session2, draw=session2] (-3.00mm,0.00mm) coordinate (a) -- ++(30.00mm,0.00mm) arc [start angle=90, end angle=0, x radius=2.00mm, y radius=2.00mm] coordinate (a1) -- ++(0.00mm,-2.00mm) coordinate (b1) arc [start angle=180, end angle=270, x radius=2.00mm, y radius=2.00mm] coordinate (b) -- ++(-30.00mm, 0.00mm) arc [start angle=270, end angle=180, x radius=2.00mm, y radius=2.00mm] -- ++(0.00mm,2.00mm) arc [start angle=0, end angle=90, x radius=2.00mm, y radius=2.00mm] -- cycle;
-			\node (explore) at ($(a)!0.5!(b)$) [white] {\titlefont PRATICANDO};
-			\draw [session2, thick] (b) --++ ($(\textwidth,0.00mm)+(-72 mm,0 mm)$); % changed
-			\node (title) at ($(a1)!0.5!(b1)$) [right] {\MakeUppercase{#1}};
-		\end{tikzpicture}
-	}
-
-	\titlespacing*{\practicesec}{0pt}{8mm}{3pt}
-
-
-\newcommand{\practice}[1]
-{
-	\needspace{.15\textheight}
-	\stepcounter{practicesec}
-	\practicesec{\texorpdfstring{}{Praticando: }#1}
+\newcommand{\practice}[1]{%
 	\def\currentcolor{session2}
-	\setlist[enumerate]{label=\protect\bfseries\textcolor{\currentcolor}{\alph*)}}
-	\setlist[enumerate,2]{label=\protect\bfseries\textcolor{\currentcolor}{\roman*)},ref=\protect\bfseries\textcolor{\currentcolor}{\alph*)}}
-}
-
-
-%Para Saber+
-
-\titleclass{\knowsec}{straight}[\chapter]
-\newcounter{knowsec}
-\renewcommand{\theknowsec}{\arabic{knowsec}}
-
-\titleformat{\knowsec}[hang]{\large\color{session3}\secondtitlefont}{\theknowsec}{0pt}{
-	\phantomsection
-	\tikzset{external/export next=false}
-	\begin{tikzpicture}[remember picture, scale=1.3, external/export=false]% overlay removed from original, otherwise the stays behind the text, scale.
-		\filldraw [fill=session3, draw=session3] (-3.00mm,0.00mm) coordinate (a) -- ++(30.00mm,0.00mm) arc [start angle=90, end angle=0, x radius=2.00mm, y radius=2.00mm] coordinate (a1) -- ++(0.00mm,-2.00mm) coordinate (b1) arc [start angle=180, end angle=270, x radius=2.00mm, y radius=2.00mm] coordinate (b) -- ++(-30.00mm, 0.00mm) arc [start angle=270, end angle=180, x radius=2.00mm, y radius=2.00mm] -- ++(0.00mm,2.00mm) arc [start angle=0, end angle=90, x radius=2.00mm, y radius=2.00mm] -- cycle;
-		\node (explore) at ($(a)!0.5!(b)$) [white] {\titlefont PARA SABER \Huge{+}};
-		\draw [session3, thick] (b) --++ ($(\textwidth,0.00mm)+(-72 mm,0 mm)$); % changed
-		\node (title) at ($(a1)!0.5!(b1)$) [right] {\MakeUppercase{#1}};
-	\end{tikzpicture}}
-
-\titlespacing*{\knowsec}{0pt}{8mm}{3pt}
-
-
-\newcommand{\know}[1]
-{
-	\needspace{.15\textheight}
-	\stepcounter{knowsec}
-	\knowsec{\texorpdfstring{}{Para Saber +: }#1}
-	% \pdfbookmark[\theknowsec]{Para Saber +: #1}{}
-	\def\currentcolor{session3}
-	\setlist[enumerate]{label=\protect\bfseries\textcolor{\currentcolor}{\alph*)}}
-	% choose secondary (depth 2) enumerate style..
-	\setlist[enumerate,2]{label=\protect\bfseries\textcolor{\currentcolor}{\roman*)},ref=\protect\bfseries\textcolor{\currentcolor}{\alph*)}}
-}
-
-
-%Organizando
-
-
-\titleclass{\arrangesec}{straight}[\section]
-	\newcounter{arrangesec}
-	\renewcommand{\thearrangesec}{\arabic{arrangesec}}
-
-	\titleformat{\arrangesec}[hang]{
-		\large\color{session4}\secondtitlefont
-	}{\thepracticesec}{0pt}{
-		\phantomsection
-		\tikzset{external/export next=false}
-		\begin{tikzpicture}[remember picture, scale=1.3, external/export=false]% overlay removed from original, otherwise the stays behind the text, scale.
-			\filldraw [fill=session4, draw=session4] (-3.00mm,0.00mm) coordinate (a) -- ++(30.00mm,0.00mm) arc [start angle=90, end angle=0, x radius=2.00mm, y radius=2.00mm] coordinate (a1) -- ++(0.00mm,-2.00mm) coordinate (b1) arc [start angle=180, end angle=270, x radius=2.00mm, y radius=2.00mm] coordinate (b) -- ++(-30.00mm, 0.00mm) arc [start angle=270, end angle=180, x radius=2.00mm, y radius=2.00mm] -- ++(0.00mm,2.00mm) arc [start angle=0, end angle=90, x radius=2.00mm, y radius=2.00mm] -- cycle;
-			\node (explore) at ($(a)!0.5!(b)$) [white] {\titlefont ORGANIZANDO};
-			\draw [session4, thick] (b) --++ ($(\textwidth,0.00mm)+(-72 mm,0 mm)$); % changed
-			\node (title) at ($(a1)!0.5!(b1)$) [right] {\MakeUppercase{#1}};
-		\end{tikzpicture}
+	\def\la@banner@title{Praticando}
+	\def\la@bannercounter{\thepractice}
+	\la@banner{%
+		\texorpdfstring{}{\la@banner@title: }#1
 	}
-
-	\titlespacing*{\arrangesec}{0pt}{8mm}{3pt}
-
-
-
-\newcommand{\arrange}[1]
-{
-	\needspace{.15\textheight}
-	\stepcounter{arrangesec}
-	\arrangesec{\texorpdfstring{}{Organizando: }#1}
-	\def\currentcolor{session4}
+	\la@defaultlist
 }
 
 
-\titleclass{\exercisesec}{straight}[\chapter]
-\newcounter{exercisesec}
-\renewcommand{\theexercisesec}{\arabic{exercisesec}}
+\newcounter{know}
+
+\newcommand{\know}[1]{%
+	\def\currentcolor{session3}
+	\def\la@banner@title{Para saber \raisebox{-2.25pt}{\Huge{+}}}
+	\def\la@bannercounter{\theknow}
+	\la@banner{%
+		\texorpdfstring{}{\la@banner@title: }#1
+	}
+	\la@defaultlist
+}
 
 
-\titleformat{\exercisesec}[hang]{\large\color{cor1}\secondtitlefont}{\theexercisesec}{0pt}{\phantomsection
-	% \needspace{\textheight}\checkoddpage\ifoddpage\else\cleardoublepage\fi%
-	\tikzset{external/export next=false}
-	\begin{tikzpicture}[remember picture, external/export=false]
-		\draw [draw=cor2, very thick] (-3.00mm,0.00mm) -- ++(0.00mm,2.00mm) -- ++(\textwidth , 0.00mm) -- ++(0mm,-2mm);% line
-		\fill [draw=cor2, very thick , fill=cor1] ($(\textwidth/2 , 0mm) + (19mm,6mm)$) -- ++(0.00mm,-5.5 mm) coordinate (line1) arc [start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm] -| ++(-38.00mm , 0.00mm)  -- ++ (0mm, 5.5 mm) coordinate (line2) arc [start angle=180, end angle=90, x radius=2.00mm, y radius=2.00mm] -- cycle;
-		\node (exercise) at ($(line1)!0.5!(line2) + (0 mm, .8 mm)$) [text=white, font=\thirdtitlefont\Large] {EXERCÍCIOS};%\fontsize{13pt}{0}
-	\end{tikzpicture}}
+\newcounter{arrange}
 
-\titlespacing*{\exercisesec}{0pt}{8mm}{1mm}
+\newcommand{\arrange}[1]{%
+	\def\currentcolor{session4}
+	\def\la@banner@title{Organizando}
+	\def\la@bannercounter{\thearrange}
+	\la@banner{%
+		\texorpdfstring{}{\la@banner@title: }#1
+	}
+	\la@defaultlist
+}
 
 
+\newcounter{exercise}
 
-\newcommand{\exercise}[1]
-{	
-	\needspace{.15\textheight}
-	\stepcounter{exercisesec}
-	\exercisesec{\texorpdfstring{}{Exercícios}}
+\newcommand{\exercise}{	
 	\def\currentcolor{cor1}
-	\exerciselist
+	\la@exercise{\texorpdfstring{}{Exercícios}}
+	\exerciselist%
 }
 
 

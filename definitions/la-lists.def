@@ -25,7 +25,7 @@
 		\pgfpathlineto{\pgfpoint{\pgf@xa+2pt}{\pgf@ya}}
 		\pgfpatharc{270}{180}{2.0pt}
 		%        \pgfpathcurveto{\pgfpoint{\pgf@xc}{\pgf@ya}\pgfpoint{\pgf@xa}{\pgf@ya}\pgfpoint{\pgf@xa}{\pgf@yc}}
-		\pgfpathclose
+		\pgfpathclose%
 	}
 }
 
@@ -49,7 +49,7 @@
 		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
 		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
 		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
-		\pgfpathclose
+		\pgfpathclose%
 	}
 }
 
@@ -88,16 +88,16 @@
 
 \newcommand{\la@defaultlist}{
 	\setlist[enumerate]{%
-		label = \protect\enumbox{\alph*)}, %chktex 9
-	} %chktex 10
+		label = \protect\titem{\alph*}
+	}
 	\setlist[itemize]{%
 		label = \protect\itemcoloredsquare%
 	}
-}
+} 
 
 \newcommand{\exerciselist}{%
 	\setlist[enumerate]{%
-		label = \protect\enumbox{\arabic*}
+		label = \protect\titem{\arabic*}
 	}
 	\setlist[enumerate,2]{%
 		label = \textit{\alph*)} %chktex 9
@@ -108,9 +108,8 @@
 } %chktex 10
 
 \@ifpackageloaded{tasks}{%
-\settasks{%
-	label = \titem{\alph*)}, %chktex 9
-	label-width = 14pt
-} %chktex 17	
-}{}
-
+	\settasks{%
+		label = \titem{\alph*)}, %chktex 9
+		label-width = 14pt
+	} 
+} % chktex 10 chktex 17

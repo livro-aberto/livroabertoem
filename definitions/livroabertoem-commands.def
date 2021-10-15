@@ -1,42 +1,35 @@
-
-
 %Commands
 
 \newcommand{\tmat}[1]{\cellcolor{\currentcolor}\textcolor{white}{\bm{#1}}}
 \newcommand{\tcolor}[1]{\cellcolor{\currentcolor}\textcolor{white}{\textbf{#1}}}
 \newcommand{\tmcol}[3]{\multicolumn{#1}{#2}{\cellcolor{\currentcolor!80}\textcolor{white}{\textbf{#3}}}}
-\newcommand{\titem}[1]{\textcolor{\currentcolor}{\textbf{#1}})}
+\newcommand{\titem}[1]{\textcolor{\currentcolor}{\textbf{#1}})} % chktex 9 chktex 10
 
 \newcommand{\tikzcolor}{\currentcolor}
 \newcommand{\sub}{\textsubscript}
 \newcommand{\super}{\textsuperscript}
 
-\newcommand{\newparallel}{\mathrel{\mkern-5mu\clipbox{0 0.75ex 0 0}{${\sslash}$}\!}}
+\newcommand{\newparallel}{\mathrel{\mkern-5mu\clipbox{0 0.75ex 0 0}{\({\sslash}\)}\!}}
 
 \def\fle{\longrightarrow}
 \def\entao{\Longrightarrow}
 \def\ssi{\Longleftrightarrow}
 \def\ri{\rightarrow} 
-\def\bbullet{\noindent{\cor $\bullet$ }}
+\def\bbullet{\noindent{\cor \( \bullet \) }} % chktex 1
 \newcommand{\no}{\noindent}
-\newcommand{\fra}[2]{\text{\small$\dfrac{#1}{#2}$}}
-\newcommand{\ve}[1]{{\overrightarrow{#1\,\,}}}
+\newcommand{\fra}[2]{\text{\small \(\dfrac{#1}{#2}\)}}
+\newcommand{\ve}[1]{{\overrightarrow{#1\, \,}}}
 \newcommand{\ol}[1]{{\overline{#1}}}
 \newcommand{\interno}[2]{{\langle{#1},{#2}\rangle}}
 
 
 \newcolumntype{d}[1]{>{\vspace{2.5pt}}m{#1}<{\vspace{2.5pt}}}
 \newcolumntype{e}[1]{>{\vspace{2.5pt}\centering\arraybackslash}m{#1}<{\vspace{2.5pt}}}
-\newcolumntype{f}{>$c<$}
-\newcolumntype{g}[1]{>$e{#1}<$}
+\newcolumntype{f}{>\(c<\)}
+\newcolumntype{g}[1]{>\(e{#1}<\)}
 
-%
+\renewcommand{\fref}[1]{\hyperref[#1]{Figura~\ref{#1}}}
+\newcommand{\Fref}[1]{\hyperref[#1]{Figura~\ref{#1}}}
 
-
-\renewcommand{\fref}[1]{\hyperref[#1]{figura \ref{#1}}}
-\newcommand{\Fref}[1]{\hyperref[#1]{Figura \ref{#1}}}
-
-\renewcommand{\tref}[1]{\hyperref[#1]{tabela \ref{#1}}}
-\newcommand{\Tref}[1]{\hyperref[#1]{Tabela \ref{#1}}}
-
-
+\renewcommand{\tref}[1]{\hyperref[#1]{Tabela~\ref{#1}}}
+\newcommand{\Tref}[1]{\hyperref[#1]{Tabela~\ref{#1}}} % chktex 17
