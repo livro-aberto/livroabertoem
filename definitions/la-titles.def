@@ -1,5 +1,4 @@
 \RequirePackage[explicit]{titlesec}
-% \RequirePackage{needspace}
 
 
 % Defines the banner used for the sections
@@ -25,7 +24,7 @@
 
 		\node (explore) at ($(a)!0.5!(b)$) [white] {\titlefont\MakeUppercase{\la@banner@title}};
 
-		\draw [\currentcolor, thick] (b) --++ ($(\textwidth,0.00mm)+(-72 mm,0 mm)$); % changed
+		\draw [\currentcolor, thick] (b) --++ ($(\la@studenttextwidth,0.00mm)+(-72 mm,0 mm)$); % changed
 		\node (title) at ($(a1)!0.5!(b1)$) [right] {\MakeUppercase{#1}};
 	\end{tikzpicture}
 }
@@ -64,9 +63,9 @@
 \titleclass{\la@exercise}{straight}[\chapter]
 	\providecommand*{\toclevel@la@exercise}{1}
 	\titlespacing{\la@exercise}{0pt}{8mm}{1mm}
-	\titleformat{\la@exercise}[hang]{\bannerfont}{\theexercise}{0pt}{
+	\titleformat{\la@exercise}[hang]{\bannerfont}{\theexercise}{0pt}{%
 		\la@exercisebanner		
-	}[\exerciselist]
+	}
 
 
 
@@ -103,11 +102,25 @@
 	\def\currentcolor{session1}
 	\def\la@banner@title{Explorando}
 	\def\la@bannercounter{\theexplore}
-	\cleardoublepage%
+	\cleardoublepage%	
+	\thispagestyle{livroaberto}
+	\iftoggle{teacher}{%
+		\iftoggle{paracol}{}{%
+			\la@prof@backgroundcolor
+			\begin{paracol}{2} % starts double column at the student's main text.
+			\toggletrue{paracol}
+		}
+	}{}
 	\la@banner{%
 		\texorpdfstring{}{\la@banner@title: }#1
 	}
 	\la@defaultlist
+}
+
+\AtEndDocument{
+    \iftoggle{paracol}{
+        \end{paracol}
+    }{}
 }
 
 

@@ -77,4 +77,4 @@
 		\large\color{\currentcolor}\secondtitlefont%
     }	
 
-\fontsize{11pt}{0}
+\AtBeginDocument{\fontsize{11pt}{13.2pt}\selectfont}

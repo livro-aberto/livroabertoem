@@ -95,6 +95,15 @@
 	}
 } 
 
+\newcommand{\la@widelist}{
+	\setlist[enumerate]{%
+		wide, label = \protect\titem{\alph*}
+	}
+	\setlist[itemize]{%
+		wide, label = \protect\itemcoloredsquare%
+	}
+} 
+
 \newcommand{\exerciselist}{%
 	\setlist[enumerate]{%
 		label = \protect\titem{\arabic*}
@@ -111,5 +120,5 @@
 	\settasks{%
 		label = \titem{\alph*)}, %chktex 9
 		label-width = 14pt
-	} 
-} % chktex 10 chktex 17
+	}
+}{} % chktex 10 chktex 17

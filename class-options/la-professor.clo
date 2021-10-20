@@ -1,6 +1,13 @@
+%%%%%%%%%%%%%%% ENDNOTES
 \def\aluno{0}
 
-%%%%%%%%%%%%%%% ENDNOTES
+
+
+
+\input{la-prof-titles.def}
+\input{la-prof-pageconfig.def}
+\input{la-prof-endnotes.def}
+
 
 \newcommand{\@endnotebox}[1]{%
 	\tikz[baseline =(numbereditem.base)]{%
@@ -177,8 +184,8 @@
 
 \renewcommand{\notesname}{Notas}
 
-%\def\@makeenmark{\hbox{\@textsuperscript{\normalfont\@theenmark}}}
-\def\@makeenmark{\hbox{\normalfont\@theenmark}}
+% %\def\@makeenmark{\hbox{\@textsuperscript{\normalfont\@theenmark}}}
+% \def\@makeenmark{\hbox{\normalfont\@theenmark}}
 
 \newcommand\notasfig[1]{
 	\notebox{\textcolor{white}{\textbf{\endnotemark}}}
@@ -247,7 +254,7 @@
 }{%
 	\clearpage
 	\end{multicols}
-	\defaultlist
+	\la@defaultlist
 	\pagebreak
 	\restoregeometry
 	\cleardoublepage
@@ -267,8 +274,7 @@
 	\newgeometry{textwidth=840pt,outer=50pt, bottom=17mm, top=17mm}
 
 	\thispagestyle{empty}\pagestyle{empty}
-	\setlist[enumerate]{wide, label=\titem{\alph*)},itemsep=0pt,topsep=2.5pt}
-	\setlist[itemize]{wide, label=\textcolor{\currentcolor}{\small$\blacksquare$}, topsep=5pt}
+	\la@defaultlist
 	\section{#1}
 	\begin{multicols}{2}
 }{
@@ -296,6 +302,8 @@
 
 
 %%%%%%%%%%%%% CAIXA DE OBJETIVO ESPECÍFICO
+
+\usetikzlibrary{shadows}
 
 \renewenvironment{objectives}[4]
 {\ifnum #3=1
@@ -519,7 +527,7 @@
 
 				\marginpar{\notebox{\textcolor{white}{\textbf{\endnotemark}}}\vspace{.05em}}
 
-				\endnotetext{
+				\makepagenote{
 					{\vspace{-2\baselineskip}
 							\begin{tcolorbox}[blanker, enhanced, breakable, before skip = 5mm, after skip = 5mm, colframe=\currentcolor,left=3mm, right=4mm, top=6mm,segmentation style={draw=none,fill=none}, bottom=3mm, colback=white, %colframe=box1,
 									borderline west={3mm}{0pt}{white}, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=-1pt, outer arc = 3mm, arc = 3mm,
@@ -665,16 +673,7 @@
 
 \newenvironment{OES}{\begin{enumerate}[label=\titem{OE \arabic*} -, topsep=2.5pt,itemsep=0pt]}{\end{enumerate}}
 
-%%%%%%%%%%%%%%% NOTA DE RODAPÉ
-
-\geometry{reset, paperwidth=950pt,paperheight=275mm,
-	marginparsep=30pt,headsep=19pt,top=17mm, bottom=17mm ,inner=50pt,outer=440pt,
-	marginparwidth=350pt}
 
 
 
 
-%Ambiente marginfigure para figuras na margem
-\newfloat{marginfigure}{htp}{Figura}[chapter]
-\floatname{marginfigure}{Figura}
-\renewcommand\themarginfigure{\thechapter.\Roman{marginfigure}}	

@@ -1,0 +1,17 @@
+\makepagenote
+
+\newcommand{\la@prof@endtitle}{
+	{
+		\color{\currentcolor}\bfseries
+		{\fontsize{14pt}{0pt}\selectfont #1}\par
+		\vspace{-.8\baselineskip}	
+		\rule{\linewidth}{3pt}
+		{\Large #2}
+	}
+}
+
+\newcommand{\objectives*}{
+	\pagenote{
+		\la@prof@endtitle
+	}
+}

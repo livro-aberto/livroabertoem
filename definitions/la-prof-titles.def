@@ -1,0 +1,32 @@
+\newcommand{\la@prof@margintitle}[2]{%
+
+	{\color{\currentcolor}\bfseries
+		{\fontsize{14pt}{0pt}\selectfont #1}\par
+		\vspace{-.8\baselineskip}	
+		\rule{\la@teachertextwidth}{3pt}
+		{\Large #2}
+	}
+}
+
+
+\newcommand{\objectivess}[1]{%
+	\iftoggle{teacherenv}{
+
+		\la@prof@margintitle{Objetivos Específicos}{#1}
+		
+	}{%
+		\ClassError{livroabertoem}{Not in teachers's environment}{%
+			You should only use this command for teacher's content
+		}
+	}
+}
+
+\newcommand{\sugestionss}[1]{%
+	\iftoggle{teacherenv}{%
+		\la@prof@margintitle{Sugestões e discussões}{#1}
+	}{%
+		\ClassError{livroabertoem}{Not in teachers's environment}{%
+			You should only use this command for teacher's content
+		}
+	}
+}

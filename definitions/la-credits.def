@@ -1,4 +1,5 @@
 \RequirePackage{makecell}
+\RequirePackage{xurl}
 
 \let\Chaptermark\chaptermark
 \let\Sectionmark\sectionmark
@@ -54,8 +55,11 @@
 \newcommand{\ccbysa}{\def\la@ccbysa{1}}
 
 \newcommand{\creditos}{%
-	\cleardoublepage
+	\newpage
 	\begin{titlingpage}
+	\iftoggle{teacher}{
+		\begin{paracol}{2}
+	}{}
 		\renewcommand{\arraystretch}{1.75}
 		\begin{center}
 			Projeto: LIVRO ABERTO DE MATEMÁTICA
@@ -78,7 +82,7 @@
 			% \vspace{.5em}
 		\else\fi
 
-		\begin{tabular}{p{.15\textwidth}p{.7\textwidth}}
+		\begin{tabular}{p{.2\la@studenttextwidth}p{.75\la@studenttextwidth}}
 			Título:                                            & \Chaptername                                                          \\
 
 			Ano/ Versão:                                       & \the\year{} / versão \la@versao{} de \today                             \\
@@ -139,7 +143,7 @@
 
 				\vspace{1em}
 				\includegraphics[width=2.5cm]{logo-associacao.jpg}
-			\end{minipage}
+			\end{minipage}\hfill
 			\begin{minipage}[r]{5cm}
 				\centering
 
@@ -149,18 +153,23 @@
 				\includegraphics[width=3.5cm]{itau}
 			\end{minipage}
 		\end{figure}
+		\iftoggle{teacher}{
+			\end{paracol}
+		}{}
 	\end{titlingpage}
 
 
-	\undef\autor
-	\undef\autores
-	\undef\revisor
-	\undef\revisores
-	\revisaofalse
+	\undef\autor%
+	\undef\autores%
+	\undef\revisor%
+	\undef\revisores%
+	\revisaofalse%
 
 	\let\la@versao\relax
 	\undef\la@autorcapa
 	\undef\la@graficos
 	\undef\la@versaodigital
 	\undef\la@ccbysa
+
+
 }

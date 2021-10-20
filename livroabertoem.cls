@@ -5,7 +5,6 @@
 \def\docdate{2021/07/21}
 \def\aluno{1}
 
-
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{\filename}
 
@@ -29,19 +28,20 @@
 \RequirePackage{endnotes}
 \RequirePackage{comment} % Comando excludecomment para remover os comandos do material do professor
 \RequirePackage{xpatch}
+\RequirePackage{paracol}
+
 
 
 \input{la-color-fonts.def}
 \input{la-pageconfig.def}
 \input{la-environments.def}
 \input{la-titles.def}
-\input{la-chapter.def}
 \input{la-tikzconfig.sty}
 \input{la-credits.def}
 \input{la-lists.def}
 \input{la-tables.def}
+\input{la-chapter.def}
 \input{la-hypersetup.def}
-
 
 
 \newcommand{\sub}{\textsubscript}
@@ -71,15 +71,16 @@
 \newcommand{\subknow}[1]{\paragraph{\color{session3}\normalfont\Large\bfseries#1}}
 \newcommand{\subexercise}[1]{\paragraph{\color{cor1}\normalfont\Large\bfseries#1}}
 
-		
-
-
-
-
-
-
 
 %%%%%%%%%%%% Material do professor
+
+
+\newtoggle{student}
+\toggletrue{student}
+
+\newtoggle{paracol}
+
+\newtoggle{teacher}
 
 %Caixa de Obetivos gerais
 \newtcolorbox{habilities}[1]{}
@@ -90,10 +91,14 @@
 %Caixa de Respostas
 \newenvironment{answer}[3]{}{}
 %Caixa de Texto
-\newenvironment{texto}[1]{}
+\newenvironment{texto}[1]{}{}
+
+
 
 \DeclareOption{professor}
-{
+{	
+	\togglefalse{student}
+	\toggletrue{teacher}
 	\input{la-professor.clo}
 }
 
@@ -105,12 +110,16 @@
 \ProcessOptions%
 
 
+
+
+
+
 %Páginas de texto
 \ifnum\aluno=1
-\excludecomment{paginatexto}
-\excludecomment{apresentacao}
-\else
-\fi
+	\excludecomment{paginatexto}
+	\excludecomment{apresentacao}
+	\excludecomment{teacher}
+\else\fi
 
 
 \endinput
