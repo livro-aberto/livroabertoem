@@ -9,175 +9,175 @@
 \input{la-prof-endnotes.def}
 
 
-\newcommand{\@endnotebox}[1]{%
-	\tikz[baseline =(numbereditem.base)]{%
-		\node[shape=enumbox,text=linkscolor, font=\fontsize{11pt}{0}\selectfont\bfseries,
-			fill=box2!70, drop shadow,
-			minimum width=4.00mm, minimum height=3.00mm,sharp corners] (numbereditem) {#1};
-	}
-}
+% \newcommand{\@endnotebox}[1]{%
+% 	\tikz[baseline =(numbereditem.base)]{%
+% 		\node[shape=enumbox,text=linkscolor, font=\fontsize{11pt}{0}\selectfont\bfseries,
+% 			fill=box2!70, drop shadow,
+% 			minimum width=4.00mm, minimum height=3.00mm,sharp corners] (numbereditem) {#1};
+% 	}
+% }
 
-\newcommand{\notebox}[1]{%
-	\tikz[baseline = (numbereditem.base)]{%
-		\node[shape=enumbox,text=linkscolor, font=\fontsize{11pt}{0}\selectfont\bfseries,
-			fill=box2!70, drop shadow,
-			minimum width=16.0mm, minimum height=3.00mm,sharp corners, align=left] (numbereditem) {#1};
-	}
-}
+% \newcommand{\notebox}[1]{%
+% 	\tikz[baseline = (numbereditem.base)]{%
+% 		\node[shape=enumbox,text=linkscolor, font=\fontsize{11pt}{0}\selectfont\bfseries,
+% 			fill=box2!70, drop shadow,
+% 			minimum width=16.0mm, minimum height=3.00mm,sharp corners, align=left] (numbereditem) {#1};
+% 	}
+% }
 
-\def\enotesize{\normalsize}
-%%% hyperendnotes.sty
-\newif\ifenotelinks
-\newcounter{Hendnote}
-% Redefining portions of endnotes-package:
-\let\savedhref\href
-\let\savedurl\url
-\def\endnotemark{%
-\@ifnextchar[\@xendnotemark{%
-	\stepcounter{endnote}%
-	\protected@xdef\@theenmark{\textbf{Nota \theendnote}}%
-	\protected@xdef\@theenvalue{\number\c@endnote}%
-	\@endnotemark
-}%
-}%
-\def\@xendnotemark[#1]{%
-	\begingroup\c@endnote#1\relax
-	\unrestored@protected@xdef\@theenmark{\theendnote}%
-	\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
-	\endgroup
-	\@endnotemark
-}%
-\def\endnotetext{%
-\@ifnextchar[\@xendnotenext{%
-	\protected@xdef\@theenmark{\theendnote}%
-	\protected@xdef\@theenvalue{\number\c@endnote}%
-	\@endnotetext
-}%
-}%
-\def\@xendnotenext[#1]{%
-	\begingroup
-	\c@endnote=#1\relax
-	\unrestored@protected@xdef\@theenmark{\theendnote}%
-	\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
-	\endgroup
-	\@endnotetext
-}%
-\def\endnote{%
-\@ifnextchar[\@xendnote{%
-	\stepcounter{endnote}%
-	\protected@xdef\@theenmark{\theendnote}%
-	\protected@xdef\@theenvalue{\number\c@endnote}%
-	\@endnotemark\@endnotetext
-}%
-}%
-\def\@xendnote[#1]{%
-	\begingroup
-	\c@endnote=#1\relax
-	\unrestored@protected@xdef\@theenmark{\theendnote}%
-	\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
-	\show\@theenvalue
-	\endgroup
-	\@endnotemark\@endnotetext
-}%
-\def\@endnotemark{%
-\leavevmode
-\ifhmode
-	\edef\@x@sf{\the\spacefactor}\nobreak
-\fi
-\ifenotelinks
-	\expandafter\@firstofone
-\else
-	\expandafter\@gobble
-\fi
-{%
-\Hy@raisedlink{%
-	\hyper@@anchor{Hendnotepage.\@theenvalue}{\empty}%
-}%
-}%
-\hyper@linkstart{link}{Hendnote.\@theenvalue}%
-\makeenmark
-\hyper@linkend
-\ifhmode
-	\spacefactor\@x@sf
-\fi
-\relax
-}%
-\long\def\@endnotetext#1{%
-	\if@enotesopen
-	\else
-		\@openenotes
-	\fi
-	\immediate\write\@enotes{%
-		\@doanenote{\@theenmark}{\@theenvalue}%
-	}%
-	\begingroup
-	\def\next{#1}%
-	\newlinechar='40
-	\immediate\write\@enotes{\meaning\next}%
-	\endgroup
-	\immediate\write\@enotes{%
-		\@endanenote
-	}%
-}%
-\def\theendnotes{%
-\immediate\closeout\@enotes
-\global\@enotesopenfalse
-\begingroup
-\edef\@tempa{`\string>}%
-\ifnum\catcode\@tempa=12
-	\let\@ResetGT\relax
-\else
-	\edef\@ResetGT{\noexpand\catcode\@tempa=\the\catcode\@tempa}%
-	\@makeother\>%
-\fi
-\def\@doanenote##1##2##3>{%
-\def\@theenmark{##1}%
-\def\@theenvalue{##2}%
-\par
-\smallskip %<-small vertical gap between endnotes
-\begingroup
-\def\href{\expandafter\savedhref}%
-\def\url{\expandafter\savedurl}%
-\@ResetGT
-\edef\@currentlabel{\csname p@endnote\endcsname\@theenmark}%
-\enoteformat
-}%
-\def\@endanenote{%
-	\par\endgroup
-}%
-% Redefine, how numbers are formatted in the endnotes-section:
-\renewcommand\@makeenmark{%
-	\normalfont\protect\@endnotebox{\@theenmark}~%
-}%
-% header of endnotes-section
-% \enoteheading
-% font-size of endnotes
-\enotesize
-\input{\jobname.ent}%
-\endgroup
-}%
-\def\enoteformat{%
-\rightskip\z@
-\leftskip1.8em
-\parindent\z@
-\leavevmode\llap{%
-\setcounter{Hendnote}{\@theenvalue}%
-\addtocounter{Hendnote}{-1}%
-\refstepcounter{Hendnote}%
-\ifenotelinks
-	\expandafter\@secondoftwo
-\else
-	\expandafter\@firstoftwo
-\fi
-{\@firstofone}%
-{\hyperlink{Hendnotepage.\@theenvalue}}%
-{\makeenmark}%
-}%
-}%
+% \def\enotesize{\normalsize}
+% %%% hyperendnotes.sty
+% \newif\ifenotelinks
+% \newcounter{Hendnote}
+% % Redefining portions of endnotes-package:
+% \let\savedhref\href
+% \let\savedurl\url
+% \def\endnotemark{%
+% \@ifnextchar[\@xendnotemark{%
+% 	\stepcounter{endnote}%
+% 	\protected@xdef\@theenmark{\textbf{Nota \theendnote}}%
+% 	\protected@xdef\@theenvalue{\number\c@endnote}%
+% 	\@endnotemark
+% }%
+% }%
+% \def\@xendnotemark[#1]{%
+% 	\begingroup\c@endnote#1\relax
+% 	\unrestored@protected@xdef\@theenmark{\theendnote}%
+% 	\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
+% 	\endgroup
+% 	\@endnotemark
+% }%
+% \def\endnotetext{%
+% \@ifnextchar[\@xendnotenext{%
+% 	\protected@xdef\@theenmark{\theendnote}%
+% 	\protected@xdef\@theenvalue{\number\c@endnote}%
+% 	\@endnotetext
+% }%
+% }%
+% \def\@xendnotenext[#1]{%
+% 	\begingroup
+% 	\c@endnote=#1\relax
+% 	\unrestored@protected@xdef\@theenmark{\theendnote}%
+% 	\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
+% 	\endgroup
+% 	\@endnotetext
+% }%
+% \def\endnote{%
+% \@ifnextchar[\@xendnote{%
+% 	\stepcounter{endnote}%
+% 	\protected@xdef\@theenmark{\theendnote}%
+% 	\protected@xdef\@theenvalue{\number\c@endnote}%
+% 	\@endnotemark\@endnotetext
+% }%
+% }%
+% \def\@xendnote[#1]{%
+% 	\begingroup
+% 	\c@endnote=#1\relax
+% 	\unrestored@protected@xdef\@theenmark{\theendnote}%
+% 	\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
+% 	\show\@theenvalue
+% 	\endgroup
+% 	\@endnotemark\@endnotetext
+% }%
+% \def\@endnotemark{%
+% \leavevmode
+% \ifhmode
+% 	\edef\@x@sf{\the\spacefactor}\nobreak
+% \fi
+% \ifenotelinks
+% 	\expandafter\@firstofone
+% \else
+% 	\expandafter\@gobble
+% \fi
+% {%
+% \Hy@raisedlink{%
+% 	\hyper@@anchor{Hendnotepage.\@theenvalue}{\empty}%
+% }%
+% }%
+% \hyper@linkstart{link}{Hendnote.\@theenvalue}%
+% \makeenmark
+% \hyper@linkend
+% \ifhmode
+% 	\spacefactor\@x@sf
+% \fi
+% \relax
+% }%
+% \long\def\@endnotetext#1{%
+% 	\if@enotesopen
+% 	\else
+% 		\@openenotes
+% 	\fi
+% 	\immediate\write\@enotes{%
+% 		\@doanenote{\@theenmark}{\@theenvalue}%
+% 	}%
+% 	\begingroup
+% 	\def\next{#1}%
+% 	\newlinechar='40
+% 	\immediate\write\@enotes{\meaning\next}%
+% 	\endgroup
+% 	\immediate\write\@enotes{%
+% 		\@endanenote
+% 	}%
+% }%
+% \def\theendnotes{%
+% \immediate\closeout\@enotes
+% \global\@enotesopenfalse
+% \begingroup
+% \edef\@tempa{`\string>}%
+% \ifnum\catcode\@tempa=12
+% 	\let\@ResetGT\relax
+% \else
+% 	\edef\@ResetGT{\noexpand\catcode\@tempa=\the\catcode\@tempa}%
+% 	\@makeother\>%
+% \fi
+% \def\@doanenote##1##2##3>{%
+% \def\@theenmark{##1}%
+% \def\@theenvalue{##2}%
+% \par
+% \smallskip %<-small vertical gap between endnotes
+% \begingroup
+% \def\href{\expandafter\savedhref}%
+% \def\url{\expandafter\savedurl}%
+% \@ResetGT
+% \edef\@currentlabel{\csname p@endnote\endcsname\@theenmark}%
+% \enoteformat
+% }%
+% \def\@endanenote{%
+% 	\par\endgroup
+% }%
+% % Redefine, how numbers are formatted in the endnotes-section:
+% \renewcommand\@makeenmark{%
+% 	\normalfont\protect\@endnotebox{\@theenmark}~%
+% }%
+% % header of endnotes-section
+% % \enoteheading
+% % font-size of endnotes
+% \enotesize
+% \input{\jobname.ent}%
+% \endgroup
+% }%
+% \def\enoteformat{%
+% \rightskip\z@
+% \leftskip1.8em
+% \parindent\z@
+% \leavevmode\llap{%
+% \setcounter{Hendnote}{\@theenvalue}%
+% \addtocounter{Hendnote}{-1}%
+% \refstepcounter{Hendnote}%
+% \ifenotelinks
+% 	\expandafter\@secondoftwo
+% \else
+% 	\expandafter\@firstoftwo
+% \fi
+% {\@firstofone}%
+% {\hyperlink{Hendnotepage.\@theenvalue}}%
+% {\makeenmark}%
+% }%
+% }%
 
-% Toggle switch in order to turn on/off back-links in the
-% endnote-section:
-\enotelinkstrue
+% % Toggle switch in order to turn on/off back-links in the
+% % endnote-section:
+% \enotelinkstrue
 %\enotelinksfalse
 
 
@@ -305,151 +305,151 @@
 
 \usetikzlibrary{shadows}
 
-\renewenvironment{objectives}[4]
-{\ifnum #3=1
-		{\ifnum #4=1
+% \renewenvironment{objectives}[4]
+% {\ifnum #3=1
+% 		{\ifnum #4=1
 
-			\marginpar{\vspace{.05em}\begin{tcolorbox}[blanker, enhanced, enforce breakable, before skip = 5mm, after skip = 5mm, colframe=\currentcolor, left=3mm, top=6mm,segmentation style={draw=none,fill=none}, bottom=3mm, colback=white, %colframe=box1,
-						borderline east={2mm}{0pt}{white}, toprule=1pt, bottomrule=1pt, leftrule=1pt, rightrule=-1pt, outer arc = 3mm, arc = 3mm,
-						fonttitle=\bfseries\large,  % Should be 12 pt. Don't know how to set this.
-						title= Objetivos Específicos,
-						boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
-						attach boxed title to top right={yshift=.5mm-.8pt},
-						underlay boxed title={
-								\draw[line width=3pt,white] ($(frame.north east)+(0,-1pt)$)--($(frame.north east)+(-15pt,-1pt)$);
-								\filldraw [\currentcolor] ($(title.north west) + (0 mm,-3.50mm)$) -- ++(0.00mm,2.5mm) arc [start angle=180, end angle=90, y radius=2.00mm, x radius=2.00mm] -| ($(title.north east)+(0,-5mm)$) arc [start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm] -| cycle;
-							}, after={\setlist[enumerate]{label=\protect\enumbox{\alph*)}}
-								%\setlist[itemize]{label=\protect\itembox}
-								\setlist[itemize]{label=\protect\itemcoloredsquare}},
-						before upper={\setlength{\parskip}{6pt}\vspace{-15pt}\tcbsubtitle{#1}
-								\normalfont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{\currentcolor}{\small$\blacksquare$}, topsep=2.5pt, itemsep=0pt}},
-						% {\boxtitlefont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{penaqua}{\small$\blacksquare$}}
-						% {\vspace{1em}\large\textbf{Levar o aluno a}}\normalsize},
-						subtitle style = {
-								frame empty,
-								fontupper = \bfseries\large,
-								colback = white,
-								coltext = \currentcolor,
-								arc = 8pt,
-								top=0pt,
-								bottom=0pt
-							},
-						middle=5pt,
-						break at=-\baselineskip/0pt] #2 \end{tcolorbox}}
-
-
-		\else
-
-			\marginpar{\vspace{.05em}\begin{tcolorbox}[blanker, enhanced, enforce breakable, before skip = 5mm, after skip = 5mm, colframe=\currentcolor, right=3mm, top=6mm,segmentation style={draw=none,fill=none}, bottom=3mm, colback=white, %colframe=box1,
-						borderline west={2mm}{0pt}{white}, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=-1pt, outer arc = 3mm, arc = 3mm,
-						fonttitle=\bfseries\large,  % Should be 12 pt. Don't know how to set this.
-						title= Objetivos Específicos,
-						boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
-						attach boxed title to top left={yshift=.5mm-.8pt},
-						underlay boxed title={
-								\draw[line width=3pt,white] ($(frame.north west)+(0,-1pt)$)--($(frame.north west)+(15pt,-1pt)$);
-								\filldraw [\currentcolor] ($(title.north west) + (0 mm,-3.50mm)$) -- ++(0.00mm,2.5mm) arc [start angle=180, end angle=90, y radius=2.00mm, x radius=2.00mm] -| ($(title.north east)+(0,-5mm)$) arc [start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm] -| cycle;
-							}, after={\setlist[enumerate]{label=\protect\enumbox{\alph*)}}
-								%\setlist[itemize]{label=\protect\itembox}
-								\setlist[itemize]{label=\protect\itemcoloredsquare}},
-						before upper={\setlength{\parskip}{6pt}\vspace{-15pt}\tcbsubtitle{#1}
-								\normalfont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{\currentcolor}{\small$\blacksquare$}, topsep=2.5pt, itemsep=0pt}},
-						% {\boxtitlefont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{penaqua}{\small$\blacksquare$}}
-						% {\vspace{1em}\large\textbf{Levar o aluno a}}\normalsize},
-						subtitle style = {
-								frame empty,
-								fontupper = \bfseries\large,
-								colback = white,
-								coltext = \currentcolor,
-								arc = 8pt,
-								top=0pt,
-								bottom=0pt
-							},
-						middle=5pt,
-						break at=-\baselineskip/0pt] #2 \end{tcolorbox}}
-
-		\fi}
+% 			\marginpar{\vspace{.05em}\begin{tcolorbox}[blanker, enhanced, enforce breakable, before skip = 5mm, after skip = 5mm, colframe=\currentcolor, left=3mm, top=6mm,segmentation style={draw=none,fill=none}, bottom=3mm, colback=white, %colframe=box1,
+% 						borderline east={2mm}{0pt}{white}, toprule=1pt, bottomrule=1pt, leftrule=1pt, rightrule=-1pt, outer arc = 3mm, arc = 3mm,
+% 						fonttitle=\bfseries\large,  % Should be 12 pt. Don't know how to set this.
+% 						title= Objetivos Específicos,
+% 						boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+% 						attach boxed title to top right={yshift=.5mm-.8pt},
+% 						underlay boxed title={
+% 								\draw[line width=3pt,white] ($(frame.north east)+(0,-1pt)$)--($(frame.north east)+(-15pt,-1pt)$);
+% 								\filldraw [\currentcolor] ($(title.north west) + (0 mm,-3.50mm)$) -- ++(0.00mm,2.5mm) arc [start angle=180, end angle=90, y radius=2.00mm, x radius=2.00mm] -| ($(title.north east)+(0,-5mm)$) arc [start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm] -| cycle;
+% 							}, after={\setlist[enumerate]{label=\protect\enumbox{\alph*)}}
+% 								%\setlist[itemize]{label=\protect\itembox}
+% 								\setlist[itemize]{label=\protect\itemcoloredsquare}},
+% 						before upper={\setlength{\parskip}{6pt}\vspace{-15pt}\tcbsubtitle{#1}
+% 								\normalfont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{\currentcolor}{\small$\blacksquare$}, topsep=2.5pt, itemsep=0pt}},
+% 						% {\boxtitlefont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{penaqua}{\small$\blacksquare$}}
+% 						% {\vspace{1em}\large\textbf{Levar o aluno a}}\normalsize},
+% 						subtitle style = {
+% 								frame empty,
+% 								fontupper = \bfseries\large,
+% 								colback = white,
+% 								coltext = \currentcolor,
+% 								arc = 8pt,
+% 								top=0pt,
+% 								bottom=0pt
+% 							},
+% 						middle=5pt,
+% 						break at=-\baselineskip/0pt] #2 \end{tcolorbox}}
 
 
-	\else
+% 		\else
 
-		{\ifnum #4=9
+% 			\marginpar{\vspace{.05em}\begin{tcolorbox}[blanker, enhanced, enforce breakable, before skip = 5mm, after skip = 5mm, colframe=\currentcolor, right=3mm, top=6mm,segmentation style={draw=none,fill=none}, bottom=3mm, colback=white, %colframe=box1,
+% 						borderline west={2mm}{0pt}{white}, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=-1pt, outer arc = 3mm, arc = 3mm,
+% 						fonttitle=\bfseries\large,  % Should be 12 pt. Don't know how to set this.
+% 						title= Objetivos Específicos,
+% 						boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+% 						attach boxed title to top left={yshift=.5mm-.8pt},
+% 						underlay boxed title={
+% 								\draw[line width=3pt,white] ($(frame.north west)+(0,-1pt)$)--($(frame.north west)+(15pt,-1pt)$);
+% 								\filldraw [\currentcolor] ($(title.north west) + (0 mm,-3.50mm)$) -- ++(0.00mm,2.5mm) arc [start angle=180, end angle=90, y radius=2.00mm, x radius=2.00mm] -| ($(title.north east)+(0,-5mm)$) arc [start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm] -| cycle;
+% 							}, after={\setlist[enumerate]{label=\protect\enumbox{\alph*)}}
+% 								%\setlist[itemize]{label=\protect\itembox}
+% 								\setlist[itemize]{label=\protect\itemcoloredsquare}},
+% 						before upper={\setlength{\parskip}{6pt}\vspace{-15pt}\tcbsubtitle{#1}
+% 								\normalfont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{\currentcolor}{\small$\blacksquare$}, topsep=2.5pt, itemsep=0pt}},
+% 						% {\boxtitlefont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{penaqua}{\small$\blacksquare$}}
+% 						% {\vspace{1em}\large\textbf{Levar o aluno a}}\normalsize},
+% 						subtitle style = {
+% 								frame empty,
+% 								fontupper = \bfseries\large,
+% 								colback = white,
+% 								coltext = \currentcolor,
+% 								arc = 8pt,
+% 								top=0pt,
+% 								bottom=0pt
+% 							},
+% 						middle=5pt,
+% 						break at=-\baselineskip/0pt] #2 \end{tcolorbox}}
 
-				\marginpar{\notebox{\textcolor{white}{\textbf{\endnotemark}}}}
-
-
-
-				\endnotetext{\vspace{-1.75\baselineskip}
-					\begin{tcolorbox}[blanker, breakable, enhanced, before skip = 5mm, after skip = 5mm, colframe=\currentcolor,left=3mm, right=3mm, top=6mm,segmentation style={draw=none,fill=none}, bottom=3mm, colback=white, %colframe=box1,
-							borderline west={3mm}{0pt}{white}, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=-1pt, outer arc = 3mm, arc = 3mm,
-							fonttitle=\bfseries\large,  % Should be 12 pt. Don't know how to set this.
-							title= Objetivos Específicos,
-							boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
-							attach boxed title to top left={xshift=3mm , yshift=.5mm-.8pt},
-							underlay boxed title={
-									\draw[line width=3pt,white] ($(frame.north west)+(0,-1pt)$)--($(frame.north west)+(15pt,-1pt)$);
-									\filldraw [\currentcolor] ($(title.north west) + (0 mm,-3.50mm)$) -- ++(0.00mm,2.5mm) arc [start angle=180, end angle=90, y radius=2.00mm, x radius=2.00mm] -| ($(title.north east)+(0,-5mm)$) arc [start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm] -| cycle;
-								},  after={\setlist[enumerate]{label=\protect\enumbox{\alph*)}}
-									%\setlist[itemize]{label=\protect\itembox}
-									\setlist[itemize]{label=\protect\itemcoloredsquare}},
-							before upper={\setlength{\parskip}{6pt}\vspace{-15pt}\tcbsubtitle{#1}
-									\normalfont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{\currentcolor}{\small$\blacksquare$}, , topsep=2.5pt, itemsep=0pt}},
-							% {\boxtitlefont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{penaqua}{\small$\blacksquare$}}
-							% {\vspace{1em}\large\textbf{Levar o aluno a}}\normalsize},
-							subtitle style = {
-									frame empty,
-									fontupper = \bfseries\large,
-									colback = white,
-									coltext = \currentcolor,
-									arc = 8pt,
-									top=0pt,
-									bottom=0pt
-								},
-							middle=5pt,
-							break at=-\baselineskip/0pt] #2 \end{tcolorbox}
-
-				}
-
-			\else
-
-				\marginpar{\notebox{\textcolor{white}{\textbf{\endnotemark}}}}
+% 		\fi}
 
 
-				\endnotetext{\adjustbox{valign=t}
-					{\begin{tcolorbox}[blanker, breakable, enhanced, before skip = 5mm, after skip = 5mm, colframe=\currentcolor,left=3mm, right=3mm, top=6mm,segmentation style={draw=none,fill=none}, bottom=3mm, colback=white, %colframe=box1,
-								borderline west={3mm}{0pt}{white}, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=-1pt, outer arc = 3mm, arc = 3mm,
-								fonttitle=\bfseries\large,  % Should be 12 pt. Don't know how to set this.
-								title= Objetivos Específicos,
-								boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
-								attach boxed title to top left={xshift=3mm , yshift=.5mm-.8pt},
-								underlay boxed title={
-										\draw[line width=3pt,white] ($(frame.north west)+(0,-1pt)$)--($(frame.north west)+(15pt,-1pt)$);
-										\filldraw [\currentcolor] ($(title.north west) + (0 mm,-3.50mm)$) -- ++(0.00mm,2.5mm) arc [start angle=180, end angle=90, y radius=2.00mm, x radius=2.00mm] -| ($(title.north east)+(0,-5mm)$) arc [start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm] -| cycle;
-									},  after={\setlist[enumerate]{label=\protect\enumbox{\alph*)}}
-										%\setlist[itemize]{label=\protect\itembox}
-										\setlist[itemize]{label=\protect\itemcoloredsquare}},
-								before upper={\setlength{\parskip}{6pt}\vspace{-15pt}\tcbsubtitle{#1}
-										\normalfont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{\currentcolor}{\small$\blacksquare$}, , topsep=2.5pt, itemsep=0pt}},
-								% {\boxtitlefont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{penaqua}{\small$\blacksquare$}}
-								% {\vspace{1em}\large\textbf{Levar o aluno a}}\normalsize},
-								subtitle style = {
-										frame empty,
-										fontupper = \bfseries\large,
-										colback = white,
-										coltext = \currentcolor,
-										arc = 8pt,
-										top=0pt,
-										bottom=0pt
-									},
-								middle=5pt,
-								break at=-\baselineskip/0pt] #2 \end{tcolorbox}}
+% 	\else
 
-				}
-			\fi}
-	\fi}
-{\setlist[enumerate]{label=\protect\enumbox{\alph*)}}
-	%\setlist[itemize]{label=\protect\itembox}
-	\setlist[itemize]{label=\protect\itemcoloredsquare}}
+% 		{\ifnum #4=9
+
+% 				\marginpar{\notebox{\textcolor{white}{\textbf{\endnotemark}}}}
+
+
+
+% 				\endnotetext{\vspace{-1.75\baselineskip}
+% 					\begin{tcolorbox}[blanker, breakable, enhanced, before skip = 5mm, after skip = 5mm, colframe=\currentcolor,left=3mm, right=3mm, top=6mm,segmentation style={draw=none,fill=none}, bottom=3mm, colback=white, %colframe=box1,
+% 							borderline west={3mm}{0pt}{white}, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=-1pt, outer arc = 3mm, arc = 3mm,
+% 							fonttitle=\bfseries\large,  % Should be 12 pt. Don't know how to set this.
+% 							title= Objetivos Específicos,
+% 							boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+% 							attach boxed title to top left={xshift=3mm , yshift=.5mm-.8pt},
+% 							underlay boxed title={
+% 									\draw[line width=3pt,white] ($(frame.north west)+(0,-1pt)$)--($(frame.north west)+(15pt,-1pt)$);
+% 									\filldraw [\currentcolor] ($(title.north west) + (0 mm,-3.50mm)$) -- ++(0.00mm,2.5mm) arc [start angle=180, end angle=90, y radius=2.00mm, x radius=2.00mm] -| ($(title.north east)+(0,-5mm)$) arc [start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm] -| cycle;
+% 								},  after={\setlist[enumerate]{label=\protect\enumbox{\alph*)}}
+% 									%\setlist[itemize]{label=\protect\itembox}
+% 									\setlist[itemize]{label=\protect\itemcoloredsquare}},
+% 							before upper={\setlength{\parskip}{6pt}\vspace{-15pt}\tcbsubtitle{#1}
+% 									\normalfont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{\currentcolor}{\small$\blacksquare$}, , topsep=2.5pt, itemsep=0pt}},
+% 							% {\boxtitlefont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{penaqua}{\small$\blacksquare$}}
+% 							% {\vspace{1em}\large\textbf{Levar o aluno a}}\normalsize},
+% 							subtitle style = {
+% 									frame empty,
+% 									fontupper = \bfseries\large,
+% 									colback = white,
+% 									coltext = \currentcolor,
+% 									arc = 8pt,
+% 									top=0pt,
+% 									bottom=0pt
+% 								},
+% 							middle=5pt,
+% 							break at=-\baselineskip/0pt] #2 \end{tcolorbox}
+
+% 				}
+
+% 			\else
+
+% 				\marginpar{\notebox{\textcolor{white}{\textbf{\endnotemark}}}}
+
+
+% 				\endnotetext{\adjustbox{valign=t}
+% 					{\begin{tcolorbox}[blanker, breakable, enhanced, before skip = 5mm, after skip = 5mm, colframe=\currentcolor,left=3mm, right=3mm, top=6mm,segmentation style={draw=none,fill=none}, bottom=3mm, colback=white, %colframe=box1,
+% 								borderline west={3mm}{0pt}{white}, toprule=1pt, bottomrule=1pt, rightrule=1pt, leftrule=-1pt, outer arc = 3mm, arc = 3mm,
+% 								fonttitle=\bfseries\large,  % Should be 12 pt. Don't know how to set this.
+% 								title= Objetivos Específicos,
+% 								boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+% 								attach boxed title to top left={xshift=3mm , yshift=.5mm-.8pt},
+% 								underlay boxed title={
+% 										\draw[line width=3pt,white] ($(frame.north west)+(0,-1pt)$)--($(frame.north west)+(15pt,-1pt)$);
+% 										\filldraw [\currentcolor] ($(title.north west) + (0 mm,-3.50mm)$) -- ++(0.00mm,2.5mm) arc [start angle=180, end angle=90, y radius=2.00mm, x radius=2.00mm] -| ($(title.north east)+(0,-5mm)$) arc [start angle=0, end angle=-90, x radius=2.00mm, y radius=2.00mm] -| cycle;
+% 									},  after={\setlist[enumerate]{label=\protect\enumbox{\alph*)}}
+% 										%\setlist[itemize]{label=\protect\itembox}
+% 										\setlist[itemize]{label=\protect\itemcoloredsquare}},
+% 								before upper={\setlength{\parskip}{6pt}\vspace{-15pt}\tcbsubtitle{#1}
+% 										\normalfont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{\currentcolor}{\small$\blacksquare$}, , topsep=2.5pt, itemsep=0pt}},
+% 								% {\boxtitlefont\setlist[enumerate]{label=OE\arabic*,wide}\setlist[itemize,1]{wide, label=\textcolor{penaqua}{\small$\blacksquare$}}
+% 								% {\vspace{1em}\large\textbf{Levar o aluno a}}\normalsize},
+% 								subtitle style = {
+% 										frame empty,
+% 										fontupper = \bfseries\large,
+% 										colback = white,
+% 										coltext = \currentcolor,
+% 										arc = 8pt,
+% 										top=0pt,
+% 										bottom=0pt
+% 									},
+% 								middle=5pt,
+% 								break at=-\baselineskip/0pt] #2 \end{tcolorbox}}
+
+% 				}
+% 			\fi}
+% 	\fi}
+% {\setlist[enumerate]{label=\protect\enumbox{\alph*)}}
+% 	%\setlist[itemize]{label=\protect\itembox}
+% 	\setlist[itemize]{label=\protect\itemcoloredsquare}}
 
 
 

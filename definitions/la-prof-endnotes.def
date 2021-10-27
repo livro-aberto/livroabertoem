@@ -1,6 +1,21 @@
 \makepagenote
 
-\newcommand{\la@prof@endtitle}{
+\renewcommand*{\notedivision}{
+	\iftoggle{paracol}{
+		\end{paracol}
+	}{}
+	\section*{\notesname}
+	\begin{multicols}{2}
+}
+
+\apptocmd{\printpagenotes}{\clearpage\end{multicols}}{}{}
+
+
+
+\renewcommand*{\pagenotesubhead}[3]{}
+
+
+\newcommand{\la@prof@endtitle}[2]{
 	{
 		\color{\currentcolor}\bfseries
 		{\fontsize{14pt}{0pt}\selectfont #1}\par
@@ -10,8 +25,49 @@
 	}
 }
 
-\newcommand{\objectives*}{
-	\pagenote{
-		\la@prof@endtitle
+
+
+
+
+\newcommand{\objectives@endnote}[2]{
+	\leavevmode\pagenote{
+		{
+			\la@prof@endtitle{as}{as}
+			\color{\currentcolor}\bfseries
+			{\fontsize{14pt}{0pt}\selectfont Objetivos específicos}\par
+			\vspace{-.8\baselineskip}	
+			\rule{\linewidth}{3pt}
+			{\Large #1}
+		}
+
+		#2
+	}
+}
+
+
+\newcommand{\la@prof@note}[3]{
+		\leavevmode\pagenote{
+		{
+			\color{\currentcolor}\bfseries
+			{\fontsize{14pt}{0pt}\selectfont #1}\par
+			\vspace{-.8\baselineskip}	
+			\rule{\linewidth}{3pt}
+			{\Large #2}
+		}	
+		#3
+	}
+}
+
+\newcommand{\teachernotes}[3][]{
+	\IfStrEqCase{#1}{%
+		{}{
+			\la@prof@note{#2}{}{#3}
+		}
+		{objectives}{
+			\la@prof@note{Objetivos específicos}{#2}{#3}				
+		}%
+		{sugestions}{
+			\la@prof@note{Sugestões e discussões}{#2}{#3}			
+		}%
 	}
 }

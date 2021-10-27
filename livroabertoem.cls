@@ -28,20 +28,18 @@
 \RequirePackage{endnotes}
 \RequirePackage{comment} % Comando excludecomment para remover os comandos do material do professor
 \RequirePackage{xpatch}
-\RequirePackage{paracol}
+% \RequirePackage{lua4ht}
+
+\RequirePackage{marginnote}
+ 
 
 
-
-\input{la-color-fonts.def}
-\input{la-pageconfig.def}
-\input{la-environments.def}
-\input{la-titles.def}
+\input{la-color.def}
 \input{la-tikzconfig.sty}
-\input{la-credits.def}
 \input{la-lists.def}
 \input{la-tables.def}
-\input{la-chapter.def}
-\input{la-hypersetup.def}
+\input{la-pageconfig.def}
+\input{la-credits.def}
 
 
 \newcommand{\sub}{\textsubscript}
@@ -79,11 +77,16 @@
 \toggletrue{student}
 
 \newtoggle{paracol}
+\togglefalse{paracol}
 
 \newtoggle{teacher}
+\togglefalse{teacher}
+
+\newtoggle{html}
+\togglefalse{html}
 
 %Caixa de Obetivos gerais
-\newtcolorbox{habilities}[1]{}
+\newenvironment{habilities}[1]{}{}{}
 %Caixa de Objetivos Específicos
 \newenvironment{objectives}[4]{}{}{}
 %Caixa de Sugestões e recomendações
@@ -103,15 +106,24 @@
 }
 
 \DeclareOption{html}
-{
+{	
+	\toggletrue{html}
 	\input{la-html.clo}
 }
 
 \ProcessOptions%
 
 
+\iftoggle{html}{
+	
+}{
+	\input{la-fonts.def}
+	\input{la-environments.def}
+	\input{la-titles.def}
+	\input{la-chapter.def}
+}
 
-
+\input{la-hypersetup.def}
 
 
 %Páginas de texto

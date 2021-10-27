@@ -1,0 +1,40 @@
+\RequirePackage{xcolor}
+	\definecolor{cor1}{RGB}{0,165,157} % Verde água
+		\colorlet{primario}{cor1}
+		\colorlet{penaqua}{cor1}
+		\colorlet{verdeagua}{cor1}
+
+	\definecolor{cor2}{RGB}{73,85,93} % Cinza
+		\colorlet{secundario}{cor2}
+		\colorlet{grafite}{cor2}
+		\colorlet{cinza}{cor2}
+
+	\definecolor{base1}{RGB}{184,202,213} % Azul Claro
+		\colorlet{terciario}{base1}
+		\colorlet{azulclaro}{base1}
+
+	\definecolor{base2}{RGB}{221,223,80}
+
+	\definecolor{session1}{RGB}{0,94,176} % Azul
+		\colorlet{atento}{session1}
+		\colorlet{penazul}{session1}
+		\colorlet{azul}{session1}
+
+	\definecolor{session2}{RGB}{75,173,49} % Verde
+		\colorlet{penverde}{session2}
+		\colorlet{verde}{session2}
+
+	\definecolor{session3}{RGB}{183,13,40} % Vinho
+		\colorlet{destacado}{session3}
+		\colorlet{penvinho}{session3}
+		\colorlet{vinho}{session3}
+
+	\definecolor{session4}{RGB}{236,107,16} % Laranja
+		\colorlet{penlaranja}{session4}
+		\colorlet{laranja}{session4}
+
+	\definecolor{box1}{RGB}{71,30,129} 
+	\definecolor{box2}{RGB}{225,221,146}
+	\definecolor{box3}{RGB}{108,27,98}
+
+	\definecolor{linkscolor}{RGB}{6,69,173}

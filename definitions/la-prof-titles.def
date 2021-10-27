@@ -1,4 +1,4 @@
-\newcommand{\la@prof@margintitle}[2]{%
+\newcommand{\la@prof@sidetitle}[2]{%
 
 	{\color{\currentcolor}\bfseries
 		{\fontsize{14pt}{0pt}\selectfont #1}\par
@@ -8,25 +8,25 @@
 	}
 }
 
+\newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Not in teachers's environment}{%
+			You should only use this command for teacher's content}
+}
 
-\newcommand{\objectivess}[1]{%
-	\iftoggle{teacherenv}{
 
-		\la@prof@margintitle{Objetivos Específicos}{#1}
-		
+\renewcommand{\objectives}[1]{
+	\iftoggle{teacherenv}{%
+		\la@prof@sidetitle{Objetivos Específicos}{#1}
 	}{%
-		\ClassError{livroabertoem}{Not in teachers's environment}{%
-			You should only use this command for teacher's content
-		}
+		\la@notteacherenv
 	}
 }
 
+
+
 \newcommand{\sugestionss}[1]{%
 	\iftoggle{teacherenv}{%
-		\la@prof@margintitle{Sugestões e discussões}{#1}
+		\la@prof@sidetitle{Sugestões e discussões}{#1}
 	}{%
-		\ClassError{livroabertoem}{Not in teachers's environment}{%
-			You should only use this command for teacher's content
-		}
+		\la@notteacherenv
 	}
 }
