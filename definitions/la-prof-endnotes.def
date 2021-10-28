@@ -1,13 +1,17 @@
 \makepagenote
 
+% Redefine as configurações da página de notas para sair do paracol e passar a utilizar multicols
 \renewcommand*{\notedivision}{
+	\clearpage
 	\iftoggle{paracol}{
 		\end{paracol}
+		\togglefalse{paracol}
 	}{}
 	\section*{\notesname}
 	\begin{multicols}{2}
 }
 
+%Termina o multicols da página de notas.
 \apptocmd{\printpagenotes}{\clearpage\end{multicols}}{}{}
 
 
@@ -24,9 +28,6 @@
 		{\Large #2}
 	}
 }
-
-
-
 
 
 \newcommand{\objectives@endnote}[2]{
@@ -68,6 +69,9 @@
 		}%
 		{sugestions}{
 			\la@prof@note{Sugestões e discussões}{#2}{#3}			
+		}%
+		{answer}{%
+			\la@prof@note{Solução}{#2}{#3}			
 		}%
 	}
 }

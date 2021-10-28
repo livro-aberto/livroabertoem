@@ -1,10 +1,10 @@
 \newcommand{\la@prof@sidetitle}[2]{%
 
-	{\color{\currentcolor}\bfseries
+	{\color{\currentcolor}\bfseries\vspace{1em}
 		{\fontsize{14pt}{0pt}\selectfont #1}\par
 		\vspace{-.8\baselineskip}	
 		\rule{\la@teachertextwidth}{3pt}
-		{\Large #2}
+		{\Large #2}\par
 	}
 }
 
@@ -13,7 +13,7 @@
 }
 
 
-\renewcommand{\objectives}[1]{
+\newcommand{\objectives}[1]{
 	\iftoggle{teacherenv}{%
 		\la@prof@sidetitle{Objetivos Específicos}{#1}
 	}{%
@@ -23,9 +23,17 @@
 
 
 
-\newcommand{\sugestionss}[1]{%
+\newcommand{\sugestions}[1]{%
 	\iftoggle{teacherenv}{%
 		\la@prof@sidetitle{Sugestões e discussões}{#1}
+	}{%
+		\la@notteacherenv
+	}
+}
+
+\newcommand{\answer}[1]{%
+	\iftoggle{teacherenv}{%
+		\la@prof@sidetitle{Solução}{#1}
 	}{%
 		\la@notteacherenv
 	}

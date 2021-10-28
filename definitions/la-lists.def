@@ -97,10 +97,10 @@
 
 \newcommand{\la@widelist}{
 	\setlist[enumerate]{%
-		wide, label = \protect\titem{\alph*}
+		wide, label = \protect\titem{\alph*}, topsep = 0pt, itemsep = 0pt
 	}
 	\setlist[itemize]{%
-		wide, label = \protect\itemcoloredsquare%
+		wide, label = \protect\itemcoloredsquare, topsep = 0pt, itemsep = 0pt%
 	}
 } 
 

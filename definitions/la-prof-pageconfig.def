@@ -31,12 +31,13 @@
 \newtoggle{teacherenv}
 
 \NewEnviron{teacher}[1]{%
+    \par
     \toggletrue{teacherenv}
-    \switchcolumn*%
+    \switchcolumn%
     \la@widelist
-    
-	\BODY%
-
+    {
+        \BODY%
+    }
     \hfil
     \switchcolumn%
     \la@defaultlist
@@ -47,6 +48,6 @@
 \twosided%
 \setcolumnwidth{\la@studenttextwidth/\la@prof@colsep,\la@teachertextwidth}
 \newcommand{\la@prof@backgroundcolor}{%
-    \backgroundcolor{c[1] (.5\la@prof@colsep,25mm) (25mm,250mm)}{lightgray!70}
+    \backgroundcolor{c[1] (.5\la@prof@colsep,25mm) (25mm,250mm)}{lightgray!50}
 }
 

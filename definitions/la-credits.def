@@ -55,7 +55,7 @@
 \newcommand{\ccbysa}{\def\la@ccbysa{1}}
 
 \newcommand{\creditos}{%
-	\newpage
+	\cleardoublepage
 	\begin{titlingpage}
 	\iftoggle{teacher}{
 		\begin{paracol}{2}
@@ -122,6 +122,7 @@
 			\else\fi
 		\end{tabular}
 
+		\vfill
 		\begin{figure}[b]
 			\begin{minipage}[l]{5cm}
 				\centering
@@ -153,6 +154,7 @@
 				\includegraphics[width=3.5cm]{itau}
 			\end{minipage}
 		\end{figure}
+		\clearpage
 		\iftoggle{teacher}{
 			\end{paracol}
 		}{}

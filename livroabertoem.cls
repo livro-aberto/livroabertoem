@@ -18,20 +18,18 @@
 }
 
 
-\RequirePackage{geometry}
-\RequirePackage{microtype}
-\RequirePackage[low-sup]{subdepth}
+% \RequirePackage{geometry}
+\RequirePackage[low-sup]{subdepth} % ajusta altura do subscript quando há superscript junto
 \RequirePackage[export]{adjustbox}
-\RequirePackage{marginfix}
+% \RequirePackage{marginfix} %?
 \RequirePackage{multicol}
 \RequirePackage{xstring}
-\RequirePackage{endnotes}
+% \RequirePackage{endnotes} %?
 \RequirePackage{comment} % Comando excludecomment para remover os comandos do material do professor
 \RequirePackage{xpatch}
-% \RequirePackage{lua4ht}
-
-\RequirePackage{marginnote}
- 
+\RequirePackage{environ} % retirar?
+\RequirePackage{paracol}
+\RequirePackage{tcolorbox} % retirar depois
 
 
 \input{la-color.def}
@@ -40,16 +38,14 @@
 \input{la-tables.def}
 \input{la-pageconfig.def}
 \input{la-credits.def}
-
+\input{la-hypersetup.def}
+% \input{la-commands.def}
 
 \newcommand{\sub}{\textsubscript}
 \newcommand{\super}{\textsuperscript}
 
 
 \newcommand{\semihuge}{\@setfontsize\semiHuge{16.72}{21.38}}
-
-
-\tikzstyle{box} = [inner sep=3mm, inner ysep=3mm]
 
 
 %Cor Explorando
@@ -85,16 +81,16 @@
 \newtoggle{html}
 \togglefalse{html}
 
-%Caixa de Obetivos gerais
-\newenvironment{habilities}[1]{}{}{}
-%Caixa de Objetivos Específicos
-\newenvironment{objectives}[4]{}{}{}
-%Caixa de Sugestões e recomendações
-\newenvironment{sugestions}[4]{}{}{}
-%Caixa de Respostas
-\newenvironment{answer}[3]{}{}
-%Caixa de Texto
-\newenvironment{texto}[1]{}{}
+
+\ifdefined\HCode
+	\toggletrue{html}
+	\input{la-html.clo}
+\else
+	\input{la-fonts.def}
+	\input{la-environments.def}
+	\input{la-titles.def}
+	\input{la-chapter.def}
+\fi
 
 
 
@@ -105,33 +101,32 @@
 	\input{la-professor.clo}
 }
 
-\DeclareOption{html}
-{	
-	\toggletrue{html}
-	\input{la-html.clo}
-}
 
 \ProcessOptions%
 
 
-\iftoggle{html}{
+
+\iftoggle{teacher}{
 	
 }{
-	\input{la-fonts.def}
-	\input{la-environments.def}
-	\input{la-titles.def}
-	\input{la-chapter.def}
-}
+	%Caixa de Obetivos gerais
+	\newenvironment{habilities}[1]{}{}{}
+	%Caixa de Objetivos Específicos
+	\newenvironment{objectives}[4]{}{}{}
+	%Caixa de Sugestões e recomendações
+	\newenvironment{sugestions}[4]{}{}{}
+	%Caixa de Respostas
+	\newenvironment{answer}[3]{}{}
+	%Caixa de Texto
+	\newenvironment{texto}[1]{}{}
 
-\input{la-hypersetup.def}
-
-
-%Páginas de texto
-\ifnum\aluno=1
 	\excludecomment{paginatexto}
 	\excludecomment{apresentacao}
 	\excludecomment{teacher}
-\else\fi
+}
+
+
+
 
 
 \endinput

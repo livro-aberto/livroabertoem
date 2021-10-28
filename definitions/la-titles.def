@@ -1,6 +1,5 @@
 \RequirePackage[explicit]{titlesec}
 
-
 % Defines the banner used for the sections
 
 \newcommand{\la@bannerstyle}[1]{
@@ -104,13 +103,15 @@
 	\def\la@bannercounter{\theexplore}
 	\cleardoublepage%	
 	\thispagestyle{livroaberto}
-	\iftoggle{teacher}{%
-		\iftoggle{paracol}{}{%
+	\iftoggle{teacher}{% iftrue
+		\iftoggle{paracol}{% iftrue
+		}{% iffalse
 			\la@prof@backgroundcolor
 			\begin{paracol}{2} % starts double column at the student's main text.
 			\toggletrue{paracol}
 		}
-	}{}
+	}{%iffalse
+	}
 	\la@banner{%
 		\texorpdfstring{}{\la@banner@title: }#1
 	}
@@ -120,6 +121,7 @@
 \AtEndDocument{
     \iftoggle{paracol}{
         \end{paracol}
+        \togglefalse{paracol}
     }{}
 }
 
@@ -144,7 +146,7 @@
 	\def\la@banner@title{Para saber \raisebox{-2.25pt}{\Huge{+}}}
 	\def\la@bannercounter{\theknow}
 	\la@banner{%
-		\texorpdfstring{}{\la@banner@title: }#1
+		\texorpdfstring{}{Para Saber +: }#1
 	}
 	\la@defaultlist
 }
