@@ -4,49 +4,74 @@
 	\tcbuselibrary{theorems, listings, breakable, most, skins,skins,breakable}
 	\tcbsetforeverylayer{shield externalize}
 
-\newtcolorbox[
-	auto counter, 
-	number within = chapter, 
-	number freestyle = {\noexpand\arabic{\tcbcounter}}
-]{task}[1]{
-	parbox = false, 
-	blanker, 
-	enhanced, 
-	breakable, 
-	before skip = 8mm, 
-	after skip = 5mm, 
-	left = 0.3mm, 
-	right = 0.8mm, 
-	top = 5mm, 
-	bottom = 3mm, 
-	colback = white, 
-	colframe = cor2!70, 
-	width = \la@studenttextwidth-2pt,
-	toprule = 0pt,
-	bottomrule = 0.5pt,
-	rightrule = -1pt,
-	leftrule = -1pt,
-	outer arc = 3mm,
-	arc = 3mm,
-	sharp corners = northeast,
-	sharp corners = southeast,
-	sharp corners = southwest,
-	fontupper = \fontsize{11}{15.5}\boxexample, % Should be 11 pt.
-	fonttitle = \boxtitlefont\large,  % Should be 9 pt. Don't know how to set this. Tried \fontsize{9pt}{}, but didn't work.
-	coltitle = \currentcolor,
-	title = \makefirstuc{#1\hfill},
-	boxed title style = {empty,arc = 1pt,outer arc = 1pt,boxrule = 1pt},
-	attach boxed title to top left = {xshift = -1 mm, yshift = -0.1mm},
-	underlay boxed title ={
-		% Draw the small arc on the top left.
-		\draw[cor2!70, line width = 1pt] ($(title.south west)+(3mm,0mm)$) coordinate (LU) arc [start angle = 90, end angle = 180, y radius = 2mm, x radius = 2mm] --++ (0mm, -2mm);
-		% Draw the top line from the left to the right.
-		\draw[cor2!70,  line width = 1pt] (LU) --++ (158mm,0mm) coordinate (R);
-		% Think on the Atividade box as an ABCD rectangle (clockwise, A is top left), now you see the coordinates. 
-		\fill [cor2!70] ($(R)+(0mm,-.3mm)$) --++ (-25.00mm,0mm) coordinate (D) --++ (0mm, 5mm) arc [start angle = 180, end angle = 90, x radius = 2.00mm, y radius = 2.00mm] --++ (25.00mm,0mm) coordinate (B) --++ (0.00mm,-5mm)  arc [start angle = 0, end angle = -90, y radius = 2.00mm, x radius = 2.00mm] -- cycle;
-		\node[font = \titlefont\large,white] at ($(B)!0.5!(D)$) {\small Atividade \thetcbcounter};
-	}
+
+\newcommand{\la@contentsepbanner}[1]{
+	\leavevmode\checkoddpage%
+	\begin{tikzpicture}[remember picture, overlay, shift = {(0,-13.5pt)}]
+
+		\draw [\currentcolor,  line width = 3pt] (-\la@studentleftmargin,0) -- (\la@studenttextwidth+\la@studentrightmargin,0);
+		\node (banner name) [
+			fill, \currentcolor, rectangle, rounded corners=10, anchor = east, minimum width = 3.5cm, minimum height = 20pt] 
+			at (\la@studenttextwidth,0) {{\bannernamefont \la@banner@name}};
+		\node [anchor = west] (banner title) at (0,-1.5em) {{\boxtitlefont #1}};
+
+	\end{tikzpicture}
 }
+
+
+\newcounter{task}[chapter]
+
+\newenvironment{task}[1]{\par
+	\refstepcounter{task}
+	\la@bannername{Atividade \thetask}
+	\la@contentsepbanner{#1}
+	\vspace{3em}
+}{}
+
+
+% \newtcolorbox[
+% 	auto counter, 
+% 	number within = chapter, 
+% 	number freestyle = {\noexpand\arabic{\tcbcounter}}
+% ]{task}[1]{
+% 	parbox = false, 
+% 	blanker, 
+% 	enhanced, 
+% 	breakable, 
+% 	before skip = 8mm, 
+% 	after skip = 5mm, 
+% 	left = 0.3mm, 
+% 	right = 0.8mm, 
+% 	top = 5mm, 
+% 	bottom = 3mm, 
+% 	colback = white, 
+% 	colframe = cor2!70, 
+% 	width = \la@studenttextwidth-2pt,
+% 	toprule = 0pt,
+% 	bottomrule = 0.5pt,
+% 	rightrule = -1pt,
+% 	leftrule = -1pt,
+% 	outer arc = 3mm,
+% 	arc = 3mm,
+% 	sharp corners = northeast,
+% 	sharp corners = southeast,
+% 	sharp corners = southwest,
+% 	fontupper = \boxnamefont, % Should be 11 pt.
+% 	fonttitle = \boxtitlefont,  % Should be 9 pt. Don't know how to set this. Tried \fontsize{9pt}{}, but didn't work.
+% 	coltitle = \currentcolor,
+% 	title = \makefirstuc{#1\hfill},
+% 	boxed title style = {empty,arc = 1pt,outer arc = 1pt,boxrule = 1pt},
+% 	attach boxed title to top left = {xshift = -1 mm, yshift = -0.1mm},
+% 	underlay boxed title ={
+% 		% Draw the small arc on the top left.
+% 		\draw[cor2!70, line width = 1pt] ($(title.south west)+(3mm,0mm)$) coordinate (LU) arc [start angle = 90, end angle = 180, y radius = 2mm, x radius = 2mm] --++ (0mm, -2mm);
+% 		% Draw the top line from the left to the right.
+% 		\draw[cor2!70,  line width = 1pt] (LU) --++ (158mm,0mm) coordinate (R);
+% 		% Think on the Atividade box as an ABCD rectangle (clockwise, A is top left), now you see the coordinates. 
+% 		\fill [cor2!70] ($(R)+(0mm,-.3mm)$) --++ (-25.00mm,0mm) coordinate (D) --++ (0mm, 5mm) arc [start angle = 180, end angle = 90, x radius = 2.00mm, y radius = 2.00mm] --++ (25.00mm,0mm) coordinate (B) --++ (0.00mm,-5mm)  arc [start angle = 0, end angle = -90, y radius = 2.00mm, x radius = 2.00mm] -- cycle;
+% 		\node[font = \titlefont\large,white] at ($(B)!0.5!(D)$) {\small Atividade \thetcbcounter};
+% 	}
+% }
 
 
 % Makes the "To think about" box.
@@ -71,7 +96,7 @@
 	leftrule = -1pt, 
 	outer arc = 3mm, 
 	arc = 3mm,
-	fonttitle = \bfseries\large\boxtitlefont,  % Should be 12 pt. Don't know how to set this.
+	fonttitle = \boxnamefont,  % Should be 12 pt. Don't know how to set this.
 	title = PARA REFLETIR,
 	boxed title style = {%
 		empty, arc = 0pt, outer arc = 0pt, boxrule = 0pt
@@ -155,7 +180,7 @@
 	sharp corners = southeast, 
 	sharp corners = southwest,
 	title = {%
-		\textcolor{cor2}{\large\extitlefont\makefirstuc{#1}\vphantom{ç}}
+		\boxtitlefont\vphantom{ç}
 	},
 	boxed title style = {empty, sharp corners},
 	attach boxed title to top left = {xshift = 22mm, yshift = -7.5mm},
@@ -168,7 +193,7 @@
 			\fill[cor1!30] ($(frame.north west)+(0,-1pt)$) rectangle ($(title.south east)+(3mm,0mm)$) coordinate (R); %chktex 46
 		\fi		
 		\fill[cor1] (frame.north west) -- ($(frame.north west)+(0,-1.4pt)+(0,-7mm)$) -- ++ (22mm,0mm) arc [start angle = -90, end angle = 0, x radius = 2mm, y radius = 2mm] -- ($(frame.north west) + (24mm,0)$) --  cycle; %chktex 46 chktex 8
-		\node [white] at ($(frame.north west) + (12mm,-3.5mm)$) {\boxfont EXEMPLO \thetcbcounter}; %chktex 1 chktex 46
+		\node [white] at ($(frame.north west) + (12mm,-3.5mm)$) {\boxnamefont EXEMPLO \thetcbcounter}; %chktex 1 chktex 46
 
 	},
 	before upper = {%
@@ -196,7 +221,7 @@
 	outer arc = 3mm, 
 	arc = 3mm, 
 	sharp corners = northwest,
-	fonttitle = \normalsize\boxtitlefont,
+	fonttitle = \boxtitlefont,
 	title = PARA PESQUISAR,
 	boxed title style = {
 		empty, 
@@ -236,7 +261,7 @@
 	outer arc = 3mm, 
 	arc = 3mm, 
 	sharp corners = northwest,
-	fonttitle = \normalsize\boxtitlefont,
+	fonttitle = \boxtitlefont,
 	title= VOC\^{E} SABIA,
 	boxed title style = {
 		empty, 

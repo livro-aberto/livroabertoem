@@ -36,7 +36,7 @@
 	\subsection{\textcolor{box1}{Para pesquisar}}
 }
 
-\newenvironment{knowledge}[1]{%
+\newenvironment{knowledge}[1]{\par
 	\subsection{\textcolor{box1}{Você sabia?}}
 }
 
@@ -118,14 +118,14 @@
 
 
 
-\newcommand{\enumeratefont}{}
-\newcommand{\boxtitlefont}{}
-\newcommand{\boxexample}{}
-\newcommand{\titlefont}{}
-\newcommand{\secondtitlefont}{}
-\newcommand{\thirdtitlefont}{}
-\newcommand{\pagetitlefont}{}
-\newcommand{\boxfont}{}
+% \newcommand{\enumeratefont}{}
+% \newcommand{\boxtitlefont}{}
+% \newcommand{\boxexample}{}
+% \newcommand{\titlefont}{}
+% \newcommand{\secondtitlefont}{}
+% \newcommand{\thirdtitlefont}{}
+% \newcommand{\pagetitlefont}{}
+% \newcommand{\boxfont}{}
 		
 \renewcommand{\creditos}{}
 \newcommand{\chapterillustration}[2]{}

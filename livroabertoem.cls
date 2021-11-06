@@ -15,6 +15,7 @@
 	{definitions/}
 	{class-options}
 	{figures}
+	{fonts}
 }
 
 
@@ -30,7 +31,7 @@
 \RequirePackage{environ} % retirar?
 \RequirePackage{paracol}
 \RequirePackage{tcolorbox} % retirar depois
-
+\RequirePackage{marginfix}
 
 \input{la-color.def}
 \input{la-tikzconfig.sty}
@@ -45,7 +46,6 @@
 \newcommand{\super}{\textsuperscript}
 
 
-\newcommand{\semihuge}{\@setfontsize\semiHuge{16.72}{21.38}}
 
 
 %Cor Explorando
@@ -86,11 +86,11 @@
 	\toggletrue{html}
 	\input{la-html.clo}
 \else
-	\input{la-fonts.def}
 	\input{la-environments.def}
 	\input{la-titles.def}
 	\input{la-chapter.def}
 \fi
+	\input{la-fonts.def}
 
 
 

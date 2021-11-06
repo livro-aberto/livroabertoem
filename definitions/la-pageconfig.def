@@ -1,8 +1,46 @@
 \RequirePackage{graphicx}
 \RequirePackage{calc}
 
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+
+
+\setstocksize{297mm}{210mm}
+\settrimmedsize{297mm}{210mm}{*}
+
+\setlrmarginsandblock{50pt}{50pt}{*}
+\setulmarginsandblock{36pt}{36pt}{*}
+
+\setcolsepandrule{12pt}{0pt}	
+
+\checkandfixthelayout%
+
+\let\la@studenttextwidth\textwidth
+\let\la@studentforemargin\foremargin%
+\let\la@studentspinemargin\spinemargin%
+
+
+\strictpagecheck%
+\newcommand{\la@studentleftmargin}{%
+	\ifoddpage%
+		\la@studentforemargin
+	\else
+		\la@studentspinemargin
+	\fi
+}
+
+\newcommand{\la@studentrightmargin}{%
+	\ifoddpage%
+		\la@studentspinemargin
+	\else
+		\la@studentforemargin
+	\fi
+}
+
+
 % Page number command
-\newcommand{\leftpagenumber}{%
+\newcommand{\la@leftpagenumber}{%
 	\tikzset{external/export next=false}
 
 	\begin{tikzpicture}[remember picture, overlay, external/export=false]
@@ -20,7 +58,7 @@
 	\end{tikzpicture}
 }
 
-\newcommand{\rightpagenumber}{%
+\newcommand{\la@rightpagenumber}{%
 	\tikzset{external/export next=false}
 
 	\begin{tikzpicture}[remember picture, overlay, external/export=false]
@@ -37,94 +75,14 @@
 	\end{tikzpicture}
 }
 
-% Draw headers. This places the tabs on the side of the page
-\newcommand{\leftpagetab}{%
-	\tikzset{external/export next=false}
+\makepagestyle{livroaberto}
+\makeevenfoot{livroaberto}{}{\la@leftpagenumber}{}
+\makeoddfoot{livroaberto}{}{\la@rightpagenumber}{}
 
-	\begin{tikzpicture}[remember picture, overlay, external/export=false]
-		\coordinate (bottom) at ($(current page.south west) + (18.00mm,0.00mm)$);
+\makepagestyle{plain}
+\makeevenfoot{plain}{}{\la@leftpagenumber}{}
+\makeoddfoot{plain}{}{\la@rightpagenumber}{}
 
-		% Draw color block
-		\filldraw [fill=cor2, draw=cor2] ($(current page.north east) + (-18.00mm,0.00mm)$)
-			rectangle ++(8.00mm,-8.00mm) coordinate (taba) {};
-
-		% Square for chapter number
-		\coordinate (tabb) at ($(taba) + (-8.00mm,-8.00mm)$);
-		\coordinate (tabc) at ($(tabb) + (4.00mm,0.00mm)$);
-		\node [
-			fill=cor1, 
-			text=white, 
-			minimum height=8.00mm, 
-			minimum width=8.00mm
-			] (chapternumber) at ($(tabb)!0.5!(taba)$) {\Large\thirdtitlefont\thechapter};
-
-		% Add chapter name
-		\node [fill=cor2, text=white] (chaptertitle) at (tabb) [
-			rotate=90, 
-			below left, 
-			minimum height = 8.00mm
-			] {\tiny\titlefont \MakeUppercase{\chaptername}};
-
-		% Add end tab
-		\fill [fill=cor2] (chaptertitle.north west) -- ++(0.00mm,-4.00mm) coordinate (t1) 
-			arc [
-				start angle=180, end angle=90, x radius=2.00mm, y radius=2.00mm
-			]  -- ++(4.00mm,0.00mm) 
-			arc [
-				start angle=270, end angle=360, x radius=2.00mm, y radius=2.00mm
-			] coordinate (t2) -| cycle;
-
-		% Add chapter title 
-		\node (chaptertitle) at ($(t1)!0.5!(t2)$) [
-			left, 
-			rotate=90, 
-			text=black
-			] {\tiny \pagetitlefont \leftmark};
-
-	\end{tikzpicture}
-}
-
-\newcommand{\rightpagetab}{%
-	\tikzset{external/export next=false}
-
-	\begin{tikzpicture}[remember picture, overlay]
-		\coordinate (bottom) at ($(current page.south west) + (18.00mm,0.00mm)$);
-
-		% Draw color block
-		\filldraw [fill=cor2, draw=cor2] ($(current page.north west) + (18.00mm,0.00mm)$)
-			rectangle ++(-8.00mm,-8.00mm) coordinate (taba) {};
-
-		% Square for chapter number
-		\coordinate (tabb) at ($(taba) + (8.00mm,-8.00mm)$);
-
-		%%% \coordinate (tabc) at ($(tabb) + (4.00mm,0.00mm)$);
-		\node [
-			fill=cor1, 
-			text=white, 
-			minimum height=8.00mm, 
-			minimum width=8.00mm
-			] (chapternumber) at ($(tabb)!0.5!(taba)$) {\Large\thirdtitlefont\thechapter};
-
-		% Add chapter name
-		\node [fill=cor2, text=white] (chaptertitle) at (tabb) [rotate=90, above left, minimum height = 8.00mm] {\tiny\titlefont \MakeUppercase{\chaptername}};
-
-		% Add end tab
-		\filldraw [fill=cor2] (chaptertitle.south west) -- ++(0.00mm,-4.00mm) coordinate (t1) arc [
-			start angle=0, end angle=90, x radius=2.00mm, y radius=2.00mm
-		] -- ++(-4.00mm,0.00mm) 
-		arc [
-			start angle=270, end angle=180, x radius=2.00mm, y radius=2.00mm
-		] coordinate (t2) -| cycle;
-
-		% Add chapter title
-		\node (chaptertitle) at ($(t1)!0.5!(t2)$) [
-			left, 
-			rotate=90, 
-			text=black, 
-			xshift=-0.00mm
-			] {\tiny\pagetitlefont\leftmark};
-	\end{tikzpicture}
-}
 
 \newcommand{\notarodape}[1]{
 	\footnotemark\footnotetext{
@@ -147,42 +105,6 @@
 	}
 }
 
-
-
-\newlength\la@studenttextwidth
-\setlength{\la@studenttextwidth}{170mm}
-
-\newlength\la@innermargin
-\setlength{\la@innermargin}{20mm}
-
-
-
-\setstocksize{297mm}{210mm}
-\settrimmedsize{297mm}{210mm}{*}
-\settypeblocksize{247mm}{\la@studenttextwidth}{*}
-
-\setlrmarginsandblock{\la@innermargin}{*}{*}
-\setulmarginsandblock{20mm}{*}{*}
-
-\setcolsepandrule{8.00mm}{0mm}	
-
-\checkandfixthelayout
-
-
-\makepagestyle{plain}
-\makeevenfoot{plain}{}{\leftpagenumber}{}
-\makeoddfoot{plain}{}{\rightpagenumber}{}
-
-
-
-\makepagestyle{livroaberto}
-\makeevenfoot{livroaberto}{}{\leftpagenumber}{}
-\makeoddfoot{livroaberto}{}{\rightpagenumber}{}
-
-
-
-\setlength{\parindent}{0em}
-\setlength{\parskip}{6pt}
 
 \raggedbottom%
 \sloppy

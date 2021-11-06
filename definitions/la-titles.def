@@ -2,7 +2,36 @@
 
 % Defines the banner used for the sections
 
+\pgfdeclareshape{banner name background}{
+	
+}
+
 \newcommand{\la@bannerstyle}[1]{
+	\leavevmode\checkoddpage%
+	\begin{tikzpicture}[remember picture, overlay, shift = {(0,0)}, x = 1pt, y = 1pt]
+
+		
+		\coordinate (tag west) at (-20,0);
+		\coordinate (tag east) at (110,0);
+		\coordinate (tag upper left) at (5,10);
+		\coordinate (tag lower left) at (5,-10);
+		\coordinate (tag upper right) at (85, 10);
+		\coordinate (tag lower right) at (85, -10);
+
+		\draw [\currentcolor,  line width = 3pt] (-\la@studentleftmargin,0) -- (\la@studenttextwidth,0);
+
+		\draw [rounded corners=4, fill = \currentcolor] (tag west) -- (tag upper left) -- (tag upper right) -- (tag east) -- (tag lower right) -- (tag lower left) -- cycle;
+
+		\node (banner name) [font = \vphantom{A}] at ($(tag east)!.5!(tag west)$) {{\bannernamefont \la@banner@name}};
+		
+		\node (banner title) [
+			anchor = east, fill, rectangle, white, inner sep = 2.5pt, outer sep = -.1pt, font = \vphantom{Ag}]
+			at (\la@studenttextwidth+.45em,0) {{\hspace*{2.5pt}\bannertitlefont #1}};
+
+	\end{tikzpicture}
+}
+
+\newcommand{\la@bannerstyle@}[1]{
 	\tikzset{external/export next = false}
 
 	\begin{tikzpicture}[remember picture, scale=1.3]
@@ -21,10 +50,10 @@
 				start angle=0, end angle=90, x radius=2.00mm, y radius=2.00mm
 			] -- cycle;
 
-		\node (explore) at ($(a)!0.5!(b)$) [white] {\titlefont\MakeUppercase{\la@banner@title}};
+		\node (bannername) at ($(a)!0.5!(b)$) {{\bannernamefont\la@banner@name}};
 
 		\draw [\currentcolor, thick] (b) --++ ($(\la@studenttextwidth,0.00mm)+(-72 mm,0 mm)$); % changed
-		\node (title) at ($(a1)!0.5!(b1)$) [right] {\MakeUppercase{#1}};
+		\node (title) at ($(a1)!0.5!(b1)$) [right] {#1};
 	\end{tikzpicture}
 }
 
@@ -45,7 +74,7 @@
 				start angle=180, end angle=90, x radius=2.00mm, y radius=2.00mm
 			] -- cycle;
 
-		\node (exercise) at ($(line1)!0.5!(line2) + (0 mm, .8 mm)$) [text=white, font=\thirdtitlefont\Large] {EXERCÍCIOS};%\fontsize{13pt}{0}
+		\node (exercise) at ($(line1)!0.5!(line2) + (0 mm, .8 mm)$) [text=white, font=\bannernamefont] {EXERCÍCIOS};%\fontsize{13pt}{0}
 	\end{tikzpicture}
 }
 
@@ -53,29 +82,37 @@
 
 \titleclass{\la@banner}{straight}[\section]
 	\providecommand*{\toclevel@la@banner}{1}
-	\titlespacing{\la@banner}{0pt}{8mm}{3pt}
-	\titleformat{\la@banner}[hang]{\bannerfont}{\la@bannercounter}{0pt}{%
+	\titlespacing{\la@banner}{0pt}{2em}{1em}
+	\titleformat{\la@banner}[hang]{\bannertitlefont}{\la@banner@counter}{0pt}{%
 		\la@bannerstyle{#1}
 		\la@defaultlist%
 	}	
 
+
+
 \titleclass{\la@exercise}{straight}[\chapter]
 	\providecommand*{\toclevel@la@exercise}{1}
 	\titlespacing{\la@exercise}{0pt}{8mm}{1mm}
-	\titleformat{\la@exercise}[hang]{\bannerfont}{\theexercise}{0pt}{%
+	\titleformat{\la@exercise}[hang]{\bannertitlefont}{\theexercise}{0pt}{%
 		\la@exercisebanner		
 	}
 
 
 
 % Formatação dos comandos \section e \subsection
+\newtoggle{la@section}
 
 \titleformat{\section}{
-	\color{\currentcolor}\normalfont\semihuge\bfseries
-	}{\thesection}{1em}{#1 \phantomsection}
+	\sectiontitlefont
+	}{\thesection}{0pt}{%
+		\cleardoublepage
+		#1
+		\toggletrue{la@section}		
+	}
 
 	\titlespacing*{\section}{0pt}{2mm}{1mm}
 	\renewcommand{\toclevel@section}{1}
+
 
 \titleformat{\subsection}{
 	\color{\currentcolor}\normalfont\Large\bfseries
@@ -83,6 +120,7 @@
 
 	\titlespacing*{\subsection}{0pt}{2mm}{1mm}
 	\renewcommand{\toclevel@subsection}{4}
+
 
 \titleformat{\paragraph}{
 	\color{\currentcolor}\normalfont\large\bfseries
@@ -92,48 +130,49 @@
 	\renewcommand{\toclevel@paragraph}{5}
 
 
+\newcommand{\la@bannername}[1]{
+	\def\la@banner@name{#1}
+}
 
-% Custom section titles definitions
+\newcommand{\la@bannercounter}[1]{
+	\def\la@banner@counter{#1}
+}
+
+
 
 \newcounter{explore}
 
 \newcommand{\explore}[1]{%
-	\def\currentcolor{session1}
-	\def\la@banner@title{Explorando}
-	\def\la@bannercounter{\theexplore}
-	\cleardoublepage%	
-	\thispagestyle{livroaberto}
-	\iftoggle{teacher}{% iftrue
-		\iftoggle{paracol}{% iftrue
-		}{% iffalse
-			\la@prof@backgroundcolor
-			\begin{paracol}{2} % starts double column at the student's main text.
-			\toggletrue{paracol}
-		}
-	}{%iffalse
+	\par
+	\sectioncolor{session1}
+	\la@bannername{Explorando}
+	\la@bannercounter{\theexplore}
+
+	\iftoggle{la@section}{
+		\clearpage
+		\togglefalse{la@section}
+	}{
+		\cleardoublepage%	
 	}
+
+	\thispagestyle{livroaberto}
+	\iftoggle{teacher}{\toggleteachercol}{}
 	\la@banner{%
-		\texorpdfstring{}{\la@banner@title: }#1
+		\texorpdfstring{}{\la@banner@name: }#1
 	}
 	\la@defaultlist
 }
 
-\AtEndDocument{
-    \iftoggle{paracol}{
-        \end{paracol}
-        \togglefalse{paracol}
-    }{}
-}
 
 
 \newcounter{practice}
 
 \newcommand{\practice}[1]{%
-	\def\currentcolor{session2}
-	\def\la@banner@title{Praticando}
-	\def\la@bannercounter{\thepractice}
+	\sectioncolor{session2}
+	\la@bannername{Praticando}
+	\la@bannercounter{\thepractice}
 	\la@banner{%
-		\texorpdfstring{}{\la@banner@title: }#1
+		\texorpdfstring{}{\la@banner@name: }#1
 	}
 	\la@defaultlist
 }
@@ -142,11 +181,11 @@
 \newcounter{know}
 
 \newcommand{\know}[1]{%
-	\def\currentcolor{session3}
-	\def\la@banner@title{Para saber \raisebox{-2.25pt}{\Huge{+}}}
-	\def\la@bannercounter{\theknow}
+	\sectioncolor{session3}
+	\la@bannername{Saiba Mais}
+	\la@bannercounter{\theknow}
 	\la@banner{%
-		\texorpdfstring{}{Para Saber +: }#1
+		\texorpdfstring{}{\la@banner@name }#1
 	}
 	\la@defaultlist
 }
@@ -155,11 +194,11 @@
 \newcounter{arrange}
 
 \newcommand{\arrange}[1]{%
-	\def\currentcolor{session4}
-	\def\la@banner@title{Organizando}
-	\def\la@bannercounter{\thearrange}
+	\sectioncolor{session4}
+	\la@bannername{Organizando}
+	\la@bannercounter{\thearrange}
 	\la@banner{%
-		\texorpdfstring{}{\la@banner@title: }#1
+		\texorpdfstring{}{\la@banner@name: }#1
 	}
 	\la@defaultlist
 }
@@ -168,7 +207,7 @@
 \newcounter{exercise}
 
 \newcommand{\exercise}{	
-	\def\currentcolor{cor1}
+	\sectioncolor{cor1}
 	\la@exercise{\texorpdfstring{}{Exercícios}}
 	\exerciselist%
 }
@@ -210,7 +249,5 @@
 \newcommand{\anexo}[1]{
 	\clearpage
 	\stepcounter{anexo}
-	\begin{center}
-		\huge{\titem{Anexo \theanexo}}
-	\end{center}
+	\section{Anexo \theanexo #1}
 }
