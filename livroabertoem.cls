@@ -47,7 +47,6 @@
 
 
 
-
 %Cor Explorando
 
 \newcommand{\scexplore}[1]{

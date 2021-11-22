@@ -26,11 +26,11 @@
 }
 
 \newcommand{\sectiontitlefont}{
-	\huge\color{principal}\titlefont
+	\fontsize{22}{26.4}\selectfont\color{principal}\titlefont
 }
 
 \newcommand{\bannernamefont}{
-	\normalfont\fontsize{14}{16.8}\bfseries\color{white}
+	\normalfont\fontsize{14}{16.8}\selectfont\bfseries\color{white}
 }
 
 \newcommand{\bannertitlefont}{
@@ -38,10 +38,10 @@
 }
 
 \newcommand{\boxnamefont}{
-	\normalfont\large\bfseries\color{white}
+	\normalfont\fontsize{12}{14.4}\selectfont\bfseries\color{white}
 }
 
 \newcommand{\boxtitlefont}{
-	\normalfont\fontsize{12}{14.4}\bfseries\color{\currentcolor}
+	\normalfont\fontsize{12}{14.4}\selectfont\bfseries\color{\currentcolor}
 }
 

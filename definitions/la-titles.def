@@ -185,7 +185,7 @@
 	\la@bannername{Saiba Mais}
 	\la@bannercounter{\theknow}
 	\la@banner{%
-		\texorpdfstring{}{\la@banner@name }#1
+		\texorpdfstring{}{\la@banner@name: }#1
 	}
 	\la@defaultlist
 }
