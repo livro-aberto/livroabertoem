@@ -4,9 +4,9 @@
 
 
 
-\input{la-prof-titles.def}
-\input{la-prof-pageconfig.def}
-\input{la-prof-endnotes.def}
+\input{la-prof-titles.tex}
+\input{la-prof-pageconfig.tex}
+\input{la-prof-endnotes.tex}
 
 
 % \newcommand{\@endnotebox}[1]{%

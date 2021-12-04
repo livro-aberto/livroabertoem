@@ -1,0 +1,194 @@
+\RequirePackage{graphicx}
+\RequirePackage{calc}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+
+\setstocksize{297mm}{210mm}
+\settrimmedsize{297mm}{210mm}{*}
+
+\setlrmarginsandblock{55pt}{55pt}{*}
+\setulmarginsandblock{50pt}{70pt}{*}
+
+\setcolsepandrule{12pt}{0pt}	
+
+\checkandfixthelayout%
+
+\newlength{\la@studenttextwidth}
+\newlength{\la@studentforemargin}
+\newlength{\la@studentspinemargin}
+\newlength{\la@studentuppermargin}
+\newlength{\la@studentlowermargin}
+
+\setlength{\la@studenttextwidth}{\textwidth}
+\setlength{\la@studentforemargin}{\foremargin}
+\setlength{\la@studentspinemargin}{\spinemargin}
+\setlength{\la@studentuppermargin}{\uppermargin}
+\setlength{\la@studentlowermargin}{\lowermargin}
+
+
+\strictpagecheck%
+\newcommand{\la@studentleftmargin}{%
+	\ifoddpage%
+		\la@studentforemargin
+	\else
+		\la@studentspinemargin
+	\fi
+}
+
+\newcommand{\la@studentrightmargin}{%
+	\ifoddpage%
+		\la@studentspinemargin
+	\else
+		\la@studentforemargin
+	\fi
+}
+
+\newlength{\la@footerheight}
+\newlength{\la@footershortwidth}
+\newlength{\la@footerlongwidth}
+\newlength{\la@footerctrla}
+\newlength{\la@footerctrlb}
+\newlength{\la@footerbaseline}
+
+\setlength{\la@footerheight}{22pt}
+\setlength{\la@footershortwidth}{.6\foremargin}
+\setlength{\la@footerlongwidth}{\foremargin+8pt}
+\setlength{\la@footerctrla}{18pt}
+\setlength{\la@footerctrla}{27pt}
+\setlength{\la@footerbaseline}{\lowermargin - 1.5\la@footerheight}
+
+
+% Page number command
+\newcommand{\la@evenpagenumber}{%
+	\tikzset{external/export next=false}
+
+	\begin{tikzpicture}[remember picture, overlay]
+
+		% \coordinate (bottom) at ($(current page.south west) + (13.50mm,6.80mm)$);
+
+		\begin{pgfonlayer}{main}
+
+			% Curve below
+			\fill [fill = principal]
+				($(current page.south west) + (0,\la@footerbaseline)$) 
+				-- ++(0,-.5\la@footerheight) -- ++(\la@footershortwidth,0)
+				.. controls +(\la@footerctrla,0) and +(\la@footerctrlb,.2\la@footerheight) ..
+				++ (\la@footerlongwidth, .5\la@footerheight) -- 
+				cycle;
+
+			% Curve below
+			\fill [fill = principal]
+				($(current page.south west) + (0,\la@footerbaseline)$) 
+				-- ++(0,+.5\la@footerheight) -- ++(\la@footershortwidth,0)
+				.. controls +(\la@footerctrla,0) and +(\la@footerctrlb, -.2\la@footerheight) ..
+				++ (\la@footerlongwidth, -.5\la@footerheight) -- 
+				cycle;
+
+			\draw [principal, line width = 3pt] 
+				($(current page.south west) + (0,\la@footerbaseline)$) 
+				-- ($(current page.south east) + (-\la@studentforemargin,\la@footerbaseline)$);
+
+      \node [anchor = east] at ($(current page.south west) + (.8\la@studentforemargin,\la@footerbaseline)$)  {\footerfont\thepage};
+				
+								
+		\end{pgfonlayer}
+
+		% \begin{pgfonlayer}{foreground}
+		% 	\node [text=white, font=\bfseries](page_number) at ($(bottom)!0.5!(corner)$) {\thepage};
+		% \end{pgfonlayer}
+	\end{tikzpicture}
+}
+
+\newcommand{\la@oddpagenumber}{%
+	\tikzset{external/export next=false}
+
+	\begin{tikzpicture}[remember picture, overlay]
+
+		% \coordinate (bottom) at ($(current page.south west) + (13.50mm,6.80mm)$);
+
+		\begin{pgfonlayer}{main}
+
+			% Curve below
+			\fill [fill = principal]
+				($(current page.south east) + (0,\la@footerbaseline)$) 
+				-- ++(0,-.5\la@footerheight) -- ++(-\la@footershortwidth,0)
+				.. controls +(-\la@footerctrla,0) and +(-\la@footerctrlb,.2\la@footerheight) ..
+				++ (-\la@footerlongwidth, .5\la@footerheight) -- 
+				cycle;
+
+			% Curve below
+			\fill [fill = principal]
+				($(current page.south east) + (0,\la@footerbaseline)$) 
+				-- ++(0,+.5\la@footerheight) -- ++(-\la@footershortwidth,0)
+				.. controls +(-\la@footerctrla,0) and +(-\la@footerctrlb, -.2\la@footerheight) ..
+				++ (-\la@footerlongwidth, -.5\la@footerheight) -- 
+				cycle;
+
+			\draw [principal, line width = 3pt] 
+				($(current page.south east) + (0,\la@footerbaseline)$) 
+				-- ($(current page.south west) + (\la@studentforemargin,\la@footerbaseline)$);
+
+      \node [anchor = west] at ($(current page.south east) + (-.8\la@studentforemargin,\la@footerbaseline)$)  {\footerfont\thepage};
+				
+								
+		\end{pgfonlayer}
+
+		% \begin{pgfonlayer}{foreground}
+		% 	\node [text=white, font=\bfseries](page_number) at ($(bottom)!0.5!(corner)$) {\thepage};
+		% \end{pgfonlayer}
+	\end{tikzpicture}
+}
+
+% \newcommand{\la@oddpagenumber}{%
+% 	\tikzset{external/export next=false}
+
+% 	\begin{tikzpicture}[remember picture, overlay]
+% 		\coordinate (bottom) at ($(current page.south east) + (-13.50mm,6.80mm)$);
+
+% 		\begin{pgfonlayer}{main}
+% 			% Square for page number
+% 			\filldraw [fill=cor1, draw=cor1] (bottom) rectangle ++(8.00mm,8.00mm) coordinate (corner);
+% 		\end{pgfonlayer}
+
+% 		\begin{pgfonlayer}{foreground}
+% 			\node [text=white, font=\bfseries](page_number) at ($(bottom)!0.5!(corner)$) {\thepage};
+% 		\end{pgfonlayer}
+% 	\end{tikzpicture}
+% }
+
+\makepagestyle{livroaberto}
+\makeevenfoot{livroaberto}{}{\la@evenpagenumber}{}
+\makeoddfoot{livroaberto}{}{\la@oddpagenumber}{}
+
+\makepagestyle{plain}
+\makeevenfoot{plain}{}{\la@evenpagenumber}{}
+\makeoddfoot{plain}{}{\la@oddpagenumber}{}
+
+
+\newcommand{\notarodape}[1]{\footnotemark%
+		\footnotetext{%
+		\belowbaseline[-\ht\strutbox]{
+			\begin{tcolorbox}[
+				colback=grafite!90!white,
+				colbacktitle=grafite!90!white,
+				colframe=grafite!90!white,
+				colupper=white, 
+				left=0pt, 
+				right=0pt,
+				top=-2pt,
+				bottom=-2pt, 
+				hbox, 
+				sharp corners = northeast, 
+				sharp corners = southwest
+			]{\textbf{#1}}
+			\end{tcolorbox}
+		}
+	}
+}
+
+
+\raggedbottom%
+\sloppy
+\hbadness=5000 

@@ -33,14 +33,14 @@
 \RequirePackage{tcolorbox} % retirar depois
 \RequirePackage{marginfix}
 
-\input{la-color.def}
+\input{definitions/la-color.tex}
 \input{la-tikzconfig.sty}
-\input{la-lists.def}
-\input{la-tables.def}
-\input{la-pageconfig.def}
-\input{la-credits.def}
-\input{la-hypersetup.def}
-% \input{la-commands.def}
+\input{definitions/la-lists.tex}
+\input{definitions/la-tables.tex}
+\input{definitions/la-pageconfig.tex}
+\input{definitions/la-credits.tex}
+\input{definitions/la-hypersetup.tex}
+% \input{la-commands.tex}
 
 \newcommand{\sub}{\textsubscript}
 \newcommand{\super}{\textsuperscript}
@@ -83,13 +83,13 @@
 
 \ifdefined\HCode
 	\toggletrue{html}
-	\input{la-html.clo}
+	\input{class-options/la-html.clo}
 \else
-	\input{la-environments.def}
-	\input{la-titles.def}
-	\input{la-chapter.def}
+	\input{definitions/la-environments.tex}
+	\input{definitions/la-titles.tex}
+	\input{definitions/la-chapter.tex}
 \fi
-	\input{la-fonts.def}
+	\input{definitions/la-fonts.tex}
 
 
 
@@ -97,12 +97,11 @@
 {	
 	\togglefalse{student}
 	\toggletrue{teacher}
-	\input{la-professor.clo}
+	\input{class-options/la-professor.clo}
 }
 
 
 \ProcessOptions%
-
 
 
 \iftoggle{teacher}{

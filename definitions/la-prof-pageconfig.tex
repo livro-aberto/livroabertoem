@@ -5,7 +5,7 @@
 \newlength\la@prof@outermargin
 
 \setlength{\la@teachertextwidth}{90mm}
-\setlength{\la@prof@colsep}{37.5pt}
+\setlength{\la@prof@colsep}{2\la@studentspinemargin}
 \setlength{\la@prof@fullwidth}{
     \la@studenttextwidth
     +\la@teachertextwidth
@@ -23,6 +23,7 @@
 \settypeblocksize{247mm}{\la@prof@fullwidth}{*}
 
 \setlrmarginsandblock{\la@studentspinemargin}{\la@prof@outermargin}{*}
+\setulmarginsandblock{\la@studentuppermargin}{\la@studentlowermargin}{*}
 
 \checkandfixthelayout%
 
@@ -47,16 +48,15 @@
 \twosided%
 \setcolumnwidth{\la@studenttextwidth/\la@prof@colsep,\la@teachertextwidth}
 \newcommand{\la@prof@backgroundcolor}{%
-    \backgroundcolor{c[1] (.5\la@prof@colsep,25mm) (25mm,250mm)}{boxbackground}
-}
+    \backgroundcolor{c[1] (.5\la@prof@colsep,25mm) (25mm,250mm)}{boxbackground}}
 
 \newcommand{\toggleteachercol}{     
-        \iftoggle{paracol}{
-        }{
-            \la@prof@backgroundcolor
-            \begin{paracol}{2} % starts double column at the student's main text.
-            \toggletrue{paracol}
-        }   
+	\iftoggle{paracol}{
+	}{
+		\la@prof@backgroundcolor
+		\begin{paracol}{2} % starts double column at the student's main text.
+		\toggletrue{paracol}
+	}
 }
 
 \newcommand{\untoggleteachercol}{
@@ -67,5 +67,6 @@
 }
 
 \AtEndDocument{
+	\clearpage
     \untoggleteachercol%
 }

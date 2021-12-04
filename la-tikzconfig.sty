@@ -1,6 +1,9 @@
 \def\input@path{{definitions/}}
 
-\@ifclassloaded{livroabertoem}{}{\input{la-color-fonts.def}}
+\@ifclassloaded{livroabertoem}{}{
+		\input{la-fonts.def}
+		\input{la-color.def}
+}
 
 \RequirePackage{tikz}
 
