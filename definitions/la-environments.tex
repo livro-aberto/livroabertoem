@@ -14,10 +14,10 @@
 
 	\begin{tikzpicture}[remember picture, overlay, shift = {(0,0)}]
 
-		\draw [\currentcolor,  line width = 3pt] (-\la@studentleftmargin,0) -- (\la@studenttextwidth+\la@studentrightmargin,0);
+		\draw [\currentcolor,  line width = 3pt] (-\la@student@leftmargin,0) -- (\la@student@textwidth+\la@student@rightmargin,0);
 		\node (banner name) [
 			fill, \currentcolor, rectangle, rounded corners=10, anchor = east, minimum width = 3.5cm, minimum height = 20pt] 
-			at (\la@studenttextwidth,0) {{\bannernamefont \la@bannername}};
+			at (\la@student@textwidth,0) {{\bannernamefont \la@bannername}};
 		\node [anchor = west] (banner title) at (0,-1.5em) {{\boxtitlefont #1}};
 
 	\end{tikzpicture}
@@ -52,13 +52,13 @@
 }
 
 
-% Creates the box with current volume color and icon
+% Creates the box with primary color
 \newtcolorbox{la@chapterbox}[1]{
 	parbox = false, blanker, enhanced, breakable, 
 	before skip = \titlebeforeskip, after skip = \titleafterskip, 
 	left = 3mm, right = 3mm, top = 1em, bottom = 3mm, 
 	leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt, 
-	% text width = .4\la@studenttextwidth,
+	% text width = .4\la@student@textwidth,
 	colframe = primario, colback = boxbackground, 
 	title = #1, fonttitle = \boxnamefont\vphantom{Ag},
 	boxed title style = {%
@@ -112,7 +112,6 @@
 
 
 
-
 % Environments
 
 \newcounter{task}[chapter]
@@ -142,13 +141,13 @@
 }
 
 
-\newcommand{\chapterwhat}[1]{
+\newcommand{\la@chapterwhat}[1]{
 	\begin{la@chapterbox}{O que?}
 		#1
 	\end{la@chapterbox}
 }	
 
-\newcommand{\chapterbecause}[1]{
+\newcommand{\la@chapterbecause}[1]{
 	\begin{la@chapterbox}{Por que?}
 		#1
 	\end{la@chapterbox}
@@ -178,7 +177,7 @@
 
 	
 
-% Creates the box with current volume color and icon
+% Creates the box with current volume color
 \newtcolorbox{project}{
 	parbox = false, blanker, enhanced, breakable, 
 	before skip = \titlebeforeskip, after skip = \titleafterskip, 

@@ -24,13 +24,13 @@
 \newcommand{\la@bannerstyle}[1]{
 	\leavevmode\checkoddpage%
 	\begin{tikzpicture}[remember picture, overlay]
-		\draw [\currentcolor,  line width = 3pt] (-\la@studentleftmargin,0) -- (\la@studenttextwidth,0);
+		\draw [\currentcolor,  line width = 3pt] (-\la@student@leftmargin,0) -- (\la@student@textwidth,0);
 
 		\bannernamestyle
 
 		\node (banner title) [
 			anchor = east, fill, rectangle, white, inner sep = 2.5pt, outer sep = -.1pt, font = \vphantom{Ag}]
-			at (\la@studenttextwidth+.45em,0) {{\hspace*{2.5pt}\bannertitlefont #1}};
+			at (\la@student@textwidth+.45em,0) {{\hspace*{2.5pt}\bannertitlefont #1}};
 	\end{tikzpicture}
 }
 
@@ -39,9 +39,9 @@
 	\tikzset{external/export next=false}
 
 	\begin{tikzpicture}[remember picture, overlay]
-		\draw [principal,  line width = 3pt] (-\la@studentleftmargin,0) -- (\la@studenttextwidth+\la@studentrightmargin,0);
+		\draw [principal,  line width = 3pt] (-\la@student@leftmargin,0) -- (\la@student@textwidth+\la@student@rightmargin,0);
 
-		\bannernamestyle[shift = {(.5\la@studenttextwidth-.5\bannername@width+\bannername@tip,0)}]
+		\bannernamestyle[shift = {(.5\la@student@textwidth-.5\bannername@width+\bannername@tip,0)}]
 
 	\end{tikzpicture}
 }
@@ -52,7 +52,7 @@
 
 	\tikzset{external/export next=false}
 	\begin{tikzpicture}[remember picture, overlay]
-		\draw [principal,  line width = 3pt] (-\la@studentleftmargin,0) -- (\la@studenttextwidth+\la@studentrightmargin,0);
+		\draw [principal,  line width = 3pt] (-\la@student@leftmargin,0) -- (\la@student@textwidth+\la@student@rightmargin,0);
 
 		\bannernamestyle
 
@@ -118,7 +118,7 @@
 
 \titleformat{\subsection}{
 	\color{\currentcolor}\normalfont\Large\bfseries
-	}{\thesection}{1em}{#1}
+}{\thesection}{1em}{#1}
 
 	\titlespacing*{\subsection}{0pt}{2mm}{1mm}
 	\renewcommand{\toclevel@subsection}{4}
@@ -260,10 +260,3 @@
 }
 
 
-\newcounter{anexo}[chapter]
-
-\newcommand{\anexo}[1]{
-	\clearpage
-	\stepcounter{anexo}
-	\section{Anexo \theanexo #1}
-}

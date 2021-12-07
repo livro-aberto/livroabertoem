@@ -9,39 +9,39 @@
 \settrimmedsize{297mm}{210mm}{*}
 
 \setlrmarginsandblock{55pt}{55pt}{*}
-\setulmarginsandblock{50pt}{70pt}{*}
+\setulmarginsandblock{50pt}{62.5pt}{*}
 
 \setcolsepandrule{12pt}{0pt}	
 
 \checkandfixthelayout%
 
-\newlength{\la@studenttextwidth}
-\newlength{\la@studentforemargin}
-\newlength{\la@studentspinemargin}
-\newlength{\la@studentuppermargin}
-\newlength{\la@studentlowermargin}
+\newlength{\la@student@textwidth}
+\newlength{\la@student@foremargin}
+\newlength{\la@student@spinemargin}
+\newlength{\la@student@uppermargin}
+\newlength{\la@student@lowermargin}
 
-\setlength{\la@studenttextwidth}{\textwidth}
-\setlength{\la@studentforemargin}{\foremargin}
-\setlength{\la@studentspinemargin}{\spinemargin}
-\setlength{\la@studentuppermargin}{\uppermargin}
-\setlength{\la@studentlowermargin}{\lowermargin}
+\setlength{\la@student@textwidth}{\textwidth}
+\setlength{\la@student@foremargin}{\foremargin}
+\setlength{\la@student@spinemargin}{\spinemargin}
+\setlength{\la@student@uppermargin}{\uppermargin}
+\setlength{\la@student@lowermargin}{\lowermargin}
 
 
 \strictpagecheck%
-\newcommand{\la@studentleftmargin}{%
+\newcommand{\la@student@leftmargin}{%
 	\ifoddpage%
-		\la@studentforemargin
+		\la@student@foremargin
 	\else
-		\la@studentspinemargin
+		\la@student@spinemargin
 	\fi
 }
 
-\newcommand{\la@studentrightmargin}{%
+\newcommand{\la@student@rightmargin}{%
 	\ifoddpage%
-		\la@studentspinemargin
+		\la@student@spinemargin
 	\else
-		\la@studentforemargin
+		\la@student@foremargin
 	\fi
 }
 
@@ -57,7 +57,7 @@
 \setlength{\la@footerlongwidth}{\foremargin+8pt}
 \setlength{\la@footerctrla}{18pt}
 \setlength{\la@footerctrla}{27pt}
-\setlength{\la@footerbaseline}{\lowermargin - 1.5\la@footerheight}
+\setlength{\la@footerbaseline}{\lowermargin - 1.25\la@footerheight}
 
 
 % Page number command
@@ -88,9 +88,9 @@
 
 			\draw [principal, line width = 3pt] 
 				($(current page.south west) + (0,\la@footerbaseline)$) 
-				-- ($(current page.south east) + (-\la@studentforemargin,\la@footerbaseline)$);
+				-- ($(current page.south east) + (-\la@student@foremargin,\la@footerbaseline)$);
 
-      \node [anchor = east] at ($(current page.south west) + (.8\la@studentforemargin,\la@footerbaseline)$)  {\footerfont\thepage};
+      \node [anchor = east] at ($(current page.south west) + (.8\la@student@foremargin,\la@footerbaseline)$)  {\footerfont\thepage};
 				
 								
 		\end{pgfonlayer}
@@ -128,9 +128,9 @@
 
 			\draw [principal, line width = 3pt] 
 				($(current page.south east) + (0,\la@footerbaseline)$) 
-				-- ($(current page.south west) + (\la@studentforemargin,\la@footerbaseline)$);
+				-- ($(current page.south west) + (\la@student@foremargin,\la@footerbaseline)$);
 
-      \node [anchor = west] at ($(current page.south east) + (-.8\la@studentforemargin,\la@footerbaseline)$)  {\footerfont\thepage};
+      \node [anchor = west] at ($(current page.south east) + (-.8\la@student@foremargin,\la@footerbaseline)$)  {\footerfont\thepage};
 				
 								
 		\end{pgfonlayer}
