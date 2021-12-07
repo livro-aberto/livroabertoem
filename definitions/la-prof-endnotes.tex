@@ -12,14 +12,17 @@
 }
 
 %Termina o multicols da página de notas.
-\apptocmd{\printpagenotes}{\clearpage\end{multicols}}{}{}
+\apptocmd{\printpagenotes}{
+	\clearpage
+	\end{multicols}
+}{}{}
 
 
 
 \renewcommand*{\pagenotesubhead}[3]{}
 
 
-\newcommand{\la@prof@endtitle}[2]{
+\newcommand{\la@teacher@endtitle}[2]{
 	{
 		\color{\currentcolor}\bfseries
 		{\fontsize{14pt}{0pt}\selectfont #1}\par
@@ -33,7 +36,7 @@
 \newcommand{\objectives@endnote}[2]{
 	\leavevmode\pagenote{
 		{
-			\la@prof@endtitle{as}{as}
+			\la@teacher@endtitle{as}{as}
 			\color{\currentcolor}\bfseries
 			{\fontsize{14pt}{0pt}\selectfont Objetivos específicos}\par
 			\vspace{-.8\baselineskip}	
@@ -46,7 +49,7 @@
 }
 
 
-\newcommand{\la@prof@note}[3]{
+\newcommand{\la@teacher@note}[3]{
 		\leavevmode\pagenote{
 		{
 			\color{\currentcolor}\bfseries
@@ -62,16 +65,16 @@
 \newcommand{\teachernotes}[3][]{
 	\IfStrEqCase{#1}{%
 		{}{
-			\la@prof@note{#2}{}{#3}
+			\la@teacher@note{#2}{}{#3}
 		}
 		{objectives}{
-			\la@prof@note{Objetivos específicos}{#2}{#3}				
+			\la@teacher@note{Objetivos específicos}{#2}{#3}				
 		}%
 		{sugestions}{
-			\la@prof@note{Sugestões e discussões}{#2}{#3}			
+			\la@teacher@note{Sugestões e discussões}{#2}{#3}			
 		}%
 		{answer}{%
-			\la@prof@note{Solução}{#2}{#3}			
+			\la@teacher@note{Solução}{#2}{#3}			
 		}%
 	}
 }
