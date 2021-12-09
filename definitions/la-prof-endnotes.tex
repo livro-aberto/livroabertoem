@@ -1,13 +1,12 @@
 \makepagenote
+\notepageref
 
-% Redefine as configurações da página de notas para sair do paracol e passar a utilizar multicols
+% % Redefine as configurações da página de notas para sair do paracol e passar a utilizar multicols
 \renewcommand*{\notedivision}{
-	\clearpage
-	\iftoggle{paracol}{
-		\end{paracol}
-		\togglefalse{paracol}
-	}{}
-	\section*{\notesname}
+	\untoggleteachercol
+	\cleardoublepage
+	\la@section{\notesname}
+% 	\par
 	\begin{multicols}{2}
 }
 
@@ -17,9 +16,16 @@
 	\end{multicols}
 }{}{}
 
-
+\renewcommand*{\pagerefname}{Página}
 
 \renewcommand*{\pagenotesubhead}[3]{}
+
+\renewcommand*{\notenumintext}[1]{{\noindent\hspace{-2.5pt}\bannernamefont\color{linkscolor} Nota #1}}
+
+\renewcommand*{\notenuminnotes}[1]{{\hspace{-2.5pt}\bannernamefont\color{principal} Nota #1.} \space}
+
+\renewcommand\printpageinnoteshyperref[1]{%
+(\hyperref[#1]{\pagerefname\ \pageref*{#1}})\space}
 
 
 \newcommand{\la@teacher@endtitle}[2]{
@@ -37,13 +43,12 @@
 	\leavevmode\pagenote{
 		{
 			\la@teacher@endtitle{as}{as}
-			\color{\currentcolor}\bfseries
+			\color{principal}\bfseries
 			{\fontsize{14pt}{0pt}\selectfont Objetivos específicos}\par
 			\vspace{-.8\baselineskip}	
 			\rule{\linewidth}{3pt}
 			{\Large #1}
 		}
-
 		#2
 	}
 }
@@ -52,7 +57,7 @@
 \newcommand{\la@teacher@note}[3]{
 		\leavevmode\pagenote{
 		{
-			\color{\currentcolor}\bfseries
+			\color{principal}\bfseries
 			{\fontsize{14pt}{0pt}\selectfont #1}\par
 			\vspace{-.8\baselineskip}	
 			\rule{\linewidth}{3pt}
@@ -78,3 +83,5 @@
 		}%
 	}
 }
+
+
