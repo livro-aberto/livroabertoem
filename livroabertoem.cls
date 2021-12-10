@@ -86,7 +86,7 @@
 	\input{class-options/la-html.clo}
 \else
 	\input{definitions/la-environments.tex}
-	\input{definitions/la-titles.tex}
+	\input{definitions/la-section.tex}
 	\input{definitions/la-chapter.tex}
 \fi
 	\input{definitions/la-fonts.tex}

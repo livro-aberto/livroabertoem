@@ -25,6 +25,7 @@
 }
 
 
+
 % Creates the box with section colors for examples and observations
 \newtcolorbox{la@sectionbox}[2]{
 	parbox = false, 
@@ -74,13 +75,15 @@
 	}
 }
 
-\newcommand{\boxicon}[1]{
-	\def\la@boxicon{#1}
-}
+
 
 % Requires icon on the format iconname-volume#.pdf, where # is the number of the current volume. 
 % If there are more volumes, you should specify an icon for each volume color. 
 % Included icons are "notas", "vocesabia" and "refletir", for each of the 4 default volume colors.
+\newcommand{\boxicon}[1]{
+	\def\la@boxicon{#1}
+}
+
 \newcommand{\la@box@icon}{
 	\ifdefined\la@boxicon
 		\includegraphics[width=22pt]{\la@boxicon-\currentvolcolor.pdf}
@@ -206,49 +209,3 @@
 		 \draw [line width = 2pt, principal] ($(fnw) + (0,-1pt)$) -- ($(fne) + (0,-1pt)$);
 	}
 }
-
-% \NewEnviron{project}{%
-% 	\setlist[itemize]{label = \protect\itemcoloredsquare}
-% 	\def\currentcolor{cor2}
-% 	\newpage
-% 	\tikzset{external/export next = false}
-% 	\begin{tikzpicture}[remember picture, overlay, external/export = false]
-% 		\coordinate (border1) at ($(current page text area.south east) + (0.00mm,8.00mm)$);
-% 		\coordinate (border1a) at ($(border1) + (-5.00mm,2.00mm)$);
-% 		\coordinate (border1b) at ($(current page text area.south west) + (11.00mm,10.00mm)$);
-% 		\coordinate (border1c) at ($(current page text area.north west) + (11.00mm,-13.00mm)$);
-% 		\coordinate (border1d) at ($(current page text area.south west) + (11.00mm,13.00mm)$);
-% 		\coordinate (heading) at ($(current page text area.north west) + (32.50mm,-5.00mm)$);
-% 		\coordinate (corner1) at ($(current page text area.north west) + (6.00mm,-10.00mm)$);
-% 		\coordinate (corner2) at ($(current page text area.north east) + (-4.00mm,-10.00mm)$);
-% 		\coordinate (corner3) at ($(current page text area.south east) + (0.00mm,10.00mm)$);
-% 		\coordinate (corner4) at ($(current page text area.south west) + (10.00mm,6.00mm)$);
-% 		\coordinate (text1) at ($(current page text area.north west) + (11.00,-12.50mm)$);
-% 		\coordinate (text2) at ($(current page text area.south east) + (-2.50mm,8.50mm)$);
-% 		\coordinate (bodytextpos) at ($(border1c) + (5.00mm,-3.00mm)$);
-
-		% \begin{pgfonlayer}{background}
-		% 	\draw [draw = base1, fill = base1] (current page text area.south west) rectangle (current page text area.north east);
-		% \end{pgfonlayer}
-
-		% \begin{pgfonlayer}{main}
-		% 	\draw [fill = cor2, draw = cor2] (current page text area.north west) -- ++(0.00mm,-8.00mm) arc [start angle = 180, end angle = 270, x radius = 2.00mm, y radius = 2.00mm] -| ++(63.00mm,8.00mm) arc [start angle = 0, end angle = 90, x radius = 2.00mm, y radius = 2.00mm] -- cycle;
-		% 	\draw [fill = base1!30, draw = base1!30] (corner1) -- (corner2) arc [start angle = 90, end angle = 0, x radius = 4.00mm, y radius = 4.00mm] -- (corner3) arc [start angle = 0, end angle = -90, x radius = 4.00mm, y radius = 4.00mm] -- (corner4) arc [start angle = 270, end angle = 180, x radius = 4.00mm, y radius = 4.00mm] -- cycle;
-		% 	% \draw [green] (text1) rectangle (text2);
-		% 	\draw [black] (border1a) -- (border1b) -- (border1c) -| cycle;
-
-		% \end{pgfonlayer}
-
-		% \begin{pgfonlayer}{foreground}
-		% 	\node [color = base1!30, font = \titlefont\bfseries\fontsize{13pt}{0}\selectfont] (title) at (heading) {PROJETO APLICADO};
-		% 	\node [box, below right] (bodytext) at (border1c){%
-		% 		\begin{minipage}{0.85\textwidth}
-		% 			\BODY
-		% 		\end{minipage}
-		% 	};
-		% \end{pgfonlayer}
-
-
-	% \end{tikzpicture}
-	% \clearpage
-% }

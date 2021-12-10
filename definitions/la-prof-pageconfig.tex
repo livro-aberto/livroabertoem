@@ -37,33 +37,19 @@
 
 \newtoggle{teacherenv}
 
-% \newenvironment{teacher}{%
-%     \par
-%     \toggletrue{teacherenv}
-%     \switchcolumn*
-% 		\raggedright
-%     \la@widelist
-% }{
-%     \hfill
-%     \switchcolumn
-%     \la@defaultlist
-%     \togglefalse{teacherenv}
-% }
-
-
-\NewEnviron{teacher}[1]{%
+\newenvironment{teacher}{%
     \par
     \toggletrue{teacherenv}
     \switchcolumn*
 		\raggedright
-    {
-        \BODY%
-    }
+    \la@widelist
+}{
     \hfill
-    \switchcolumn%
+    \switchcolumn
     \la@defaultlist
     \togglefalse{teacherenv}
 }
+
 
 % paracol definitions
 \twosided%
