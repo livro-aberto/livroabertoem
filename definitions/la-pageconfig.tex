@@ -60,15 +60,25 @@
 \setlength{\la@footerbaseline}{\lowermargin - 1.25\la@footerheight}
 
 
+% Requires icon on the format iconnamme-footericon.pdf.
+\newcommand{\footericon}[1]{
+	\def\la@footericon{#1}
+}
+
+\newcommand{\la@footer@icon}{
+	\ifdefined\la@footericon
+		\includegraphics[width=25pt]{\la@footericon-footericon.pdf}
+		\undef\la@footericon
+	\else\fi
+}
+
+%Requires volume icon for the footer
+
 % Page number command
 \newcommand{\la@evenpagenumber}{%
 	\tikzset{external/export next=false}
 
 	\begin{tikzpicture}[remember picture, overlay]
-
-		% \coordinate (bottom) at ($(current page.south west) + (13.50mm,6.80mm)$);
-
-		\begin{pgfonlayer}{main}
 
 			% Curve below
 			\fill [fill = principal]
@@ -91,13 +101,9 @@
 				-- ($(current page.south east) + (-\la@student@foremargin,\la@footerbaseline)$);
 
       \node [anchor = east] at ($(current page.south west) + (.8\la@student@foremargin,\la@footerbaseline)$)  {\footerfont\thepage};
-				
-								
-		\end{pgfonlayer}
 
-		% \begin{pgfonlayer}{foreground}
-		% 	\node [text=white, font=\bfseries](page_number) at ($(bottom)!0.5!(corner)$) {\thepage};
-		% \end{pgfonlayer}
+			\node [fill=white, inner sep=3.5pt] at ($(current page.south east) + (-\la@student@foremargin, \la@footerbaseline)$) {\la@footer@icon};
+
 	\end{tikzpicture}
 }
 
@@ -105,10 +111,6 @@
 	\tikzset{external/export next=false}
 
 	\begin{tikzpicture}[remember picture, overlay]
-
-		% \coordinate (bottom) at ($(current page.south west) + (13.50mm,6.80mm)$);
-
-		\begin{pgfonlayer}{main}
 
 			% Curve below
 			\fill [fill = principal]
@@ -132,39 +134,18 @@
 
       \node [anchor = west] at ($(current page.south east) + (-.8\la@student@foremargin,\la@footerbaseline)$)  {\footerfont\thepage};
 				
-								
-		\end{pgfonlayer}
+			\node [fill=white, inner sep=3.5pt] at ($(current page.south west) + (\la@student@foremargin, \la@footerbaseline)$) {\la@footer@icon};
 
-		% \begin{pgfonlayer}{foreground}
-		% 	\node [text=white, font=\bfseries](page_number) at ($(bottom)!0.5!(corner)$) {\thepage};
-		% \end{pgfonlayer}
 	\end{tikzpicture}
 }
-
-% \newcommand{\la@oddpagenumber}{%
-% 	\tikzset{external/export next=false}
-
-% 	\begin{tikzpicture}[remember picture, overlay]
-% 		\coordinate (bottom) at ($(current page.south east) + (-13.50mm,6.80mm)$);
-
-% 		\begin{pgfonlayer}{main}
-% 			% Square for page number
-% 			\filldraw [fill=cor1, draw=cor1] (bottom) rectangle ++(8.00mm,8.00mm) coordinate (corner);
-% 		\end{pgfonlayer}
-
-% 		\begin{pgfonlayer}{foreground}
-% 			\node [text=white, font=\bfseries](page_number) at ($(bottom)!0.5!(corner)$) {\thepage};
-% 		\end{pgfonlayer}
-% 	\end{tikzpicture}
-% }
 
 \makepagestyle{livroaberto}
 \makeevenfoot{livroaberto}{}{\la@evenpagenumber}{}
 \makeoddfoot{livroaberto}{}{\la@oddpagenumber}{}
 
 \makepagestyle{plain}
-\makeevenfoot{plain}{}{\la@evenpagenumber}{}
-\makeoddfoot{plain}{}{\la@oddpagenumber}{}
+\makeevenfoot{plain}{}{}{}
+\makeoddfoot{plain}{}{}{}
 
 
 \newcommand{\notarodape}[1]{\footnotemark%

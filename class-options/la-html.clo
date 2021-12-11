@@ -1,4 +1,3 @@
-
 \newcounter{ativ}
 
 \newenvironment{task}[1]{%
@@ -17,7 +16,6 @@
 
 \newenvironment{observationtitle}[1]{%
 	\paragraph{Observação: #1}
-
 }{}
 
 % Observation Box
@@ -30,7 +28,6 @@
 	\def\currentcolor{cor1}
 	\subsection{Exemplo \theex: #1}
 }
-
 
 \newenvironment{research}[1]{%
 	\subsection{\textcolor{box1}{Para pesquisar}}

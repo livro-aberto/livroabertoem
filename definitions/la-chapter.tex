@@ -1,177 +1,56 @@
-\RequirePackage{anyfontsize}
-\RequirePackage{tcolorbox}
+\RequirePackage{pagecolor}
+\RequirePackage{titlesec}
 
-\newcommand{\chapterillustration}[2]{
-	\ifnum\aluno=1
+\newcommand{\chapterillustration}[1]{%
 		\def\la@chapterillustration{#1}
-	\else
-		\def\la@chapterillustration{#2}
-	\fi
 }
 
-% \newcommand{\chapterwhat}[1]{
-% 	\def\la@chapterwhat{#1}
-% }
-% \newcommand{\chapterbecause}[1]{
-% 	\def\la@chapterbecause{#1}
+% \renewcommand{chapter}{%
+% 	\cleardoublepage
 % }
 
-\newtcolorbox{openningbox}{
-	enhanced,
-	opacityframe=.3,
-	opacityfill=.3,
-	width=80mm,
-	left=3mm,
-	right=3mm,
-	top=3mm,
-	bottom=.5mm,
-	colback=white,
-	colframe=white,
-	arc=3mm,
-	sharp corners=uphill,
-	lower separated = false,
-	before upper = \tcbsubtitle{O QU\^E?},
-	before lower = \tcbsubtitle{POR QU\^E?},
-	fontupper = \sffamily,
-	fontlower = \sffamily,
-	sharp corners = north,
-	subtitle style = {
-		frame empty,
-		fontupper = \fontsize{13pt}{0}\selectfont\titlefont\bfseries,
-		colback = cor1,
-		coltext = black!70,
-		width = 3.5cm,
-		arc = 8pt,
-		rounded corners = east
-	}
+\newcommand{\volumeillustration}[1]{%
+	\def\la@volumeillustration{#1}
 }
 
-\newcommand{\bigopenningbox}{
-	\renewtcolorbox{openningbox}{
-		enhanced,
-		%  jigsaw,
-		opacityframe=.3,
-		opacityfill=.3,
-		width=105mm,
-		left=3mm,
-		right=3mm,
-		top=3mm,
-		bottom=.5mm,
-		colback=white,
-		colframe=white,
-		arc=3mm,
-		sharp corners=uphill,
-		% frame empty,
-		% arc = 8pt,
-		lower separated = false,
-		before upper = \tcbsubtitle{O QU\^E?},
-		before lower = \tcbsubtitle{POR QU\^E?},
-		fontupper = \sffamily,
-		fontlower = \sffamily,
-		sharp corners = north,
-		subtitle style = {
-			frame empty,
-			fontupper = \fontsize{13pt}{0}\selectfont\titlefont\bfseries,
-			colback = cor1,
-			coltext = black!70,
-			width = 3.5cm,
-			arc = 8pt,
-			rounded corners = east
+\newcommand{\la@volume@illustration}{
+	\ifdefined\la@volumeillustration
+		\includegraphics[width=360bp]{\la@volumeillustration-volicon.pdf}
+		\undef\la@volumeillustration
+	\else\fi
+}
+
+
+\newcounter{volume}
+\newcounter{la@volume}
+
+\titleclass{\la@volume}{top}[\part]
+	\providecommand*{\toclevel@la@volume}{0}
+	\titlespacing{\la@volume}{0pt}{0pt}{0pt}
+	\titleformat{\la@volume}[block]{\volumetitlefont}{
+		\parbox{\widthof{\volumenumfont4}}{\raggedleft\volumenumfont\thevolume}
+	}{0pt}{
+	\centering
+		\parbox[][][b]{\la@student@textwidth - 140pt}{
+			\raggedright \strut{#1}
 		}
 	}
-}
-
-\newcommand{\ChapNumTitle}[1]{%
+	
+\newcommand{\volume}[1]{
+	\cleardoublepage
+	\refstepcounter{volume}
+	\pagecolor{\currentvolcolor}
 	\thispagestyle{empty}
-	\tikzset{external/export next=false}
-	\begin{tikzpicture}[remember picture, overlay, external/export=false]
-		\coordinate (a) at ($(current page.north west) + (44.00mm,-44.00mm)$);
-		\coordinate (c) at ($(current page.north west) + (148.54mm,-64.82mm)$);
-		\coordinate (d) at ($(current page.north) + (0.00mm,-78.57mm)$);
-
-		\begin{pgfonlayer}{top}
-			\filldraw [fill=cor1, draw=cor1] ($(a) + (0.00mm,-25.00mm)$) -- ++(22.00mm,0.0mm) arc [start angle=270, end angle=360, x radius = 3.00mm, y
-					radius=3.00mm] coordinate (c1) -- ++(0.00mm,44.00mm) coordinate (c2) arc [start angle=0, end angle=90, x radius=3.00mm, y radius=3.00mm] --
-			++(-44.00mm,0.00mm) arc [start angle=90, end angle=180, x radius=3.00mm, y radius=3.00mm] -- ++(0.00mm,-44.00mm) arc [start angle=180, end
-					angle=270, x radius=3.00mm, y radius=3.00mm] -- cycle;
-			\node[font=\chapnumfont, text=cor2] at (a) {\chapnamefont\thechapter};
-
-			\coordinate (b) at ($(c1)!0.5!(c2)$);
-			\node (title) at (b) [right, font=\chaptitlefont, text=cor2] {\begin{varwidth}{12cm}\baselineskip=1cm #1\end{varwidth}};
-			% solution to the box O QUE and POR QUE?
-			\node [right] at ($(current page.north)+(-15mm,-150mm)$) %
-			{\begin{openningbox}
-					\la@chapterwhat
-
-					\tcblower
-
-					\la@chapterbecause
-
-				\end{openningbox}};
-
-		\end{pgfonlayer}
-
-		\begin{pgfonlayer}{bottom}
-			\node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{\la@chapterillustration}};
-		\end{pgfonlayer}
-
-		\begin{pgfonlayer}{top}
-
-		\end{pgfonlayer}
+	\la@volume{#1}
+	\begin{tikzpicture}[remember picture, overlay]
+		\node at (current page.center) {\la@volume@illustration};
 	\end{tikzpicture}
-
+	\clearpage
+	\pagecolor{white}
 }
 
-\newcommand{\ChapNoNumTitle}[1]{%
-	\thispagestyle{plain}
-	\tikzset{external/export next=false}
-	\begin{tikzpicture}[remember picture, overlay, external/export=false]
-		\coordinate (a) at ($(current page.north west) + (44.00mm,-44.00mm)$);
 
-		\filldraw [fill=cor1] ($(a) + (0.00mm,-25.00mm)$) -- ++(22.00mm,0.0mm) arc [start angle=270, end angle=360, x radius = 3.00mm, y
-				radius=3.00mm] coordinate (c1) -- ++(0.00mm,44.00mm) coordinate (c2) arc [start angle=0, end angle=90, x radius=3.00mm, y radius=3.00mm] --
-		++(-44.00mm,0.00mm) arc [start angle=90, end angle=180, x radius=3.00mm, y radius=3.00mm] -- ++(0.00mm,-44.00mm) arc [start angle=180, end
-				angle=270, x radius=3.00mm, y radius=3.00mm] -- cycle;
-		%        \node[textbf, text=cor2] at (a) {\chapnamefont\thechapter};
 
-		\coordinate (b) at ($(c1)!0.5!(c2)$);
-		\node (title) at (b) [right, font=\chaptitlefont] {#1};
-	\end{tikzpicture}
-}
-
-\newif\ifnumberedchap
-\numberedchaptrue
-
-% Defining the section style for the diferent names that eventually appear.
-\setsecnumdepth{chapter} % just number the chapter, not lower levels.
-
-% Clear page after chapter title
-\renewcommand\memendofchapterhook{%
-	\clearpage\m@mindentafterchapter\@afterheading}
-
-% Setup page
-\makechapterstyle{livroaberto}{%
-	\renewcommand{\chapnamefont}{}
-	\renewcommand{\chapnumfont}{\titlefont\bfseries\fontsize{140pt}{0}\selectfont}
-	\renewcommand{\chaptitlefont}{\titlefont\bfseries\fontsize{25pt}{0}\selectfont}
-	\renewcommand{\chapternamenum}{}
-	\renewcommand{\afterchapternum}{}
-	\renewcommand{\printchaptername}{}
-	\renewcommand{\printchapternum}{}
-	\renewcommand{\printchapternonum}{\global\numberedchapfalse}
-	\renewcommand{\printchaptertitle}[1]{%
-		\thispagestyle{plain}
-		\ifnumberedchap%
-			\ChapNumTitle{##1}
-		\else
-			\ChapNoNumTitle{##1}
-		\fi
-		\global\numberedchaptrue%
-	}
-	\renewcommand{\afterchaptertitle}{\clearpage}
-
-}
-\renewcommand{\chaptermarksn}[1]{}
 
 \chapterstyle{livroaberto}
 \pagestyle{livroaberto}
