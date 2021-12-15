@@ -8,11 +8,6 @@
 	}
 }
 
-\newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Not in teachers's environment}{%
-			You should only use this command for teacher's content}
-}
-
-
 \newcommand{\objectives}[1]{
 	\iftoggle{teacherenv}{%
 		\la@teacher@sidetitle{Objetivos Específicos}{#1}

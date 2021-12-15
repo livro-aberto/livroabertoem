@@ -4,28 +4,32 @@
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1em}
 
-
-\setstocksize{297mm}{210mm}
-\settrimmedsize{297mm}{210mm}{*}
-
-\setlrmarginsandblock{55pt}{55pt}{*}
-\setulmarginsandblock{50pt}{62.5pt}{*}
-
-\setcolsepandrule{12pt}{0pt}	
-
-\checkandfixthelayout%
-
-\newlength{\la@student@textwidth}
+\newlength{\la@student@pageheight}
+\newlength{\la@student@pagewidth}
 \newlength{\la@student@foremargin}
 \newlength{\la@student@spinemargin}
 \newlength{\la@student@uppermargin}
 \newlength{\la@student@lowermargin}
 
+\setlength{\la@student@pageheight}{297mm}
+\setlength{\la@student@pagewidth}{210mm}
+\setlength{\la@student@foremargin}{55pt}
+\setlength{\la@student@spinemargin}{55pt}
+\setlength{\la@student@uppermargin}{50pt}
+\setlength{\la@student@lowermargin}{62.5pt}
+
+\setstocksize{\la@student@pageheight}{\la@student@pagewidth}
+\settrimmedsize{\la@student@pageheight}{\la@student@pagewidth}{*}
+
+\setlrmarginsandblock{\la@student@spinemargin}{\la@student@foremargin}{*}
+\setulmarginsandblock{\la@student@uppermargin}{\la@student@lowermargin}{*}
+
+\setcolsepandrule{3em}{0pt}	
+
+\checkandfixthelayout%
+
+\newlength{\la@student@textwidth}
 \setlength{\la@student@textwidth}{\textwidth}
-\setlength{\la@student@foremargin}{\foremargin}
-\setlength{\la@student@spinemargin}{\spinemargin}
-\setlength{\la@student@uppermargin}{\uppermargin}
-\setlength{\la@student@lowermargin}{\lowermargin}
 
 
 \strictpagecheck%
@@ -75,13 +79,13 @@
 %Requires volume icon for the footer
 
 % Page number command
-\newcommand{\la@evenpagenumber}{%
+\newcommand{\la@evenpagenumber}[1][principal]{%
 	\tikzset{external/export next=false}
 
 	\begin{tikzpicture}[remember picture, overlay]
 
 			% Curve below
-			\fill [fill = principal]
+			\fill [fill = #1]
 				($(current page.south west) + (0,\la@footerbaseline)$) 
 				-- ++(0,-.5\la@footerheight) -- ++(\la@footershortwidth,0)
 				.. controls +(\la@footerctrla,0) and +(\la@footerctrlb,.2\la@footerheight) ..
@@ -89,14 +93,14 @@
 				cycle;
 
 			% Curve below
-			\fill [fill = principal]
+			\fill [fill = #1]
 				($(current page.south west) + (0,\la@footerbaseline)$) 
 				-- ++(0,+.5\la@footerheight) -- ++(\la@footershortwidth,0)
 				.. controls +(\la@footerctrla,0) and +(\la@footerctrlb, -.2\la@footerheight) ..
 				++ (\la@footerlongwidth, -.5\la@footerheight) -- 
 				cycle;
 
-			\draw [principal, line width = 3pt] 
+			\draw [#1, line width = 3pt] 
 				($(current page.south west) + (0,\la@footerbaseline)$) 
 				-- ($(current page.south east) + (-\la@student@foremargin,\la@footerbaseline)$);
 
@@ -107,13 +111,13 @@
 	\end{tikzpicture}
 }
 
-\newcommand{\la@oddpagenumber}{%
+\newcommand{\la@oddpagenumber}[1][principal]{%
 	\tikzset{external/export next=false}
 
 	\begin{tikzpicture}[remember picture, overlay]
 
 			% Curve below
-			\fill [fill = principal]
+			\fill [fill = #1]
 				($(current page.south east) + (0,\la@footerbaseline)$) 
 				-- ++(0,-.5\la@footerheight) -- ++(-\la@footershortwidth,0)
 				.. controls +(-\la@footerctrla,0) and +(-\la@footerctrlb,.2\la@footerheight) ..
@@ -121,14 +125,14 @@
 				cycle;
 
 			% Curve below
-			\fill [fill = principal]
+			\fill [fill = #1]
 				($(current page.south east) + (0,\la@footerbaseline)$) 
 				-- ++(0,+.5\la@footerheight) -- ++(-\la@footershortwidth,0)
 				.. controls +(-\la@footerctrla,0) and +(-\la@footerctrlb, -.2\la@footerheight) ..
 				++ (-\la@footerlongwidth, -.5\la@footerheight) -- 
 				cycle;
 
-			\draw [principal, line width = 3pt] 
+			\draw [#1, line width = 3pt] 
 				($(current page.south east) + (0,\la@footerbaseline)$) 
 				-- ($(current page.south west) + (\la@student@foremargin,\la@footerbaseline)$);
 

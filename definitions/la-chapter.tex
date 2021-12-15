@@ -1,13 +1,66 @@
 \RequirePackage{pagecolor}
 \RequirePackage{titlesec}
+\RequirePackage{tikz}
 
 \newcommand{\chapterillustration}[1]{%
 		\def\la@chapterillustration{#1}
 }
 
-% \renewcommand{chapter}{%
-% 	\cleardoublepage
-% }
+\newcommand{\la@chapter@illustration}{
+	\ifdefined\la@chapterillustration
+		\begin{tikzpicture}[remember picture, overlay]
+			\node [anchor = east] at (current page.east) {
+					\includegraphics[height = \la@student@pageheight]{\la@chapterillustration}
+			};
+		\end{tikzpicture}
+		\undef\la@chapterillustration
+	\else\fi
+}
+
+\newlength{\la@chapterbannerheight}
+\setlength{\la@chapterbannerheight}{140pt}
+
+\newcounter{la@chapter}
+\providecommand*{\toclevel@la@chapter}{1}
+
+\newcommand{\la@chapterautores}{%	
+	\ifdefined\la@autores
+		\la@autores
+		\undef\la@autores
+	\else
+		\ifdefined\la@autor
+			\la@autor
+			\undef\la@autor
+		\else\fi
+	\fi
+}
+
+\titleclass{\la@chapter}{page}[\chapter]
+\titlespacing{\la@chapter}{0pt}{0pt}{0pt}
+\titleformat{\la@chapter}[hang]{\chaptertitlefont}{\thela@chapter}{0pt}{
+	\la@chapter@illustration
+	\begin{tikzpicture}[remember picture, overlay]
+		\fill [\currentvolcolor] (current page.south west) 
+					-- ($(current page.south west) + (0,\la@chapterbannerheight)$) 
+					-- ($(current page.south east) + (0,\la@chapterbannerheight)$) 
+					-- (current page.south east) -- cycle;
+		\node [
+			align = left, font = \vphantom{Ag}, anchor = west
+		]	at ($(current page.south west) + (20pt,.5\la@chapterbannerheight)$) {
+			\parbox{.4\paperwidth}{\raggedright{\chapternamefont\chaptername\ \thela@chapter} \\ \chaptertitlefont#1}};
+		\node [
+			align = right, font = \vphantom{Ag}, anchor = east
+		]	at ($(current page.south east) + (-20pt,.5\la@chapterbannerheight)$) {
+			\parbox{.4\paperwidth}{\raggedleft\chapterauthorfont\la@chapterautores}};
+	\end{tikzpicture}
+}
+
+\renewcommand{\chapter}{
+	\cleardoublepage
+	\refstepcounter{la@chapter}
+	\la@chapter
+}
+
 
 \newcommand{\volumeillustration}[1]{%
 	\def\la@volumeillustration{#1}
@@ -27,9 +80,13 @@
 \titleclass{\la@volume}{top}[\part]
 	\providecommand*{\toclevel@la@volume}{0}
 	\titlespacing{\la@volume}{0pt}{0pt}{0pt}
-	\titleformat{\la@volume}[block]{\volumetitlefont}{
-		\parbox{\widthof{\volumenumfont4}}{\raggedleft\volumenumfont\thevolume}
-	}{0pt}{
+	\titleformat{\la@volume}[block]{\volumetitlefont}{% numbering
+		\parbox{%
+			\widthof{%
+				\volumenumfont 4
+			}
+		}{\raggedleft\volumenumfont\thevolume}
+	}{0pt}{% title
 	\centering
 		\parbox[][][b]{\la@student@textwidth - 140pt}{
 			\raggedright \strut{#1}
@@ -44,6 +101,15 @@
 	\la@volume{#1}
 	\begin{tikzpicture}[remember picture, overlay]
 		\node at (current page.center) {\la@volume@illustration};
+		\node [anchor = south east, inner sep = 0pt] at ($(current page.south east) + (-\la@student@spinemargin, \la@student@lowermargin)$) {
+				\includegraphics[width = 150pt]{impa-capa}
+			};
+		\node [
+			anchor = south west, inner sep = 0pt,
+			font = \vphantom{Ag}\volumeauthorfont, text width = .5\la@student@textwidth, align = left
+		] at ($(current page.south west) + (\la@student@foremargin, \la@student@lowermargin)$) {
+			Livro Aberto de Matemática
+		};
 	\end{tikzpicture}
 	\clearpage
 	\pagecolor{white}

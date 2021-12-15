@@ -3,10 +3,9 @@
 
 % % Redefine as configurações da página de notas para sair do paracol e passar a utilizar multicols
 \renewcommand*{\notedivision}{
-	\untoggleteachercol
 	\cleardoublepage
-	\la@section{\notesname}
-% 	\par
+	\teachercol@off
+	\par \la@section{\sectiontitlefont\notesname}
 	\begin{multicols}{2}
 }
 
@@ -26,32 +25,6 @@
 
 \renewcommand\printpageinnoteshyperref[1]{%
 (\hyperref[#1]{\pagerefname\ \pageref*{#1}})\space}
-
-
-\newcommand{\la@teacher@endtitle}[2]{
-	{
-		\color{\currentcolor}\bfseries
-		{\fontsize{14pt}{0pt}\selectfont #1}\par
-		\vspace{-.8\baselineskip}	
-		\rule{\linewidth}{3pt}
-		{\Large #2}
-	}
-}
-
-
-\newcommand{\objectives@endnote}[2]{
-	\leavevmode\pagenote{
-		{
-			\la@teacher@endtitle{as}{as}
-			\color{principal}\bfseries
-			{\fontsize{14pt}{0pt}\selectfont Objetivos específicos}\par
-			\vspace{-.8\baselineskip}	
-			\rule{\linewidth}{3pt}
-			{\Large #1}
-		}
-		#2
-	}
-}
 
 
 \newcommand{\la@teacher@note}[3]{

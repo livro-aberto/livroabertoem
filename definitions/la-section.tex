@@ -17,7 +17,13 @@
 		\coordinate (tag upper right) at ($(tag west) + (\bannername@width - \bannername@tip, .5\bannername@height)$);
 		\coordinate (tag lower right) at ($(tag west) + (\bannername@width - \bannername@tip, -.5\bannername@height)$);
 
-		\draw [rounded corners=4, fill = \currentcolor] (tag west) -- (tag upper left) -- (tag upper right) -- (tag east) -- (tag lower right) -- (tag lower left) -- cycle;
+		\draw [rounded corners=4, fill = \currentcolor] (tag west) 
+		-- (tag upper left) 
+		-- (tag upper right) 
+		-- (tag east) 
+		-- (tag lower right) 
+		-- (tag lower left) 
+		-- cycle;
 		\node (banner name) [font = \vphantom{A}, anchor = center] at ($(tag east)!.5!(tag west)$) {{\bannernamefont \la@bannername}};
 }
 
@@ -111,7 +117,7 @@
 
 \renewcommand{\section}[1]{
 	\la@section{#1}
-	\iftoggle{teacher}{\toggleteachercol}{}
+	\iftoggle{teacher}\teachercol@on
 	\toggletrue{la@section}
 	\thispagestyle{livroaberto}
 }
@@ -158,7 +164,7 @@
 	}
 
 	\thispagestyle{livroaberto}
-	\iftoggle{teacher}{\toggleteachercol}{}
+	\iftoggle{teacher}\teachercol@on
 	\la@banner{%
 		\texorpdfstring{}{\la@bannername: }#1
 	}

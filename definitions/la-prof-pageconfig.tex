@@ -6,7 +6,6 @@
 \newlength\la@teacher@foremargin
 \newlength\la@teacher@innermargin
 
-
 \setlength{\la@teacher@pagewidth}{315mm}
 \setlength{\la@teacher@foremargin}{.75\la@student@foremargin}
 \setlength{\la@teacher@spinemargin}{\la@student@spinemargin}
@@ -26,8 +25,8 @@
 	-\la@teacher@spinemargin
 }
 
-\setstocksize{297mm}{315mm}
-\settrimmedsize{297mm}{\la@teacher@pagewidth}{*}
+\setstocksize{\la@student@pageheight}{\la@teacher@pagewidth}
+\settrimmedsize{\la@student@pageheight}{\la@teacher@pagewidth}{*}
 
 \setlrmarginsandblock{\la@student@spinemargin}{\la@teacher@foremargin}{*}
 \setulmarginsandblock{\la@student@uppermargin}{\la@student@lowermargin}{*}
@@ -36,6 +35,7 @@
 
 
 \newtoggle{teacherenv}
+
 
 \newenvironment{teacher}{%
     \par
@@ -50,6 +50,27 @@
     \togglefalse{teacherenv}
 }
 
+\newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Not in teachers's environment}{%
+			You should only use this command for teacher's content}
+}
+
+\newcounter{teacherpage}
+\makepagestyle{teacherpage}
+\makeevenfoot{teacherpage}{}{\la@evenpagenumber[\currentvolcolor]}{}
+\makeoddfoot{teacherpage}{}{\la@oddpagenumber[\currentvolcolor]}{}
+
+\newcommand{\la@teacherpage}{
+	\cleardoublepage
+	\pagestyle{teacherpage}
+	\begin{multicols}{2}
+}
+
+\newenvironment{teacherpage}{%
+	\iftoggle{paracol}{\teachercol@off}{}
+	\la@teacherpage
+}{\end{multicols}}
+
+
 
 % paracol definitions
 \twosided%
@@ -57,23 +78,27 @@
 \newcommand{\la@teacher@backgroundcolor}{%
     \backgroundcolor{c[1] (\la@teacher@innermargin,25mm) (25mm,250mm)}{boxbackground}}
 
-\newcommand{\toggleteachercol}{     
-	\iftoggle{paracol}{
-	}{
-		\la@teacher@backgroundcolor
-		\begin{paracol}{2} % starts double column at the student's main text.
-		\toggletrue{paracol}
+\newcommand{\teachercol@on}{     
+	\iftoggle{teacher}{
+		\iftoggle{paracol}{
+		}{
+			\la@teacher@backgroundcolor
+			\begin{paracol}{2} % starts double column at the student's main text.
+			\toggletrue{paracol}
+		}
 	}
 }
 
-\newcommand{\untoggleteachercol}{
+\newcommand{\teachercol@off}{
+	\iftoggle{teacher}{
     \iftoggle{paracol}{
-        \end{paracol}
-        \togglefalse{paracol}
-    }{}
+			\end{paracol}
+			\togglefalse{paracol}
+    }
+	}
 }
 
 \AtEndDocument{
 	\clearpage
-    \untoggleteachercol%
+    \teachercol@off%
 }

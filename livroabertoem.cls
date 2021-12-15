@@ -21,17 +21,17 @@
 
 % \RequirePackage{geometry}
 \RequirePackage[low-sup]{subdepth} % ajusta altura do subscript quando há superscript junto
-\RequirePackage[export]{adjustbox}
+% \RequirePackage[export]{adjustbox}
 % \RequirePackage{marginfix} %?
 \RequirePackage{multicol}
 \RequirePackage{xstring}
 % \RequirePackage{endnotes} %?
 \RequirePackage{comment} % Comando excludecomment para remover os comandos do material do professor
 \RequirePackage{xpatch}
-\RequirePackage{environ} % retirar?
+% \RequirePackage{environ} % retirar?
 \RequirePackage{paracol}
-\RequirePackage{tcolorbox} % retirar depois
-\RequirePackage{marginfix}
+% \RequirePackage{tcolorbox} % retirar depois
+% \RequirePackage{marginfix}
 
 \input{definitions/la-color.tex}
 \input{la-tikzconfig.sty}
@@ -92,6 +92,12 @@
 	\input{definitions/la-fonts.tex}
 
 
+\DeclareOption{teacher}
+{	
+	\togglefalse{student}
+	\toggletrue{teacher}
+	\input{class-options/la-professor.clo}
+}
 
 \DeclareOption{professor}
 {	
@@ -118,7 +124,7 @@
 	%Caixa de Texto
 	\newenvironment{texto}[1]{}{}
 
-	\excludecomment{paginatexto}
+	\excludecomment{teacherpage}
 	\excludecomment{apresentacao}
 	\excludecomment{teacher}
 }
