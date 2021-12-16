@@ -51,7 +51,7 @@
 }
 
 \newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Not in teachers's environment}{%
-			You should only use this command for teacher's content}
+	You should only use this command for teacher's content}
 }
 
 \newcounter{teacherpage}
@@ -68,7 +68,9 @@
 \newenvironment{teacherpage}{%
 	\iftoggle{paracol}{\teachercol@off}{}
 	\la@teacherpage
-}{\end{multicols}}
+}{
+	\end{multicols}
+}
 
 
 
@@ -76,7 +78,8 @@
 \twosided%
 \setcolumnwidth{\la@student@textwidth/\la@teacher@colsep,\la@teacher@textwidth}
 \newcommand{\la@teacher@backgroundcolor}{%
-    \backgroundcolor{c[1] (\la@teacher@innermargin,25mm) (25mm,250mm)}{boxbackground}}
+	\backgroundcolor{c[1] (\la@teacher@innermargin,25mm) (25mm,250mm)}{boxbackground}
+}
 
 \newcommand{\teachercol@on}{     
 	\iftoggle{teacher}{

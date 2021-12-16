@@ -20,7 +20,7 @@
 
 
 % \RequirePackage{geometry}
-\RequirePackage[low-sup]{subdepth} % ajusta altura do subscript quando há superscript junto
+% \RequirePackage[low-sup]{subdepth} % ajusta altura do subscript quando há superscript junto
 % \RequirePackage[export]{adjustbox}
 % \RequirePackage{marginfix} %?
 \RequirePackage{multicol}
@@ -88,6 +88,7 @@
 	\input{definitions/la-environments.tex}
 	\input{definitions/la-section.tex}
 	\input{definitions/la-chapter.tex}
+	\input{definitions/la-volume.tex}
 \fi
 	\input{definitions/la-fonts.tex}
 
