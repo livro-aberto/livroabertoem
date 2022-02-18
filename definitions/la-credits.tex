@@ -26,14 +26,9 @@
 
 \newif\ifrevisao
 
-\newcommand{\revisor}[1]{%
+\newcommand{\revisao}[1]{%
 	\revisaotrue
-	\def\la@revisor{#1}
-}
-
-\newcommand{\revisores}[1]{%
-	\revisaotrue
-	\def\la@revisores{%
+	\def\la@revisao{%
 		\makecell[tl]{#1}
 	}
 }
@@ -101,7 +96,7 @@
 			\ifdefined\la@autores Autores \else Autor (a) \fi  & \ifdefined\la@autores \la@autores@table \else \la@autor \fi             \\
 
 			\ifrevisao
-			Revisão:                                           & \ifdefined\la@revisores \la@revisores \else \la@revisor \fi             \\
+			Revisão:                                           &  \la@revisao            \\
 			\fi
 
 			\ifdefined\la@colaboracao
@@ -175,6 +170,4 @@
 	\undef\la@graficos
 	\undef\la@versaodigital
 	\undef\la@ccbysa
-
-
 }

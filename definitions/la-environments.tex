@@ -1,4 +1,3 @@
-
 \RequirePackage{tcolorbox}
 	\tcbuselibrary{theorems, listings, breakable, most, skins}
 	\tcbsetforeverylayer{shield externalize}
@@ -75,7 +74,6 @@
 }
 
 
-
 % Requires icon on the format iconname-volume#.pdf, where # is the number of the current volume. 
 % If there are more volumes, you should specify an icon for each volume color. 
 % Included icons are "notas", "vocesabia" and "refletir", for each of the 4 default volume colors.
@@ -87,7 +85,9 @@
 	\ifdefined\la@boxicon
 		\includegraphics[width=22pt]{\la@boxicon-\currentvolcolor.pdf}
 		\undef\la@boxicon
-	\else\fi
+	\else
+    \includegraphics[width=22pt]{notas-\currentvolcolor.pdf}
+  \fi
 }
 
 % Creates the box with current volume color and icon
@@ -106,7 +106,7 @@
 		 \coordinate (fnw) at (frame.north west);
 		 \filldraw [draw = \currentvolcolor, fill = \currentvolcolor]
 			($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (6pc,0) % Up from frame and left
-			.. controls +(1.5pc,-1pt) and ($(fnw) + (10.5pc,-1pt)$) .. % curve going down
+			.. controls +(1.5pc, -1pt) and ($(fnw) + (10.5pc,-1pt)$) .. % curve going down
 		    ($(fnw) + (12pc, -1pt)$) -- cycle;
 		 \node [overlay, left of = fnw, node distance = 18pt, yshift = 9pt] {\la@box@icon};
 	}
@@ -117,8 +117,6 @@
 % Environments
 
 \newcounter{task}[chapter]
-\newcounter{example}[chapter]
-
 \newenvironment{task}[1]{\par
 	\refstepcounter{task}
 	\bannername{Atividade \thetask}
@@ -128,7 +126,7 @@
 	\vspace{\titlebeforeskip}
 }
 
-
+\newcounter{example}[chapter]
 \newenvironment{example}[1]{
 	\refstepcounter{example}
 	\begin{la@sectionbox}{#1}{Exemplo \theexample}
@@ -177,7 +175,6 @@
 	\end{la@volumebox}
 }
 
-	
 
 % Creates the box with current volume color
 \newtcolorbox{project}{

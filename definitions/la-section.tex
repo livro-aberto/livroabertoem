@@ -1,107 +1,124 @@
 \RequirePackage[explicit]{titlesec}
 
-\newlength{\bannername@width}
-\newlength{\bannername@height}
-\newlength{\bannername@tip}
-
-\setlength{\bannername@width}{130pt}
-\setlength{\bannername@height}{20pt}
-\setlength{\bannername@tip}{25pt}
-
-% Defines the banner used for the sections
-\newcommand{\bannernamestyle}[1][]{
-		\coordinate [#1] (tag west) at ($(-\bannername@tip,0pt)$);
-		\coordinate (tag east) at ($(tag west) + (\bannername@width, 0pt)$);
-		\coordinate (tag upper left) at ($(tag west) + (\bannername@tip, .5\bannername@height)$);
-		\coordinate (tag lower left) at ($(tag west) + (\bannername@tip, -.5\bannername@height)$);
-		\coordinate (tag upper right) at ($(tag west) + (\bannername@width - \bannername@tip, .5\bannername@height)$);
-		\coordinate (tag lower right) at ($(tag west) + (\bannername@width - \bannername@tip, -.5\bannername@height)$);
-
-		\draw [rounded corners=4, fill = \currentcolor] (tag west) 
-		-- (tag upper left) 
-		-- (tag upper right) 
-		-- (tag east) 
-		-- (tag lower right) 
-		-- (tag lower left) 
-		-- cycle;
-		\node (banner name) [font = \vphantom{A}, anchor = center] at ($(tag east)!.5!(tag west)$) {{\bannernamefont \la@bannername}};
-}
-
-\newcommand{\la@bannerstyle}[1]{
-	\leavevmode\checkoddpage%
-	\begin{tikzpicture}[remember picture, overlay]
-		\draw [\currentcolor,  line width = 3pt] (-\la@student@leftmargin,0) -- (\la@student@textwidth,0);
-
-		\bannernamestyle
-
-		\node (banner title) [
-			anchor = east, fill, rectangle, white, inner sep = 2.5pt, outer sep = -.1pt, font = \vphantom{Ag}]
-			at (\la@student@textwidth+.45em,0) {{\hspace*{2.5pt}\bannertitlefont #1}};
-	\end{tikzpicture}
-}
-
-
-\newcommand{\la@exercisebanner}{
-	\tikzset{external/export next=false}
-
-	\begin{tikzpicture}[remember picture, overlay]
-		\draw [principal,  line width = 3pt] (-\la@student@leftmargin,0) -- (\la@student@textwidth+\la@student@rightmargin,0);
-
-		\bannernamestyle[shift = {(.5\la@student@textwidth-.5\bannername@width+\bannername@tip,0)}]
-
-	\end{tikzpicture}
-}
-
-
-
-\newcommand{\la@largebannerstyle}{
-
-	\tikzset{external/export next=false}
-	\begin{tikzpicture}[remember picture, overlay]
-		\draw [principal,  line width = 3pt] (-\la@student@leftmargin,0) -- (\la@student@textwidth+\la@student@rightmargin,0);
-
-		\bannernamestyle
-
-	\end{tikzpicture}
-}
-
+\newlength{\la@bannername@width}
+\newlength{\la@bannername@height}
+\newlength{\la@bannername@tip}
 \newlength{\titlebeforeskip}
 \newlength{\titleafterskip}
 
 \setlength{\titlebeforeskip}{1em plus 2pt minus 1pt}
 \setlength{\titleafterskip}{2em plus 3pt minus 1pt}
 
+\newcommand{\la@default@banner@length}{
+  \setlength{\la@bannername@width}{130pt}
+  \setlength{\la@bannername@height}{20pt}
+  \setlength{\la@bannername@tip}{25pt}
+}
+
+\newcommand{\la@large@banner@length}{
+  \setlength{\la@bannername@width}{130pt}
+  \setlength{\la@bannername@height}{20pt}
+  \setlength{\la@bannername@tip}{25pt}
+}
+
+% Defines the banner used for the sections
+\newcommand{\la@bannernamestyle}[1][]{
+		\coordinate [#1] (tag west) at 
+      ($(-\la@bannername@tip,0pt)$);
+		\coordinate (tag east) at 
+      ($(tag west) + (\la@bannername@width, 0pt)$);
+		\coordinate (tag upper left) at 
+      ($(tag west) + (\la@bannername@tip, .5\la@bannername@height)$);
+		\coordinate (tag lower left) at 
+      ($(tag west) + (\la@bannername@tip, -.5\la@bannername@height)$);
+		\coordinate (tag upper right) at 
+      ($(tag west) + (\la@bannername@width - \la@bannername@tip, .5\la@bannername@height)$);
+		\coordinate (tag lower right) at 
+      ($(tag west) + (\la@bannername@width - \la@bannername@tip, -.5\la@bannername@height)$);
+
+		\draw [rounded corners=4, fill = \currentcolor] (tag west) 
+                                                 -- (tag upper left) 
+                                                 -- (tag upper right) 
+                                                 -- (tag east) 
+                                                 -- (tag lower right) 
+                                                 -- (tag lower left) 
+                                                 -- cycle;
+
+		\node (banner name) [font = \vphantom{A}, anchor = center] at 
+      ($(tag east)!.5!(tag west)$) {{\bannernamefont \la@bannername}};
+}
+
+\newcommand{\la@bannerstyle}[1]{
+	\leavevmode\checkoddpage%
+  \la@default@banner@length
+  \tikzset{external/export next=false}
+	\begin{tikzpicture}[remember picture, overlay]
+		\draw [\currentcolor,  line width = 3pt] (-\la@student@leftmargin,0) 
+    -- (\la@student@textwidth,0);
+
+		\la@bannernamestyle
+
+		\node (banner title) [
+        anchor = east, fill, rectangle, white, inner sep = 2.5pt,
+        outer sep = -.1pt, font = \vphantom{Ag}
+      ]
+			at (\la@student@textwidth+.45em,0) {{\hspace*{2.5pt}\bannertitlefont #1}};
+	\end{tikzpicture}
+}
+
+
+\newcommand{\la@exercisebanner}{
+  \la@default@banner@length
+	\tikzset{external/export next=false}
+	\begin{tikzpicture}[remember picture, overlay]
+		\draw [principal,  line width = 3pt] (-\la@student@leftmargin,0) 
+    -- (\la@student@textwidth+\la@student@rightmargin,0);
+
+		\la@bannernamestyle[shift = {(.5\la@student@textwidth-.5\la@bannername@width+\la@bannername@tip,0)}]
+	\end{tikzpicture}
+}
+
+\newcommand{\la@largebannerstyle}{
+  \la@large@banner@length
+	\tikzset{external/export next=false}
+	\begin{tikzpicture}[remember picture, overlay]
+		\draw [principal,  line width = 3pt] (-\la@student@leftmargin,0) 
+      -- (\la@student@textwidth+\la@student@rightmargin,0);
+
+		\la@bannernamestyle
+	\end{tikzpicture}
+}
+
+
 \titleclass{\la@banner}{straight}[\section]
 	\providecommand*{\toclevel@la@banner}{1}
 	\titlespacing{\la@banner}{0pt}{\titlebeforeskip}{\titleafterskip}
-	\titleformat{\la@banner}[hang]{\bannertitlefont}{\la@banner@counter}{0pt}{%
+	\titleformat{\la@banner}[hang]{\bannertitlefont}{}{0pt}{%
 		\needspace{6em}
 		\la@bannerstyle{#1}
 		\la@defaultlist%
 	}	
 
-
-
 \titleclass{\la@exercise}{straight}[\chapter]
 	\providecommand*{\toclevel@la@exercise}{1}
 	\titlespacing{\la@exercise}{0pt}{\titlebeforeskip}{\titleafterskip}
-	\titleformat{\la@exercise}[hang]{\bannertitlefont}{\theexercise}{0pt}{%
+	\titleformat{\la@exercise}[hang]{\bannertitlefont}{}{0pt}{%
 		\needspace{6em}
 		\la@exercisebanner		
 	}
 
-
 \titleclass{\la@largebanner}{straight}[\chapter]
 	\providecommand*{\toclevel@la@largebanner}{1}
 	\titlespacing{\la@largebanner}{0pt}{\titlebeforeskip}{\titleafterskip}
-	\titleformat{\la@largebanner}[hang]{\bannertitlefont}{\thelargebanner}{0pt}{%
+	\titleformat{\la@largebanner}[hang]{\bannertitlefont}{}{0pt}{%
 		\la@largebannerstyle
 	}
 
 
 % Formatação dos comandos \section e \subsection
+\renewcommand{\toclevel@section}{1}
 \newtoggle{la@section}
-
+\titlespacing*{\section}{0pt}{2mm}{1mm}
 \titleformat{\section}{
 	\sectiontitlefont
 	}{\thesection}{0pt}{%
@@ -110,10 +127,7 @@
 		\toggletrue{la@section}		
 	}
 
-	\titlespacing*{\section}{0pt}{2mm}{1mm}
-	\renewcommand{\toclevel@section}{1}
-
-\let\la@section\section
+\let\la@section\section %chktex 1
 
 \renewcommand{\section}[1]{
 	\la@section{#1}
@@ -122,12 +136,11 @@
 	\thispagestyle{livroaberto}
 }
 
+\renewcommand{\toclevel@subsection}{4}
+\titlespacing*{\subsection}{0pt}{2mm}{1mm}
 \titleformat{\subsection}{
 	\color{\currentcolor}\normalfont\Large\bfseries
 }{\thesection}{1em}{#1}
-
-	\titlespacing*{\subsection}{0pt}{2mm}{1mm}
-	\renewcommand{\toclevel@subsection}{4}
 
 
 \titleformat{\paragraph}{
@@ -147,14 +160,10 @@
 }
 
 
-
-\newcounter{explore}
-
 \newcommand{\explore}[1]{%
 	\par
 	\sectioncolor{session1}
 	\bannername{Explorando}
-	\la@bannercounter{\theexplore}
 
 	\iftoggle{la@section}{
 		\clearpage
@@ -171,35 +180,23 @@
 	\la@defaultlist
 }
 
-
-
-\newcounter{practice}
-
 \newcommand{\practice}[1]{%
 	\sectioncolor{session2}
 	\bannername{Praticando}
-	\la@bannercounter{\thepractice}
 	\la@banner{%
 		\texorpdfstring{}{\la@bannername: }#1
 	}
 	\la@defaultlist
 }
-
-
-\newcounter{know}
 
 \newcommand{\know}[1]{%
 	\sectioncolor{session3}
 	\bannername{Saiba Mais}
-	\la@bannercounter{\theknow}
 	\la@banner{%
 		\texorpdfstring{}{\la@bannername: }#1
 	}
 	\la@defaultlist
 }
-
-
-\newcounter{arrange}
 
 \newcommand{\arrange}[1]{%
 	\sectioncolor{session4}
@@ -211,58 +208,48 @@
 	\la@defaultlist
 }
 
-
-\newcounter{exercise}
-
 \newcommand{\exercise}{	
+	\sectioncolor{principal}
 	\bannername{\strut{Exercícios}}
-	\sectioncolor{cor1}
 	\la@exercise{\texorpdfstring{}{Exercícios}}
-	\exerciselist%
+	\la@exerciselist%
 }
-
 
 \newcommand{\additionalmaterial}{	
-	\setlength{\bannername@width}{225pt}
-	\setlength{\bannername@tip}{40pt}
-
+	\sectioncolor{principal}
 	\bannername{Material Suplementar}
-	\sectioncolor{cor1}
 	\la@largebanner{\texorpdfstring{}{Material Suplementar}}
 	\la@defaultlist%
-
-	\setlength{\bannername@width}{130pt}
-	\setlength{\bannername@tip}{25pt}
 }
 
 
-\newcommand{\expandtocdepth}[1][]{%
-	\renewcommand{\toclevel@section}{1}
-	\renewcommand{\toclevel@subsection}{4}
-	\renewcommand{\toclevel@paragraph}{5}
-	\renewcommand{\toclevel@subparagraph}{6}
+% \newcommand{\expandtocdepth}[1][]{%
+% 	\renewcommand{\toclevel@section}{1}
+% 	\renewcommand{\toclevel@subsection}{4}
+% 	\renewcommand{\toclevel@paragraph}{5}
+% 	\renewcommand{\toclevel@subparagraph}{6}
 
-	\renewcommand{\toclevel@exploresec}{2}
-	\renewcommand{\toclevel@practicesec}{2}
-	\renewcommand{\toclevel@arrangesec}{2}
-	\setcounter{tocdepth}{2}
+% 	\renewcommand{\toclevel@exploresec}{2}
+% 	\renewcommand{\toclevel@practicesec}{2}
+% 	\renewcommand{\toclevel@arrangesec}{2}
+% 	\setcounter{tocdepth}{2}
 
-	\IfStrEqCase{#1}{%
-		{}{
-}%
-		{know}{
-			\renewcommand{\toclevel@knowsec}{2}
-		}%
-		{exercise}{
-			\renewcommand{\toclevel@exercisesec}{2}
-		}%
-		{know, exercise}{
-			\renewcommand{\toclevel@knowsec}{2}
-			\renewcommand{\toclevel@exercisesec}{2}
-		}
-	}[%
-	Apenas os valores ``know'' e ``exercise'' são permitidos.
-	]%
-}
+% 	\IfStrEqCase{#1}{%
+% 		{}{
+% }%
+% 		{know}{
+% 			\renewcommand{\toclevel@knowsec}{2}
+% 		}%
+% 		{exercise}{
+% 			\renewcommand{\toclevel@exercisesec}{2}
+% 		}%
+% 		{know, exercise}{
+% 			\renewcommand{\toclevel@knowsec}{2}
+% 			\renewcommand{\toclevel@exercisesec}{2}
+% 		}
+% 	}[%
+% 	Apenas os valores ``know'' e ``exercise'' são permitidos.
+% 	]%
+% }
 
 
