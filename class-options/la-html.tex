@@ -1,0 +1,132 @@
+\newcounter{ativ}
+
+\newenvironment{task}[1]{%
+	\stepcounter{ativ}
+	\subsection{Atividade \theativ: #1}
+}{}
+
+
+\newenvironment{reflection}[1]{%
+	\subsection{\textcolor{box1}{Para refletir}}
+}{}
+
+\newenvironment{observation}{%
+	\paragraph{Observação:}
+}{}
+
+\newenvironment{observationtitle}[1]{%
+	\paragraph{Observação: #1}
+}{}
+
+% Observation Box
+
+
+\newcounter{ex}
+
+\newenvironment{example}[1]{%
+	\stepcounter{ex}
+	\sectioncolor{cor1}
+	\subsection{Exemplo \theex: #1}
+}
+
+\newenvironment{research}[1]{%
+	\subsection{\textcolor{box1}{Para pesquisar}}
+}
+
+\newenvironment{knowledge}[1]{\par
+	\subsection{\textcolor{box1}{Você sabia?}}
+}
+
+
+
+\newenvironment{project}[1]{%
+	\sectioncolor{cor2}
+	\section*{\textcolor{\currentcolor}{Projeto Aplicado}}
+}
+
+
+
+\newcounter{explore}
+% \newcommand*{\theexplore}{\arabic{explore}}
+
+\newcommand{\explore}[1]{	
+	\sectioncolor{session1}
+	\stepcounter{explore}
+	\section*{\textcolor{\currentcolor}{Explorando: #1}}
+	\la@defaultlist%
+}
+
+
+%Praticando
+
+\newcounter{practice}
+% \newcommand*{\thepractice}{\arabic{practice}}
+
+\newcommand{\practice}[1]{%
+	\sectioncolor{session2}
+	\stepcounter{practice}
+	\section*{\textcolor{\currentcolor}{Praticando: #1}}
+	\la@defaultlist%
+}
+
+
+
+%Para Saber+
+
+\newcounter{know}
+% \newcommand*{\theknow}{\arabic{know}}
+
+\newcommand{\know}[1]{%
+	\sectioncolor{session3}
+	\stepcounter{know}
+	\section*{\textcolor{\currentcolor}{Para saber +: #1}}
+	\la@defaultlist%
+}
+
+
+%Organizando
+
+\newcounter{arrange}
+% \newcommand*{\thearrange}{\arabic{arrange}}
+
+\newcommand{\arrange}[1]{%
+	\sectioncolor{session4}
+	\stepcounter{arrange}
+	\section*{\textcolor{\currentcolor}{Organizando: #1}}
+	\la@defaultlist%
+}
+
+
+\newcounter{exercise}
+% \newcommand*{\theexercise}{\arabic{exercise}}
+
+\newcommand{\exercise}{%
+	\sectioncolor{cor1}
+	\stepcounter{exercise}
+	\section*{\textcolor{\currentcolor}{Exercícios}}
+	\la@exerciselist
+}
+
+
+
+\ifdefined\HCode
+   \def\pgfsysdriver{pgfsys-tex4ht-updated.def}
+\fi 
+
+
+
+% \newcommand{\enumeratefont}{}
+% \newcommand{\boxtitlefont}{}
+% \newcommand{\boxexample}{}
+% \newcommand{\titlefont}{}
+% \newcommand{\secondtitlefont}{}
+% \newcommand{\thirdtitlefont}{}
+% \newcommand{\pagetitlefont}{}
+% \newcommand{\boxfont}{}
+		
+\renewcommand{\creditos}{}
+\newcommand{\chapterillustration}[2]{}
+\newcommand{\chapterwhat}[1]{}
+\newcommand{\chapterbecause}[1]{}
+
+\endinput
