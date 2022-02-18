@@ -18,54 +18,22 @@
 	{fonts}
 }
 
-
-% \RequirePackage{geometry}
-% \RequirePackage[low-sup]{subdepth} % ajusta altura do subscript quando há superscript junto
-% \RequirePackage[export]{adjustbox}
-% \RequirePackage{marginfix} %?
 \RequirePackage{multicol}
 \RequirePackage{xstring}
-% \RequirePackage{endnotes} %?
 \RequirePackage{comment} % Comando excludecomment para remover os comandos do material do professor
 \RequirePackage{xpatch}
-% \RequirePackage{environ} % retirar?
 \RequirePackage{paracol}
-% \RequirePackage{tcolorbox} % retirar depois
-% \RequirePackage{marginfix}
+
 
 \input{definitions/la-color.tex}
-\input{la-tikzconfig.sty}
 \input{definitions/la-lists.tex}
 \input{definitions/la-tables.tex}
 \input{definitions/la-pageconfig.tex}
 \input{definitions/la-credits.tex}
 \input{definitions/la-hypersetup.tex}
+\input{la-tikzconfig.sty}
 % \input{la-commands.tex}
 
-\newcommand{\sub}{\textsubscript}
-\newcommand{\super}{\textsuperscript}
-
-
-
-%Cor Explorando
-
-\newcommand{\scexplore}[1]{
-	\hypersetup{linkcolor=session1}\paragraph{\color{session1}\normalfont\Large\bfseries#1}\hypersetup{linkcolor=linkscolor}
-}
-\newcommand{\scarrange}[1]{\hypersetup{linkcolor=session4}\paragraph{\color{session4}\normalfont\Large\bfseries#1}\hypersetup{linkcolor=linkscolor}}
-\newcommand{\scpractice}[1]{\hypersetup{linkcolor=session2}\paragraph{\color{session2}\normalfont\Large\bfseries#1}\hypersetup{linkcolor=linkscolor}}
-\newcommand{\scknow}[1]{\hypersetup{linkcolor=session2}\paragraph{\color{session3}\normalfont\Large\bfseries#1}\hypersetup{linkcolor=linkscolor}}
-\newcommand{\scexercise}[1]{\hypersetup{linkcolor=cor1}\paragraph{\color{cor1}\normalfont\Large\bfseries#1}\hypersetup{linkcolor=linkscolor}}
-
-
-\newcommand{\subexplore}[1]{\paragraph{\color{session1}\normalfont\Large\bfseries#1}}
-\newcommand{\subarrange}[1]{\paragraph{\color{session4}\normalfont\Large\bfseries#1}}
-\newcommand{\subpractice}[1]{\paragraph{\color{session2}\normalfont\Large\bfseries#1}}
-\newcommand{\subknow}[1]{\paragraph{\color{session3}\normalfont\Large\bfseries#1}}
-\newcommand{\subexercise}[1]{\paragraph{\color{cor1}\normalfont\Large\bfseries#1}}
-
-
-%%%%%%%%%%%% Material do professor
 
 
 \newtoggle{student}
@@ -79,41 +47,63 @@
 
 \newtoggle{html}
 \togglefalse{html}
-
-
 \ifdefined\HCode
-	\toggletrue{html}
-	\input{class-options/la-html.clo}
-\else
-	\input{definitions/la-environments.tex}
+  \toggletrue{html}
+\else\fi
+
+\newtoggle{nofonts}
+\togglefalse{nofonts}
+
+\iftoggle{html}{
+	\input{class-options/la-html.tex}
+}{
 	\input{definitions/la-section.tex}
+	\input{definitions/la-environments.tex}
 	\input{definitions/la-chapter.tex}
 	\input{definitions/la-volume.tex}
-\fi
-	\input{definitions/la-fonts.tex}
+}
 
+\DeclareOption{draft}
+{
+  \toggletrue{draft}
+  \togglefalse{draft}
+  \input{class-options/la-draft.tex}
+}
+
+\DeclareOption{rascunho}
+{
+  \toggletrue{draft}
+  \togglefalse{draft}
+  \input{class-options/la-draft.tex}
+}
+
+\DeclareOption{nofonts}
+{
+  \toggletrue{nofonts}
+  \togglefalse{nofonts}
+}
 
 \DeclareOption{teacher}
 {	
 	\togglefalse{student}
 	\toggletrue{teacher}
-	\input{class-options/la-professor.clo}
+	\input{class-options/la-professor.tex}
 }
 
 \DeclareOption{professor}
 {	
 	\togglefalse{student}
 	\toggletrue{teacher}
-	\input{class-options/la-professor.clo}
+	\input{class-options/la-professor.tex}
 }
-
-
 \ProcessOptions%
 
+\iftoggle{nofonts}{}
+{
+	\input{definitions/la-fonts.tex}
+}
 
-\iftoggle{teacher}{
-	
-}{
+\iftoggle{teacher}{}{
 	%Caixa de Obetivos gerais
 	\newenvironment{habilities}[1]{}{}{}
 	%Caixa de Objetivos Específicos
@@ -128,10 +118,8 @@
 	\excludecomment{teacherpage}
 	\excludecomment{apresentacao}
 	\excludecomment{teacher}
+	\excludecomment{teacher*}
+	\excludecomment{teachersection}
 }
-
-
-
-
 
 \endinput

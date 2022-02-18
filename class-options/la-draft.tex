@@ -1,0 +1,110 @@
+\renewcommand{\volume}{}
+
+\iftoggle{teacher}{
+	\renewenvironment{teacher}{
+		\begin{quote}
+			\subsection{Para o professor}
+			}{
+		\end{quote}
+	}
+
+	\renewenvironment{teacher*}{
+		\begin{quote}
+			\subsection{Para o professor}
+			}{
+		\end{quote}
+	}
+
+	\renewenvironment{teacherpage}[1]{
+		\section{Para o professor: #1}
+	}{}
+
+	\renewenvironment{objectives}{
+		\paragraph{Objetivos específicos}
+	}{}
+
+	\renewenvironment{sugestions}{
+		\paragraph{Objetivos específicos}
+	}{}
+	\renewcommand{\sugestions}{\textbf}
+
+	\renewenvironment{sugestions}{
+		\paragraph{Objetivos específicos}
+	}{}
+
+	\renewenvironment{answer}{
+		\paragraph{Objetivos específicos}
+	}{}
+}{}
+
+\renewenvironment{task}[1]{
+  \refstepcounter{task}
+	\subsection{Atividade \thetask: #1}
+}{}
+
+\renewenvironment{example}[1]{
+  \refstepcounter{example}
+	\subsection{Exemplo \theexample: #1}
+}{}
+
+\renewenvironment{example}[1]{
+  \refstepcounter{example}
+	\subsection{Observação: #1}
+}{}
+
+\renewenvironment{reflection}[1]{
+	\subsection{Refletindo}
+}{}
+
+\renewenvironment{knowledge}{
+	\subsection{Você sabia?}
+}{}
+
+
+\renewenvironment{research}{
+	\subsection{Notas}
+}{}
+
+
+\renewenvironment{project}{
+	\subsection{project}
+}{}
+
+\renewcommand{\explore}[1]{
+  \cleardoublepage
+  \sectioncolor{session1}
+	\section{\textcolor{session1}{Explorando: #1}}
+  \la@defaultlist
+}
+
+\renewcommand{\arrange}[1]{
+  \sectioncolor{session4}
+	\section{\textcolor{session2}{Organizando: #1}}
+  \la@defaultlist
+}
+
+\renewcommand{\practice}[1]{
+  \sectioncolor{session2}
+	\section{\textcolor{session3}{Praticando: #1}}
+  \la@defaultlist
+}
+
+\renewcommand{\know}[1]{
+  \sectioncolor{session3}
+	\section{\textcolor{session3}{Saiba Mais: #1}}
+  \la@defaultlist
+}
+
+\renewcommand{\exercise}{
+	\section{\textcolor{principal}{Exercícios}}
+  \la@exerciselist
+}
+
+\renewcommand{\additionalmaterial}{
+	\section{\textcolor{principal}{Material Suplementar}}
+  \la@defaultlist
+}
+
+\titleformat{\section}{
+  \chapterauthorfont
+}{\thesection}{0pt}{#1}
