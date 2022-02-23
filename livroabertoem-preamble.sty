@@ -1,7 +1,7 @@
 \RequirePackage{float}
 \RequirePackage{ragged2e}
 \RequirePackage{standalone}
-\RequirePackage[brazil]{babel}
+\RequirePackage[brazilian]{babel}
 
 \RequirePackage[
 	style = apa,
@@ -99,3 +99,36 @@
 
 
 \numberwithin{figure}{chapter}
+
+\RequirePackage{cleveref}
+\crefformat{task}{#2atividade~#1#3}
+\Crefformat{task}{#2Atividade~#1#3}
+
+\crefrangeformat{task}{#3atividades~#1#4 a~#5#2#6}
+\Crefrangeformat{task}{#3Atividades~#1#4 a~#5#2#6}
+
+\crefmultiformat{task}{#2atividades~#1#3}%
+  { e~#2#1#3}{, #2#1#3}{ e~#2#1#3}
+\Crefmultiformat{task}{#2Atividades~#1#3}%
+  { e~#2#1#3}{, #2#1#3}{ e~#2#1#3}
+
+\crefrangemultiformat{task}{#3atividades~#1#4 a~#5#2#6}%
+  { e~#3#1#4 a~#5#2#6}{, #3#1#4 a~#5#2#6}{ e~#3#1#4 a~#5#2#6}
+\crefrangemultiformat{task}{#3Atividades~#1#4 a~#5#2#6}%
+  { e~#3#1#4 a~#5#2#6}{, #3#1#4 a~#5#2#6}{ e~#3#1#4 a~#5#2#6}
+
+\crefformat{example}{#2exemplo~#1#3}
+\Crefformat{example}{#2Exemplo~#1#3}
+
+\crefrangeformat{example}{#3exemplos~#1#4 a~#5#2#6}
+\Crefrangeformat{example}{#3Exemplos~#1#4 a~#5#2#6}
+
+\crefmultiformat{example}{#2exemplos~#1#3}%
+  { e~#2#1#3}{, #2#1#3}{ e~#2#1#3}
+\Crefmultiformat{example}{#2Exemplos~#1#3}%
+  { e~#2#1#3}{, #2#1#3}{ e~#2#1#3}
+
+\crefrangemultiformat{example}{#3exemplos~#1#4 a~#5#2#6}%
+  { e~#3#1#4 a~#5#2#6}{, #3#1#4 a~#5#2#6}{ e~#3#1#4 a~#5#2#6}
+\crefrangemultiformat{example}{#3Exemplos~#1#4 a~#5#2#6}%
+  { e~#3#1#4 a~#5#2#6}{, #3#1#4 a~#5#2#6}{ e~#3#1#4 a~#5#2#6}
