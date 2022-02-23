@@ -1,5 +1,7 @@
-\RequirePackage{titlesec}
 \RequirePackage{tikz}
+
+\newlength{\la@chapterbannerheight}
+\setlength{\la@chapterbannerheight}{140pt}
 
 \newcommand{\chapterillustration}[1]{%
 		\def\la@chapterillustration{#1}
@@ -16,12 +18,9 @@
 	\else\fi
 }
 
-\newlength{\la@chapterbannerheight}
-\setlength{\la@chapterbannerheight}{140pt}
 
 \newcounter{la@chapter}
 \providecommand*{\toclevel@la@chapter}{1}
-
 \newcommand{\la@chapterautores}{%	
 	\ifdefined\la@autores
 		\la@autores
@@ -34,30 +33,36 @@
 	\fi
 }
 
-\titleclass{\la@chapter}{page}[\chapter]
-\titlespacing{\la@chapter}{0pt}{0pt}{0pt}
-\titleformat{\la@chapter}[hang]{\chaptertitlefont}{\thela@chapter}{0pt}{
+% \titleclass{\la@chapter}{page}[\chapter]
+% \titlespacing{\la@chapter}{0pt}{0pt}{0pt}
+% \titleformat{\la@chapter}[hang]{\chaptertitlefont}{\thela@chapter}{0pt}{
+% }
+
+\renewcommand{\chapter}[1]{
+	\cleardoublepage
+  \thispagestyle{empty}
+	\refstepcounter{chapter}
+  \addcontentsline{toc}{chapter}{\chaptername\space\thechapter: #1}
 	\la@chapter@illustration
+
 	\begin{tikzpicture}[remember picture, overlay]
 		\fill [\currentvolcolor] (current page.south west) 
 					-- ($(current page.south west) + (0,\la@chapterbannerheight)$) 
 					-- ($(current page.south east) + (0,\la@chapterbannerheight)$) 
 					-- (current page.south east) -- cycle;
+
 		\node [
-			align = left, font = \vphantom{Ag}, anchor = south west, inner sep = 0pt
-		]	at ($(current page.south west) + (30pt,.15\la@chapterbannerheight)$) {
-			\parbox{.4\paperwidth}{\raggedright{\chapternamefont\chaptername\ \thela@chapter} \\ \chaptertitlefont#1}};
+			align = left, font = \vphantom{Ag}, anchor = west, inner sep = 0pt
+		]	at ($(current page.south west) + (30pt,.5\la@chapterbannerheight)$) {
+			\parbox{.4\paperwidth}{
+        \raggedright{\chapternamefont\chaptername\ \thechapter} \\ \chaptertitlefont#1}
+      };
+
 		\node [
-			align = right, font = \vphantom{Ag}, anchor = south east, inner sep = 0pt
-		]	at ($(current page.south east) + (-30pt,.15\la@chapterbannerheight)$) {
+			align = right, font = \vphantom{Ag}, anchor = east, inner sep = 0pt
+		]	at ($(current page.south east) + (-30pt,.5\la@chapterbannerheight)$) {
 			\parbox{.4\paperwidth}{\raggedleft\chapterauthorfont\la@chapterautores}};
 	\end{tikzpicture}
-}
-
-\renewcommand{\chapter}{
-	\cleardoublepage
-	\refstepcounter{la@chapter}
-	\la@chapter
 }
 
 
