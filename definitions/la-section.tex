@@ -3,11 +3,15 @@
 \newlength{\la@bannername@width}
 \newlength{\la@bannername@height}
 \newlength{\la@bannername@tip}
-\newlength{\titlebeforeskip}
-\newlength{\titleafterskip}
+\newlength{\la@titlebeforeskip}
+\newlength{\la@titleafterskip}
 
-\setlength{\titlebeforeskip}{1em plus 2pt minus 1pt}
-\setlength{\titleafterskip}{2em plus 3pt minus 1pt}
+\setlength{\la@titlebeforeskip}{1em plus 2pt minus 1pt}
+\setlength{\la@titleafterskip}{2em plus 3pt minus 1pt}
+
+\setlength{\la@bannername@width}{130pt}
+\setlength{\la@bannername@height}{20pt}
+\setlength{\la@bannername@tip}{25pt}
 
 \newcommand{\la@default@banner@length}{
   \setlength{\la@bannername@width}{130pt}
@@ -16,15 +20,14 @@
 }
 
 \newcommand{\la@large@banner@length}{
-  \setlength{\la@bannername@width}{130pt}
+  \setlength{\la@bannername@width}{200pt}
   \setlength{\la@bannername@height}{20pt}
   \setlength{\la@bannername@tip}{25pt}
 }
-
 % Defines the banner used for the sections
 \newcommand{\la@bannernamestyle}[1][]{
 		\coordinate [#1] (tag west) at 
-      ($(-\la@bannername@tip,0pt)$);
+      ($(-1\la@bannername@tip,0pt)$);
 		\coordinate (tag east) at 
       ($(tag west) + (\la@bannername@width, 0pt)$);
 		\coordinate (tag upper left) at 
@@ -50,7 +53,7 @@
 
 \newcommand{\la@bannerstyle}[1]{
 	\leavevmode\checkoddpage%
-  \la@default@banner@length
+  % \la@default@banner@length
   \tikzset{external/export next=false}
 	\begin{tikzpicture}[remember picture, overlay]
 		\draw [\currentcolor,  line width = 3pt] (-\la@student@leftmargin,0) 
@@ -60,9 +63,9 @@
 
 		\node (banner title) [
         anchor = east, fill, rectangle, white, inner sep = 2.5pt,
-        outer sep = -.1pt, font = \vphantom{Ag}
+        outer sep = 1pt, font = \vphantom{Ag}
       ]
-			at (\la@student@textwidth+.45em,0) {{\hspace*{2.5pt}\bannertitlefont #1}};
+			at (\la@student@textwidth+.4em,0) {{\hspace*{2.5pt}\bannertitlefont #1}};
 	\end{tikzpicture}
 }
 
@@ -92,7 +95,7 @@
 
 \titleclass{\la@banner}{straight}[\section]
 	\providecommand*{\toclevel@la@banner}{1}
-	\titlespacing{\la@banner}{0pt}{\titlebeforeskip}{\titleafterskip}
+	\titlespacing{\la@banner}{0pt}{\la@titlebeforeskip}{\la@titleafterskip}
 	\titleformat{\la@banner}[hang]{\bannertitlefont}{}{0pt}{%
 		\needspace{6em}
 		\la@bannerstyle{#1}
@@ -101,7 +104,7 @@
 
 \titleclass{\la@exercise}{straight}[\chapter]
 	\providecommand*{\toclevel@la@exercise}{1}
-	\titlespacing{\la@exercise}{0pt}{\titlebeforeskip}{\titleafterskip}
+	\titlespacing{\la@exercise}{0pt}{\la@titlebeforeskip}{\la@titleafterskip}
 	\titleformat{\la@exercise}[hang]{\bannertitlefont}{}{0pt}{%
 		\needspace{6em}
 		\la@exercisebanner		
@@ -109,7 +112,7 @@
 
 \titleclass{\la@largebanner}{straight}[\chapter]
 	\providecommand*{\toclevel@la@largebanner}{1}
-	\titlespacing{\la@largebanner}{0pt}{\titlebeforeskip}{\titleafterskip}
+	\titlespacing{\la@largebanner}{0pt}{\la@titlebeforeskip}{\la@titleafterskip}
 	\titleformat{\la@largebanner}[hang]{\bannertitlefont}{}{0pt}{%
 		\la@largebannerstyle
 	}

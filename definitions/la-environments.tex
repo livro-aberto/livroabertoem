@@ -12,14 +12,17 @@
 
 	\begin{tikzpicture}[remember picture, overlay, shift = {(0,0)}]
 
-		\draw [\currentcolor,  line width = 3pt] (-\la@student@leftmargin,0) -- (\la@student@textwidth+\la@student@rightmargin,0);
+		\draw [\currentcolor,  line width = 3pt] 
+      (-\la@student@leftmargin,0) -- (\la@student@textwidth+\la@student@rightmargin,0);
 		\node (banner name) [
-			fill, \currentcolor, rectangle, rounded corners=10, anchor = east, minimum width = 3.5cm, minimum height = 20pt] 
+			fill, \currentcolor, rectangle, rounded corners=10, anchor = east,
+      minimum width = 3.5cm, minimum height = 20pt
+    ] 
 			at (\la@student@textwidth,0) {{\bannernamefont \la@bannername}};
-		\node [anchor = west] (banner title) at (0,-1.5em) {{\boxtitlefont #1}};
+		\node [anchor = west, outer sep = -3pt, inner sep = 0pt] (banner title) at (0,-1.5em) {{\boxtitlefont\noindent#1}};
 
 	\end{tikzpicture}
-	\vspace{\titleafterskip}
+	\vspace{\la@titleafterskip}
 }
 
 
@@ -28,7 +31,7 @@
 \newtcolorbox{la@sectionbox}[2]{
 	parbox = false, 
 	blanker, enhanced, breakable, 
-	before skip = \titlebeforeskip, after skip = \titleafterskip, 
+	before skip = \la@titlebeforeskip, after skip = \la@titleafterskip, 
 	left = 3mm, right = 3mm, top = 1em, bottom = 3mm, 
 	leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt, 
 	colframe = \currentcolor, colback = boxbackground, 
@@ -39,7 +42,6 @@
 	boxed title style = {colback = white, opacityframe = 0,},
 	underlay boxed title = {%
 		\coordinate (fne) at (frame.north east);
-
 
 		\filldraw [draw = \currentcolor, fill = \currentcolor]
 			($(fne) + (-.2pt,0)$) -- ++ (0,20pt) -- ++ (-6pc,0) % Up from frame and left
@@ -54,7 +56,7 @@
 % Creates the box with primary color
 \newtcolorbox{la@chapterbox}[1]{
 	parbox = false, blanker, enhanced, breakable, 
-	before skip = \titlebeforeskip, after skip = \titleafterskip, 
+	before skip = \la@titlebeforeskip, after skip = \la@titleafterskip, 
 	left = 3mm, right = 3mm, top = 1em, bottom = 3mm, 
 	leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt, 
 	% text width = .4\la@student@textwidth,
@@ -93,7 +95,7 @@
 % Creates the box with current volume color and icon
 \newtcolorbox{la@volumebox}[1]{
 	parbox = false, blanker, enhanced, breakable, 
-	before skip = \titlebeforeskip, after skip = \titleafterskip, 
+	before skip = \la@titlebeforeskip, after skip = \la@titleafterskip, 
 	left = 3mm, right = 3mm, top = 1em, bottom = 3mm, 
 	leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt, 
 	colframe = \currentvolcolor, colback = boxbackground, 
@@ -123,7 +125,7 @@
 	\la@contentsepbanner{#1}
 	\par
 }{
-	\vspace{\titlebeforeskip}
+	\vspace{\la@titlebeforeskip}
 }
 
 \newcounter{example}[chapter]
@@ -179,7 +181,7 @@
 % Creates the box with current volume color
 \newtcolorbox{project}{
 	parbox = false, blanker, enhanced, breakable, 
-	before skip = \titlebeforeskip, after skip = \titleafterskip, 
+	before skip = \la@titlebeforeskip, after skip = \la@titleafterskip, 
 	left = 3mm, right = 3mm, top = 1em, bottom = 3mm, 
 	leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt, 
 	colframe = principal, colback = boxbackground, 
