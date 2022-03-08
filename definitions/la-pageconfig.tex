@@ -1,37 +1,48 @@
+%\begin{macrocode}
 \RequirePackage{graphicx}
 \RequirePackage{calc}
+\RequirePackage{tikz}
+%\end{macrocode}
 
-\setlength{\parindent}{0em}
-\setlength{\parskip}{1em}
-
+%\begin{macrocode}
 \newlength{\la@student@pageheight}
 \newlength{\la@student@pagewidth}
 \newlength{\la@student@foremargin}
 \newlength{\la@student@spinemargin}
 \newlength{\la@student@uppermargin}
 \newlength{\la@student@lowermargin}
+%\end{macrocode}
 
+%\begin{macrocode}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
 \setlength{\la@student@pageheight}{297mm}
 \setlength{\la@student@pagewidth}{210mm}
 \setlength{\la@student@foremargin}{55pt}
 \setlength{\la@student@spinemargin}{55pt}
 \setlength{\la@student@uppermargin}{50pt}
 \setlength{\la@student@lowermargin}{62.5pt}
+%\end{macrocode}
 
+%\begin{macrocode}
 \setstocksize{\la@student@pageheight}{\la@student@pagewidth}
 \settrimmedsize{\la@student@pageheight}{\la@student@pagewidth}{*}
-
 \setlrmarginsandblock{\la@student@spinemargin}{\la@student@foremargin}{*}
 \setulmarginsandblock{\la@student@uppermargin}{\la@student@lowermargin}{*}
-
 \setcolsepandrule{3em}{0pt}	
+%\end{macrocode}
 
+%\begin{macrocode}
 \checkandfixthelayout%
+%\end{macrocode}
 
+%\begin{macrocode}
 \newlength{\la@student@textwidth}
 \setlength{\la@student@textwidth}{\textwidth}
+%\end{macrocode}
 
 
+%\begin{macrocode}
 \strictpagecheck%
 \newcommand{\la@student@leftmargin}{%
 	\ifoddpage%
@@ -48,7 +59,10 @@
 		\la@student@foremargin
 	\fi
 }
+%\end{macrocode}
 
+
+%\begin{macrocode}
 \newlength{\la@footerheight}
 \newlength{\la@footershortwidth}
 \newlength{\la@footerlongwidth}
@@ -62,8 +76,10 @@
 \setlength{\la@footerctrla}{18pt}
 \setlength{\la@footerctrla}{27pt}
 \setlength{\la@footerbaseline}{\lowermargin - 1.25\la@footerheight}
+%\end{macrocode}
 
 
+%\begin{macrocode}
 % Requires icon on the format iconnamme-footericon.pdf.
 \newcommand{\footericon}[1]{
 	\def\la@footericon{#1}
@@ -75,15 +91,16 @@
 		\undef\la@footericon
 	\else\fi
 }
+%\end{macrocode}
 
 %Requires volume icon for the footer
 
 % Page number command
+%\begin{macrocode}
 \newcommand{\la@evenpagenumber}[1][principal]{%
 	\tikzset{external/export next=false}
 
 	\begin{tikzpicture}[remember picture, overlay]
-
 			% Curve below
 			\fill [fill = #1]
 				($(current page.south west) + (0,\la@footerbaseline)$) 
@@ -110,12 +127,12 @@
 
 	\end{tikzpicture}
 }
+%\end{macrocode}
 
+%\begin{macrocode}
 \newcommand{\la@oddpagenumber}[1][principal]{%
 	\tikzset{external/export next=false}
-
 	\begin{tikzpicture}[remember picture, overlay]
-
 			% Curve below
 			\fill [fill = #1]
 				($(current page.south east) + (0,\la@footerbaseline)$) 
@@ -139,10 +156,11 @@
       \node [anchor = west] at ($(current page.south east) + (-.8\la@student@foremargin,\la@footerbaseline)$)  {\footerfont\thepage};
 				
 			\node [fill=white, inner sep=3.5pt] at ($(current page.south west) + (\la@student@foremargin, \la@footerbaseline)$) {\la@footer@icon};
-
 	\end{tikzpicture}
 }
+%\end{macrocode}
 
+%\begin{macrocode}
 \makepagestyle{livroaberto}
 \makeevenfoot{livroaberto}{}{\la@evenpagenumber}{}
 \makeoddfoot{livroaberto}{}{\la@oddpagenumber}{}
@@ -150,30 +168,8 @@
 \makepagestyle{plain}
 \makeevenfoot{plain}{}{}{}
 \makeoddfoot{plain}{}{}{}
+%\end{macrocode}
 
-
-\newcommand{\notarodape}[1]{\footnotemark%
-		\footnotetext{%
-		\belowbaseline[-\ht\strutbox]{
-			\begin{tcolorbox}[
-				colback=grafite!90!white,
-				colbacktitle=grafite!90!white,
-				colframe=grafite!90!white,
-				colupper=white, 
-				left=0pt, 
-				right=0pt,
-				top=-2pt,
-				bottom=-2pt, 
-				hbox, 
-				sharp corners = northeast, 
-				sharp corners = southwest
-			]{\textbf{#1}}
-			\end{tcolorbox}
-		}
-	}
-}
-
-
-\raggedbottom%
-\sloppy
-\hbadness=5000 
+^^A% \raggedbottom%
+^^A% \sloppy
+^^A% \hbadness=5000 

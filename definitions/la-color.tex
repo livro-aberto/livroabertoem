@@ -1,3 +1,4 @@
+% \begin{macrocode}
 \RequirePackage{xcolor}
 	\definecolor{azul}{HTML}{2747cc} % Azul escuro
 		\colorlet{principal}{azul}
@@ -44,15 +45,16 @@
 		
 	\definecolor{amarelo}{HTML}{ffc200} % Amarelo
 		\colorlet{volume4}{amarelo}
+% \end{macrocode}
 
-
+\begin{macrocode}
 \newcommand{\volumecolor}[1]{
 	\def\currentvolcolor{#1}
 }
-
 \newcommand{\sectioncolor}[1]{
 	\def\currentcolor{#1}
 }
 
 \def\currentvolcolor{primario}
 \def\currentcolor{primario}
+\end{macrocode}

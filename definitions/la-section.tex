@@ -1,30 +1,42 @@
 \RequirePackage[explicit]{titlesec}
 
+%\begin{macrocode}
 \newlength{\la@bannername@width}
 \newlength{\la@bannername@height}
 \newlength{\la@bannername@tip}
 \newlength{\la@titlebeforeskip}
 \newlength{\la@titleafterskip}
+%\end{macrocode}
 
+%\begin{macrocode}
 \setlength{\la@titlebeforeskip}{1em plus 2pt minus 1pt}
 \setlength{\la@titleafterskip}{2em plus 3pt minus 1pt}
+%\end{macrocode}
 
+%\begin{macrocode}
 \setlength{\la@bannername@width}{130pt}
 \setlength{\la@bannername@height}{20pt}
 \setlength{\la@bannername@tip}{25pt}
+%\end{macrocode}
 
+%\begin{macrocode}
 \newcommand{\la@default@banner@length}{
   \setlength{\la@bannername@width}{130pt}
   \setlength{\la@bannername@height}{20pt}
   \setlength{\la@bannername@tip}{25pt}
 }
+%\end{macrocode}
 
+%\begin{macrocode}
 \newcommand{\la@large@banner@length}{
   \setlength{\la@bannername@width}{200pt}
   \setlength{\la@bannername@height}{20pt}
   \setlength{\la@bannername@tip}{25pt}
 }
+%\end{macrocode}
+
 % Defines the banner used for the sections
+%\begin{macrocode}
 \newcommand{\la@bannernamestyle}[1][]{
 		\coordinate [#1] (tag west) at 
       ($(-1\la@bannername@tip,0pt)$);
@@ -50,7 +62,9 @@
 		\node (banner name) [font = \vphantom{A}, anchor = center] at 
       ($(tag east)!.5!(tag west)$) {{\bannernamefont \la@bannername}};
 }
+%\end{macrocode}
 
+%\begin{macrocode}
 \newcommand{\la@bannerstyle}[1]{
 	\leavevmode\checkoddpage%
   % \la@default@banner@length
@@ -68,8 +82,10 @@
 			at (\la@student@textwidth+.4em,0) {{\hspace*{2.5pt}\bannertitlefont #1}};
 	\end{tikzpicture}
 }
+%\end{macrocode}
 
 
+%\begin{macrocode}
 \newcommand{\la@exercisebanner}{
   \la@default@banner@length
 	\tikzset{external/export next=false}
@@ -80,7 +96,9 @@
 		\la@bannernamestyle[shift = {(.5\la@student@textwidth-.5\la@bannername@width+\la@bannername@tip,0)}]
 	\end{tikzpicture}
 }
+%\end{macrocode}
 
+%\begin{macrocode}
 \newcommand{\la@largebannerstyle}{
   \la@large@banner@length
 	\tikzset{external/export next=false}
@@ -91,8 +109,10 @@
 		\la@bannernamestyle
 	\end{tikzpicture}
 }
+%\end{macrocode}
 
 
+%\begin{macrocode}
 \titleclass{\la@banner}{straight}[\section]
 	\providecommand*{\toclevel@la@banner}{1}
 	\titlespacing{\la@banner}{0pt}{\la@titlebeforeskip}{\la@titleafterskip}
@@ -101,7 +121,9 @@
 		\la@bannerstyle{#1}
 		\la@defaultlist%
 	}	
+%\end{macrocode}
 
+%\begin{macrocode}
 \titleclass{\la@exercise}{straight}[\chapter]
 	\providecommand*{\toclevel@la@exercise}{1}
 	\titlespacing{\la@exercise}{0pt}{\la@titlebeforeskip}{\la@titleafterskip}
@@ -109,19 +131,22 @@
 		\needspace{6em}
 		\la@exercisebanner		
 	}
+%\end{macrocode}
 
+%\begin{macrocode}
 \titleclass{\la@largebanner}{straight}[\chapter]
 	\providecommand*{\toclevel@la@largebanner}{1}
 	\titlespacing{\la@largebanner}{0pt}{\la@titlebeforeskip}{\la@titleafterskip}
 	\titleformat{\la@largebanner}[hang]{\bannertitlefont}{}{0pt}{%
 		\la@largebannerstyle
 	}
+%\end{macrocode}
 
 
 % Formatação dos comandos \section e \subsection
-\renewcommand{\toclevel@section}{1}
+
+%\begin{macrocode}
 \newtoggle{la@section}
-\titlespacing*{\section}{0pt}{2mm}{1mm}
 \titleformat{\section}{
 	\sectiontitlefont
 	}{\thesection}{0pt}{%
@@ -129,40 +154,45 @@
 		#1
 		\toggletrue{la@section}		
 	}
+\titlespacing*{\section}{0pt}{2mm}{1mm}
+\renewcommand{\toclevel@section}{1}
 
 \let\la@section\section %chktex 1
-
 \renewcommand{\section}[1]{
 	\la@section{#1}
 	\iftoggle{teacher}\teachercol@on
 	\toggletrue{la@section}
 	\thispagestyle{livroaberto}
 }
+%\end{macrocode}
 
-\renewcommand{\toclevel@subsection}{4}
-\titlespacing*{\subsection}{0pt}{2mm}{1mm}
+%\begin{macrocode}
 \titleformat{\subsection}{
 	\color{\currentcolor}\normalfont\Large\bfseries
-}{\thesection}{1em}{#1}
+  }{\thesection}{1em}{#1}
+  \titlespacing*{\subsection}{0pt}{2mm}{1mm}
+  \renewcommand{\toclevel@subsection}{4}
 
 
 \titleformat{\paragraph}{
 	\color{\currentcolor}\normalfont\large\bfseries
 	}{\thesubsection}{1em}{#1}
-		
 	\titlespacing*{\paragraph}{0pt}{1mm}{1mm}
 	\renewcommand{\toclevel@paragraph}{5}
+%\end{macrocode}
 
 
+%\begin{macrocode}
 \newcommand{\bannername}[1]{
 	\def\la@bannername{#1}
 }
-
 \newcommand{\la@bannercounter}[1]{
 	\def\la@banner@counter{#1}
 }
+%\end{macrocode}
 
 
+%\begin{macrocode}
 \newcommand{\explore}[1]{%
 	\par
 	\sectioncolor{session1}
@@ -182,7 +212,9 @@
 	}
 	\la@defaultlist
 }
+%\end{macrocode}
 
+%\begin{macrocode}
 \newcommand{\practice}[1]{%
 	\sectioncolor{session2}
 	\bannername{Praticando}
@@ -210,7 +242,9 @@
 	}
 	\la@defaultlist
 }
+%\end{macrocode}
 
+%\begin{macrocode}
 \newcommand{\exercise}{	
 	\sectioncolor{principal}
 	\bannername{\strut{Exercícios}}
@@ -224,6 +258,7 @@
 	\la@largebanner{\texorpdfstring{}{Material Suplementar}}
 	\la@defaultlist%
 }
+%\end{macrocode}
 
 
 % \newcommand{\expandtocdepth}[1][]{%
