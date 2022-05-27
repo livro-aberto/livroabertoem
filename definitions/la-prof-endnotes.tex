@@ -3,25 +3,20 @@
 
 % % Redefine as configurações da página de notas para sair do paracol e passar a utilizar multicols
 \renewcommand*{\notedivision}{
-	\cleardoublepage
-	\teachercol@off
-	\par \la@section{\sectiontitlefont\notesname}
-	\begin{multicols}{2}
+    \teachersection{\notesname}
 }
 
 %Termina o multicols da página de notas.
 \apptocmd{\printpagenotes}{
-	\clearpage
-	\end{multicols}
+    \endteachersection
 }{}{}
 
+\renewcommand*{\notesname}{Notas}
 \renewcommand*{\pagerefname}{Página}
-
 \renewcommand*{\pagenotesubhead}[3]{}
-
 \renewcommand*{\notenumintext}[1]{{\noindent\hspace{-2.5pt}\bannernamefont\color{linkscolor} Nota #1}}
 
-\renewcommand*{\notenuminnotes}[1]{{\hspace{-2.5pt}\bannernamefont\color{principal} Nota #1.} \space}
+\renewcommand*{\notenuminnotes}[1]{{\hspace{-2.5pt}\bannernamefont\color{\currentvolcolor} Nota #1.} \space}
 
 \renewcommand\printpageinnoteshyperref[1]{%
 (\hyperref[#1]{\pagerefname\ \pageref*{#1}})\space}
@@ -30,10 +25,10 @@
 \newcommand{\la@teacher@note}[3]{
 		\leavevmode\pagenote{
 		{
-			\color{principal}\bfseries
+			\color{\currentvolcolor}\bfseries
 			{\fontsize{14pt}{0pt}\selectfont #1}\par
 			\vspace{-.8\baselineskip}	
-			\rule{\linewidth}{3pt}
+			\rule{\widthof{\fontsize{14pt}{0}\selectfont Sugestões e Discussões}+1em}{3pt}\\[.2em]
 			{\Large #2}
 		}	
 		#3

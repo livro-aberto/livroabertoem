@@ -1,69 +1,87 @@
 \RequirePackage{anyfontsize}
-\RequirePackage{fontspec}
-	\setmainfont{NunitoSans-Regular.ttf}[
-		BoldFont = NunitoSans-Bold.ttf,
-		ItalicFont = NunitoSans-Italic.ttf,
-		BoldItalicFont = NunitoSans-BoldItalic.ttf
+\RequirePackage[no-math]{fontspec}
+	\setmainfont{NotoSans-Regular.ttf}[
+		Path = resources/fonts/,
+		BoldFont = {NotoSans-SemiBold.ttf},
+		ItalicFont = {NotoSans-Italic.ttf},
+		BoldItalicFont = {NotoSans-SemiBoldItalic.ttf},
 	]
 	
-	\newfontfamily{\subtitlefont}{Montserrat-Bold.ttf}
-	\newfontfamily{\titlefont}{Montserrat-Black.ttf}
-	\newfontfamily{\titlenumfont}{Montserrat-ExtraBold.ttf}
+    \newfontfamily{\taskfont}{NotoSans-Medium.ttf}[
+        Path = resources/fonts/,
+        BoldFont = {NotoSans-Bold.ttf},
+        ItalicFont = {NotoSans-Italic.ttf},
+        BoldItalicFont = {NotoSans-BoldItalic.ttf}
+    ]
+    
+	\newfontfamily{\subtitlefont}{Montserrat-Bold.ttf}[Path = resources/fonts/]
+	\newfontfamily{\titlefont}{Montserrat-Black.ttf}[Path = resources/fonts/]
+	\newfontfamily{\titlenumfont}{Montserrat-ExtraBold.ttf}[Path = resources/fonts/]
 
 
-\@setfontsize\small{10}{12}
-\@setfontsize\normalsize{11}{13.2}
-\@setfontsize\large{12}{14.4}
-\@setfontsize\Large{14}{16.8}
-\@setfontsize\huge{22}{26.4}
+\renewcommand{\small}{\fontsize{10}{12}\selectfont}
+\renewcommand{\normalsize}{\fontsize{11}{13.2}\selectfont}
+\renewcommand{\large}{\fontsize{12}{14.4}\selectfont}
+\renewcommand{\Large}{\fontsize{14}{16.8}\selectfont}
+\renewcommand{\LARGE}{\fontsize{16}{19.2}\selectfont}
+\renewcommand{\huge}{\fontsize{22}{26.4}\selectfont}
+\renewcommand{\Huge}{\fontsize{28}{33.6}\selectfont}
+\renewcommand{\HUGE}{\fontsize{40}{48}\selectfont}
+\newcommand{\semihuge}{\fontsize{18}{21.6}\selectfont}
+\newcommand{\semiHuge}{\fontsize{26}{31.2}\selectfont}
+\newcommand{\EXHUGE}{\fontsize{108}{129.6}\selectfont}
 
 
 
-\newcommand{\volumetitlefont}{
-	\fontsize{40}{48.0}\color{white}\titlefont
+
+\newcommand{\volumenumfont}{%
+	\EXHUGE\fontsize{108}{129.6}\selectfont
 }
 
-\newcommand{\volumenumfont}{
-	\titlenumfont\fontsize{108}{129.6}\selectfont
+\newcommand{\volumetitlefont}{%
+	\linespread{.8}\HUGE\color{white}\titlefont
 }
 
-\newcommand{\volumeauthorfont}{
-	\titlenumfont\fontsize{28}{33.6}\selectfont\color{white}
+\newcommand{\volumeauthorfont}{%
+	\huge\subtitlefont\color{white}
 }
 
-\newcommand{\chaptertitlefont}{
-	\fontsize{26}{31.2}\color{white}\titlefont
+\newcommand{\chaptertitlefont}{%
+	\huge\color{white}\titlefont
 }
 
-\newcommand{\chapternamefont}{
-	\fontsize{18}{21.6}\selectfont\color{white}\subtitlefont
+\newcommand{\chapternamefont}{%
+	\semihuge\color{white}\subtitlefont
 }
 
-\newcommand{\chapterauthorfont}{
-	\fontsize{16}{19.2}\selectfont\color{white}\subtitlefont
+\newcommand{\chapterauthorfont}{%
+	\LARGE\color{white}\subtitlefont
 }
 
-\newcommand{\sectiontitlefont}{
-	\fontsize{22}{26.4}\selectfont\color{principal}\titlefont
+\newcommand{\sectiontitlefont}{%
+	\huge\color{principal}\titlefont\scshape
 }
 
-\newcommand{\bannernamefont}{
-	\normalfont\fontsize{14}{16.8}\selectfont\bfseries\color{white}
+\newcommand{\subsectiontitlefont}{%
+	\Large\color{principal}\subtitlefont
 }
 
-\newcommand{\bannertitlefont}{
+\newcommand{\bannernamefont}{%
+	\normalfont\large\bfseries\color{white}
+}
+
+\newcommand{\bannertitlefont}{%
    	\normalfont\normalsize\color\currentcolor\titlefont
 }
 
-\newcommand{\boxnamefont}{
-	\normalfont\fontsize{12}{14.4}\selectfont\bfseries\color{white}
+\newcommand{\boxnamefont}{%
+	\normalfont\large\bfseries\color{white}
 }
 
-\newcommand{\boxtitlefont}{
-  \normalfont\fontsize{12}{14.4}\selectfont\bfseries\color{\currentcolor}
+\newcommand{\boxtitlefont}{%
+  \normalfont\large\bfseries\color{\currentcolor}
 }
 
-\newcommand{\footerfont}{
-	\titlefont\fontsize{13}{14.4}\selectfont\color{white}	
+\newcommand{\footerfont}{%
+	\titlefont\large\color{white}	
 }
-

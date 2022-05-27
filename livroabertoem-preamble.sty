@@ -1,134 +1,68 @@
+\RequirePackage{tikz}
+\def\input@path{%
+  {figures}
+}
+
+\input{definitions/la-lists.tex}
+\input{definitions/la-tables.tex}
+\input{definitions/la-credits.tex}
+
+\RequirePackage{definitions/la-tikzconfig}
 \RequirePackage{float}
-\RequirePackage{ragged2e}
-\RequirePackage{standalone}
+\RequirePackage{siunitx}
+\RequirePackage{currency}
+\RequirePackage{caption}
+
+\newcommand{\reais}{R\$}
+\DefineCurrency{USD}{name = {dólar}, plural = {dólares}, iso = {USD}, kind = symbol, symbol = {\$}}
+\DefineCurrency{BRL}{name = {real}, plural = {reais}, iso = {BRL}, kind = symbol, symbol = {\reais}}
+\DefineCurrency{EUR}{name={euro}, plural={euros}, symbol={\euro}, iso={EUR}, kind=symbol}
+\CurrencySetup{pre = true, group-separator = {.}, base = {2}}
+
+\sisetup{
+	per-mode = symbol,
+	group-separator = {.},
+	output-decimal-marker = {,},
+	range-phrase = { a },
+	range-units = single,
+	detect-mode,
+	retain-zero-uncertainty,
+	drop-zero-decimal=false
+}
+
+\counterwithin{figure}{chapter}
+\renewcommand{\fps@figure}{!htb}
+\renewcommand{\fps@table}{!htb}
+\g@addto@macro\@floatboxreset\centering
+
 \RequirePackage[brazilian]{babel}
+\babelprovide[transforms = hyphen.repeat]{brazilian}
+\addto\captionsbrazilian{%
+  \renewcommand{\appendixname}{Apêndice}%
+  \renewcommand{\bibname}{Bibliografia}
+}
 
 \RequirePackage[
 	style = apa,
 	backend = biber
 ]{biblatex}
-
-\renewbibmacro*{cite:plabelyear+extradate}{%
-	\iffieldundef{labelyear}{}
-	{\clearfield{labelmonth}% don't want months in citations
-		\clearfield{labelday}% don't want days in citations
-		\clearfield{labelendmonth}% don't want months in citations
-		\clearfield{labelendday}% don't want days in citations
-		\iffieldsequal{labelyear}{labelendyear}% Don't want no-op year ranges
-		{\clearfield{labelendyear}}
-		{}%
-		\iffieldundef{origyear}
-		{}
-		{\printorigdate%
-			\setunit*{\addslash}}%
-		\iffieldundef{related}
-		{}
-		{\iffieldequalstr{relatedtype}{reprintfrom}
-			{\entrydata*{\thefield{related}}{\printlabeldateextra}%
-				\setunit*{\addslash}}
-			{}}%
-		\printlabeldateextra}}
-
-\renewbibmacro*{cite}{%
-	\iffieldequals{fullhash}{\cbx@lasthash}
-	{\setunit{\compcitedelim}%
-		\printtext[bibhyperref]{%
-			\usebibmacro{cite:plabelyear+extradate}}}%
-	{\printtext[bibhyperref]{%
-			\ifnameundef{labelname}
-			{\usebibmacro{cite:noname}%
-				\setunit{\printdelim{nameyeardelim}}%
-				\usebibmacro{cite:plabelyear+extradate}%
-				\savefield{fullhash}{\cbx@lasthash}}
-			{\ifnameundef{shortauthor}
-				{\printnames{labelname}}%
-				{\cbx@apa@ifnamesaved
-					{\printnames{shortauthor}}
-					{\ifnameundef{groupauthor}
-						{\printnames[labelname]{author}}
-						{\printnames[labelname]{groupauthor}}%
-						\addspace\printnames[sabrackets]{shortauthor}}}%
-				\setunit{\printdelim{nameyeardelim}}%
-				\usebibmacro{cite:plabelyear+extradate}%
-				\savefield{fullhash}{\cbx@lasthash}}}}%
-	\setunit{\multicitedelim}}
-
-\renewbibmacro*{textcite}{%
-	\iffieldequals{fullhash}{\cbx@lasthash}
-	{\setunit{\compcitedelim}%
-		\printtext[bibhyperref]{%
-			\usebibmacro{cite:plabelyear+extradate}}}
-	{%
-		\ifbool{cbx:parens}
-		{\bibcloseparen\global\boolfalse{cbx:parens}}
-		{}%
-		\setunit{\compcitedelim}%
-		\ifnameundef{labelname}
-		{\iffieldundef{shorthand}%
-			{\printtext[bibhyperref]{%
-					\usebibmacro{cite:noname}}%
-				\setunit{\ifbool{cbx:np}%
-					{\printdelim{nameyeardelim}}%
-					{\global\booltrue{cbx:parens}\addspace\bibopenparen}}%
-				\printtext[bibhyperref]{%
-					\usebibmacro{cite:plabelyear+extradate}}}
-			{\printtext[bibhyperref]{%
-					\usebibmacro{cite:shorthand}}}}
-		{\printtext[bibhyperref]{%
-				\ifnameundef{shortauthor}%
-				{\printnames{labelname}}
-				{\cbx@apa@ifnamesaved
-					{\printnames{shortauthor}}
-					{\ifnameundef{groupauthor}
-						{\printnames[labelname]{author}}
-						{\printnames[labelname]{groupauthor}}}}}%
-			\setunit{\ifbool{cbx:np}
-				{\printdelim{nameyeardelim}}
-				{\global\booltrue{cbx:parens}\addspace\bibopenparen}}%
-			\printtext[bibhyperref]{%
-				\ifnameundef{shortauthor}
-				{}
-				{\cbx@apa@ifnamesaved
-					{}
-					{\printnames{shortauthor}\setunit{\printdelim{nameyeardelim}}}}%
-				\usebibmacro{cite:plabelyear+extradate}}%
-			\savefield{fullhash}{\cbx@lasthash}}}}
+\RequirePackage[portuguese=brazilian]{csquotes}
 
 
 \input{definitions/la-math.tex}
 
+\input{definitions/la-hypersetup.tex}
 
-\numberwithin{figure}{chapter}
+\RequirePackage[capitalise,nameinlink,noabbrev,brazilian]{cleveref}
 
-\RequirePackage{cleveref}
-\crefformat{task}{#2atividade~#1#3}
-\Crefformat{task}{#2Atividade~#1#3}
+\renewcommand{\cpageref}[1]{página~\labelcpageref{#1}}
 
-\crefrangeformat{task}{#3atividades~#1#4 a~#5#2#6}
-\Crefrangeformat{task}{#3Atividades~#1#4 a~#5#2#6}
-
-\crefmultiformat{task}{#2atividades~#1#3}%
-  { e~#2#1#3}{, #2#1#3}{ e~#2#1#3}
-\Crefmultiformat{task}{#2Atividades~#1#3}%
-  { e~#2#1#3}{, #2#1#3}{ e~#2#1#3}
-
-\crefrangemultiformat{task}{#3atividades~#1#4 a~#5#2#6}%
-  { e~#3#1#4 a~#5#2#6}{, #3#1#4 a~#5#2#6}{ e~#3#1#4 a~#5#2#6}
-\crefrangemultiformat{task}{#3Atividades~#1#4 a~#5#2#6}%
-  { e~#3#1#4 a~#5#2#6}{, #3#1#4 a~#5#2#6}{ e~#3#1#4 a~#5#2#6}
-
-\crefformat{example}{#2exemplo~#1#3}
-\Crefformat{example}{#2Exemplo~#1#3}
-
-\crefrangeformat{example}{#3exemplos~#1#4 a~#5#2#6}
-\Crefrangeformat{example}{#3Exemplos~#1#4 a~#5#2#6}
-
-\crefmultiformat{example}{#2exemplos~#1#3}%
-  { e~#2#1#3}{, #2#1#3}{ e~#2#1#3}
-\Crefmultiformat{example}{#2Exemplos~#1#3}%
-  { e~#2#1#3}{, #2#1#3}{ e~#2#1#3}
-
-\crefrangemultiformat{example}{#3exemplos~#1#4 a~#5#2#6}%
-  { e~#3#1#4 a~#5#2#6}{, #3#1#4 a~#5#2#6}{ e~#3#1#4 a~#5#2#6}
-\crefrangemultiformat{example}{#3Exemplos~#1#4 a~#5#2#6}%
-  { e~#3#1#4 a~#5#2#6}{, #3#1#4 a~#5#2#6}{ e~#3#1#4 a~#5#2#6}
+\crefname{task}{Atividade}{Atividades}
+\crefname{example}{Exemplo}{Exemplos}
+\crefname{reflection}{Refletindo}{Refletindo}
+\crefname{knowledge}{Você sabia?}{Você sabia?}
+\crefname{research}{Notas}{Notas}
+\crefname{explore}{Explorando}{Explorando}
+\crefname{arrange}{Organizando}{Organizando}
+\crefname{practice}{Praticando}{Praticando}
+\crefname{know}{Saiba Mais}{Saiba Mais}

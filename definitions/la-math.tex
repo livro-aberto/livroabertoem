@@ -1,4 +1,5 @@
-\RequirePackage{amsmath,amssymb,amsfonts,amsthm,amstext,mathtools}
+\RequirePackage{amsmath,amsthm,mathtools}
+
 	\DeclareMathOperator{\sen}{sen}
 	\DeclareMathOperator{\tg}{tg}
 	\DeclareMathOperator{\cotg}{cotg}
@@ -22,3 +23,19 @@
 	\newcommand{\Q}{\mathbb{Q}}
 	\newcommand{\Z}{\mathbb{Z}}
 	\newcommand{\N}{\mathbb{N}}
+	
+\RequirePackage{unicode-math}
+\setmathfont{latinmodern-math.otf}
+
+\setmathfont{Noto Sans Math}[
+    range={
+        it/{num,latin}->sfit,
+        it/{greek}->up,
+        up/{greek},
+        up/{num,latin}->sfup,
+        bb/{num,latin}->bb,
+        bb/{greek}->sfbb,
+        bbit/{num,latin}->sfbbit,
+        bbit/{greek}->sfbbit
+    }
+]

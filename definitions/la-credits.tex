@@ -1,41 +1,36 @@
 \RequirePackage{makecell}
 \RequirePackage{xurl}
 
-\let\Chaptermark\chaptermark
-\let\Sectionmark\sectionmark
-\let\Subsectionmark\subsectionmark
-\let\Subsubsectionmark\subsubsectionmark
-\def\chaptermark#1{\def\Chaptername{#1}\Chaptermark{#1}}
-\def\sectionmark#1{\def\Sectionname{#1}\Sectionmark{#1}}
-\def\subsectionmark#1{\def\Subsectionname{#1}\Subsectionmark{#1}}
-\def\subsubsectionmark#1{\def\Subsubsectionname{#1}\Subsubsectionmark{#1}}
+\newif\ifauthors%
 
-% Comandos para definir a página de créditos
+\renewcommand{\author}[1]{%
+        \renewcommand{\and}{%
+            \authorstrue\\
+        }
+    \def\la@author{#1}
+}
 
-\newcommand{\autor}[1]{%
-	\def\la@autor{#1}
+\newcommand{\la@author@table}{%
+    \makecell[tl]{\la@author}
 }
-\newcommand{\autores}{%
-	\def\la@autores
-}
-\newcommand{\la@autores@table}[1]{
-		\makecell[tl]{\la@autores}
-}
-\newif\ifrevisao
 
-\newcommand{\revisao}[1]{%
-	\revisaotrue
-	\def\la@revisao{%
-		\makecell[tl]{#1}
+\newif\ifrevisao%
+\newcommand{\revision}[1]{%
+  {\renewcommand{\and}{\\}
+    \revisaotrue%
+    \def\la@revisao{%
+      \makecell[tl]{#1}
+    }
 	}
 }
 
 
-\newcommand{\colaboracao}[1]{\def\la@colaboracao{#1}}
-\newcommand{\versao}[1]{\def\la@versao{#1}}
-\newcommand{\graficos}[1]{\def\la@graficos{#1}}
-\newcommand{\ilustracao}[1]{\def\la@ilustracao{#1}}
-\newcommand{\autordacapa}[3]{%
+\newcommand{\collaboration}[1]{\def\la@colaboracao{#1}}
+\newcommand{\version}[1]{\def\la@versao{#1}}
+\def\la@version{\textbf{?}}
+\newcommand{\graphicsauthor}[1]{\def\la@graficos{#1}}
+\newcommand{\illustrationauthor}[1]{\def\la@ilustracao{#1}}
+\newcommand{\coverauthor}[3]{%
 	\def\la@autorcapa{%
 		\makecell*[t{p{\linewidth}}]{%
 			Foto de #1 no #2 \\ \url{#3}
@@ -47,15 +42,12 @@
 \newcommand{\versaodigital}[1]{\def\la@versaodigital{\url{#1}}}
 \newcommand{\ccbysa}{\def\la@ccbysa{1}}
 
-\newcommand{\creditos}{%
-	\cleardoublepage
-	\begin{titlingpage}
-	\iftoggle{teacher}{
-		\begin{paracol}{2}
-	}{}
+\renewcommand{\leftmark}{\chaptermark}
+\newcommand{\credits}{%
+\begin{titlingpage}
 		\renewcommand{\arraystretch}{1.75}
 		\begin{center}
-			Projeto: LIVRO ABERTO DE MATEMÁTICA
+			Projeto: {\scshape Livro Aberto de Matemática}
 
 			\noindent \begin{tabular}{lcccr}
 				\includegraphics[scale=.15]{impa} & \quad\quad & \includegraphics[width=3cm]{logo} & \quad\quad & \includegraphics[scale=.24]{obmep}
@@ -75,10 +67,12 @@
 			% \vspace{.5em}
 		\else\fi
 
-		\begin{tabular}{p{.2\la@studenttextwidth}p{.75\la@studenttextwidth}}
-			Título:                                            & \Chaptername                                                          \\
+		\begin{tabular}{p{.2\la@student@textwidth}p{.75\la@student@textwidth}}
+			Título:                                            & \@currentchaptertitle                                                          \\
 
-			Ano/ Versão:                                       & \the\year{} / versão \la@versao{} de \today                             \\
+            \ifdefined\la@versao%
+			Ano/ Versão:                                       & \the\year\space\slash\space  versão \la@versao\ de \today                             \\
+			\else\fi
 
 			Editora                                            & Instituto Nacional de Matem\'atica Pura e Aplicada (IMPA-OS)          \\
 
@@ -88,7 +82,7 @@
 
 			Coordenação:                                       & Fabio Simas e Augusto Teixeira (\url{livroaberto@impa.br})            \\
 
-			\ifdefined\la@autores Autores \else Autor (a) \fi  & \ifdefined\la@autores \la@autores@table \else \la@autor \fi             \\
+			\ifauthors Autores \else Autor (a) \fi  & \la@author@table        \\
 
 			\ifrevisao
 			Revisão:                                           &  \la@revisao            \\
@@ -100,7 +94,7 @@
 
 			Design:                                            & Andreza Moreira (Tangentes Design)                                    \\
 
-			Diagramação:                                       & Tarso Caldas                                                          \\
+			Diagramação:                                       & Tarso Boudet Caldas                                                          \\
 
 			\ifdefined\la@ilustracao
 			Ilustrações:                                       & \la@ilustracao                                                          \\
@@ -136,7 +130,7 @@
 				{\large Desenvolvido por}
 
 				\vspace{1em}
-				\includegraphics[width=2.5cm]{logo-associacao.jpg}
+				\includegraphics[width=2.5cm]{logo-associacao}
 			\end{minipage}\hfill
 			\begin{minipage}[r]{5cm}
 				\centering
@@ -147,22 +141,17 @@
 				\includegraphics[width=3.5cm]{itau}
 			\end{minipage}
 		\end{figure}
-		\clearpage
-		\iftoggle{teacher}{
-			\end{paracol}
-		}{}
-	\end{titlingpage}
+    % \teachercol@off
 
-
-	\undef\autor%
-	\undef\autores%
-	\undef\revisor%
-	\undef\revisores%
+	\undef\author%
+	\undef\revision%
 	\revisaofalse%
+    \authorsfalse%
 
-	\let\la@versao\relax
+    \undef\la@versao
 	\undef\la@autorcapa
 	\undef\la@graficos
 	\undef\la@versaodigital
 	\undef\la@ccbysa
+\end{titlingpage}
 }

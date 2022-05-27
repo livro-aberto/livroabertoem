@@ -51,7 +51,7 @@
 		\coordinate (tag lower right) at 
       ($(tag west) + (\la@bannername@width - \la@bannername@tip, -.5\la@bannername@height)$);
 
-		\draw [rounded corners=4, fill = \currentcolor] (tag west) 
+		\fill [rounded corners=4, fill = \currentcolor] (tag west) 
                                                  -- (tag upper left) 
                                                  -- (tag upper right) 
                                                  -- (tag east) 
@@ -70,16 +70,16 @@
   % \la@default@banner@length
   \tikzset{external/export next=false}
 	\begin{tikzpicture}[remember picture, overlay]
-		\draw [\currentcolor,  line width = 3pt] (-\la@student@leftmargin,0) 
-    -- (\la@student@textwidth,0);
+		\draw [\currentcolor,  line width = 3pt] (-\la@student@leftmargin-3pt,0) 
+    -- (\la@student@textwidth-7pt,0);
 
 		\la@bannernamestyle
 
 		\node (banner title) [
-        anchor = east, fill, rectangle, white, inner sep = 2.5pt,
-        outer sep = 1pt, font = \vphantom{Ag}
+        anchor = east, fill, rectangle, white, inner sep = 0pt,
+        inner sep = 3pt, font = \vphantom{Ag}
       ]
-			at (\la@student@textwidth+.4em,0) {{\hspace*{2.5pt}\bannertitlefont #1}};
+			at (\la@student@textwidth,0) {{\bannertitlefont #1}};
 	\end{tikzpicture}
 }
 %\end{macrocode}
@@ -90,7 +90,7 @@
   \la@default@banner@length
 	\tikzset{external/export next=false}
 	\begin{tikzpicture}[remember picture, overlay]
-		\draw [principal,  line width = 3pt] (-\la@student@leftmargin,0) 
+		\draw [principal,  line width = 3pt] (-\la@student@leftmargin-15pt,0) 
     -- (\la@student@textwidth+\la@student@rightmargin,0);
 
 		\la@bannernamestyle[shift = {(.5\la@student@textwidth-.5\la@bannername@width+\la@bannername@tip,0)}]
@@ -112,75 +112,16 @@
 %\end{macrocode}
 
 
-%\begin{macrocode}
-\titleclass{\la@banner}{straight}[\section]
-	\providecommand*{\toclevel@la@banner}{1}
-	\titlespacing{\la@banner}{0pt}{\la@titlebeforeskip}{\la@titleafterskip}
-	\titleformat{\la@banner}[hang]{\bannertitlefont}{}{0pt}{%
-		\needspace{6em}
-		\la@bannerstyle{#1}
-		\la@defaultlist%
-	}	
-%\end{macrocode}
-
-%\begin{macrocode}
-\titleclass{\la@exercise}{straight}[\chapter]
-	\providecommand*{\toclevel@la@exercise}{1}
-	\titlespacing{\la@exercise}{0pt}{\la@titlebeforeskip}{\la@titleafterskip}
-	\titleformat{\la@exercise}[hang]{\bannertitlefont}{}{0pt}{%
-		\needspace{6em}
-		\la@exercisebanner		
-	}
-%\end{macrocode}
-
-%\begin{macrocode}
-\titleclass{\la@largebanner}{straight}[\chapter]
-	\providecommand*{\toclevel@la@largebanner}{1}
-	\titlespacing{\la@largebanner}{0pt}{\la@titlebeforeskip}{\la@titleafterskip}
-	\titleformat{\la@largebanner}[hang]{\bannertitlefont}{}{0pt}{%
-		\la@largebannerstyle
-	}
-%\end{macrocode}
-
-
 % Formatação dos comandos \section e \subsection
-
 %\begin{macrocode}
-\newtoggle{la@section}
-\titleformat{\section}{
-	\sectiontitlefont
-	}{\thesection}{0pt}{%
-		\cleardoublepage
-		#1
-		\toggletrue{la@section}		
-	}
-\titlespacing*{\section}{0pt}{2mm}{1mm}
-\renewcommand{\toclevel@section}{1}
-
-\let\la@section\section %chktex 1
-\renewcommand{\section}[1]{
-	\la@section{#1}
-	\iftoggle{teacher}\teachercol@on
-	\toggletrue{la@section}
-	\thispagestyle{livroaberto}
-}
-%\end{macrocode}
-
-%\begin{macrocode}
-\titleformat{\subsection}{
-	\color{\currentcolor}\normalfont\Large\bfseries
-  }{\thesection}{1em}{#1}
-  \titlespacing*{\subsection}{0pt}{2mm}{1mm}
-  \renewcommand{\toclevel@subsection}{4}
-
-
-\titleformat{\paragraph}{
-	\color{\currentcolor}\normalfont\large\bfseries
-	}{\thesubsection}{1em}{#1}
-	\titlespacing*{\paragraph}{0pt}{1mm}{1mm}
-	\renewcommand{\toclevel@paragraph}{5}
-%\end{macrocode}
-
+\newif\ifaftersection
+\setsecheadstyle{\sectiontitlefont\raggedright}
+ \pretocmd{\section}{%
+	\cleardoublepage
+    \thispagestyle{livroaberto}
+	\aftersectiontrue
+}{}{}
+\setsecindent{0pt}
 
 %\begin{macrocode}
 \newcommand{\bannername}[1]{
@@ -189,74 +130,104 @@
 \newcommand{\la@bannercounter}[1]{
 	\def\la@banner@counter{#1}
 }
+\newcommand{\bannertype}[1]{
+  \def\la@bannertype{#1}
+}
 %\end{macrocode}
 
+\newcommand{\la@banner}[1]{
+  \def\@currentlabelname{#1}
+  \addcontentsline{toc}{banner}{\la@bannername: #1}
+  \vspace{\la@titlebeforeskip}
+  \par\la@bannerstyle{#1}
+  \vspace*{\la@titleafterskip}
+  \la@defaultlist
+  \color{black}
+}
+
+\newcommand{\la@largebanner}{
+  \def\@currentlabelname{\la@bannername}
+  \addcontentsline{toc}{section}{\la@bannername}
+  \vspace{\la@titlebeforeskip}
+  \par\la@largebannerstyle\par
+  \vspace*{\la@titleafterskip}
+  \la@defaultlist
+  \color{black}
+}
+
+\newcommand{\la@exercise}[1][]{
+    \def\@currentlabelname{Exercícios}
+    \IfStrEq{#1}{section}{
+        \clearpage
+        \addcontentsline{toc}{section}{Exercícios}
+    }{
+        \addcontentsline{toc}{banner}{Exercícios}
+  }
+  \vspace{\la@titlebeforeskip}
+  \par\la@exercisebanner\par
+  \vspace*{\la@titleafterskip}
+  \la@exerciselist
+  \color{black}
+}
 
 %\begin{macrocode}
+\newcounter{explore}
 \newcommand{\explore}[1]{%
-	\par
 	\sectioncolor{session1}
 	\bannername{Explorando}
-
-	\iftoggle{la@section}{
-		\clearpage
-		\togglefalse{la@section}
-	}{
-		\cleardoublepage%	
-	}
-
 	\thispagestyle{livroaberto}
-	\iftoggle{teacher}\teachercol@on
-	\la@banner{%
-		\texorpdfstring{}{\la@bannername: }#1
-	}
-	\la@defaultlist
+	\ifaftersection
+		\clearpage
+		\aftersectionfalse
+	\else	
+		\cleardoublepage%	
+	\fi
+  \refstepcounter{explore}
+  \la@banner{#1}
 }
 %\end{macrocode}
 
 %\begin{macrocode}
+\newcounter{practice}
 \newcommand{\practice}[1]{%
 	\sectioncolor{session2}
 	\bannername{Praticando}
-	\la@banner{%
-		\texorpdfstring{}{\la@bannername: }#1
-	}
-	\la@defaultlist
+  \refstepcounter{practice}
+  \la@banner{#1}
 }
 
+\newcounter{know}
 \newcommand{\know}[1]{%
 	\sectioncolor{session3}
 	\bannername{Saiba Mais}
-	\la@banner{%
-		\texorpdfstring{}{\la@bannername: }#1
-	}
-	\la@defaultlist
+  \refstepcounter{know}
+  \la@banner{#1}
 }
 
+\newcounter{arrange}
 \newcommand{\arrange}[1]{%
 	\sectioncolor{session4}
 	\bannername{Organizando}
-	\la@bannercounter{\thearrange}
-	\la@banner{%
-		\texorpdfstring{}{\la@bannername: }#1
-	}
-	\la@defaultlist
+  \refstepcounter{arrange}
+  \la@banner{#1}
 }
 %\end{macrocode}
 
 %\begin{macrocode}
+\newcounter{exercise}
 \newcommand{\exercise}{	
 	\sectioncolor{principal}
 	\bannername{\strut{Exercícios}}
-	\la@exercise{\texorpdfstring{}{Exercícios}}
-	\la@exerciselist%
+  \refstepcounter{exercise}
+	\la@exercise
 }
 
+\newcounter{additionalmaterial}
 \newcommand{\additionalmaterial}{	
 	\sectioncolor{principal}
 	\bannername{Material Suplementar}
-	\la@largebanner{\texorpdfstring{}{Material Suplementar}}
-	\la@defaultlist%
+  \refstepcounter{additionalmaterial}
+  \la@largebanner
 }
 %\end{macrocode}
 

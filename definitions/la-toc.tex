@@ -1,0 +1,51 @@
+\setcounter{tocdepth}{3}
+\let\l@subsection\l@paragraph
+\let\l@subsubsection\l@paragraph
+
+\newlistentry{banner}{toc}{1}
+    \cftsetindents{banner}{2.5em}{3.2em}
+\newlistentry{task}{toc}{2}
+    \cftsetindents{task}{3.25em}{3.2em}
+
+\newif\ifla@taskintoc
+\newcommand{\task@toc}[1]{
+    \ifla@taskintoc
+        \addcontentsline{toc}{task}{#1}
+    \else\fi
+}
+\newcommand{\taskintoc}{\la@taskintoctrue}
+\newcommand{\notaskintoc}{\la@taskintocfalse}
+
+
+\renewcommand{\printtoctitle}{\sectiontitlefont}
+\renewcommand{\cftchapterfont}{\LARGE\bfseries}
+\renewcommand{\cftchapterpagefont}{\LARGE\bfseries}
+\renewcommand{\cftsectionfont}{\Large}
+\renewcommand{\cftsectionpagefont}{\Large}
+\renewcommand{\cftbannerfont}{\large}
+\renewcommand{\cftbannerpagefont}{\large}
+\renewcommand{\cfttaskfont}{\normalsize}
+\renewcommand{\cfttaskpagefont}{\normalsize}
+
+\setlength{\cftbeforechapterskip}{2em}
+\setlength{\cftbeforesectionskip}{1em}
+\setlength{\cftbeforebannerskip}{.5em}
+\setlength{\cftbeforetaskskip}{.25em}
+
+% \renewcommand{\cftdot}{}
+% \setpnumwidth{2.55em}
+% \setrmarg{3.55em}
+% \let\oldcftchapterfont\cftchapterfont%
+
+% % Alinhamento à esquerda dos itens da toc 
+% % https://tex.stackexchange.com/questions/283730/left-align-toc-items-when-using-tableofcontents
+% \bgroup%
+% \advance\@flushglue by \@tocrmarg%
+% \xdef\@tocrmarg{\the\@flushglue}%
+% \egroup%
+
+% \settocpreprocessor{chapter}{%
+% 	\let\tempf@rtoc\f@rtoc%
+% 	\def\f@rtoc{%
+% 		\texorpdfstring{\MakeTextUppercase{\tempf@rtoc}}{\tempf@rtoc}}%
+% }

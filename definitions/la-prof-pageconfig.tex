@@ -13,7 +13,7 @@
 
 \setlength{\la@teacher@colsep}{\la@student@foremargin+\la@teacher@innermargin}
 \setlength{\la@teacher@textwidth}{
-	\la@teacher@pagewidth
+ 	 \la@teacher@pagewidth
 	-\la@student@textwidth
 	-\la@teacher@colsep
 	-\la@teacher@spinemargin
@@ -33,72 +33,87 @@
 
 \checkandfixthelayout%
 
-
-\newtoggle{teacherenv}
-
-
-\newenvironment{teacher}{%
-    \par
-    \toggletrue{teacherenv}
-    \switchcolumn*
-		\raggedright
-    \la@widelist
-}{
-    \hfill
-    \switchcolumn
-    \la@defaultlist
-    \togglefalse{teacherenv}
-}
-
-\newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Not in teachers's environment}{%
-	You should only use this command for teacher's content}
-}
-
+\newcounter{studentpage}
 \newcounter{teacherpage}
+
 \makepagestyle{teacherpage}
 \makeevenfoot{teacherpage}{}{\la@evenpagenumber[\currentvolcolor]}{}
 \makeoddfoot{teacherpage}{}{\la@oddpagenumber[\currentvolcolor]}{}
 
-\newcommand{\la@teacherpage}{
-	\cleardoublepage
-	\pagestyle{teacherpage}
+\newif\ifteacherpage\teacherpagefalse
+\newif\ifteachersection\teachersectionfalse
+\newenvironment{la@teacherpage}[1]{%
+    \clearpage
+	\teacherpagetrue
+    \renewcommand{\thepage}{\arabic{chapter}.\Alph{page}}
+    \setcounter{studentpage}{\value{page}}
+    \setcounter{page}{\value{teacherpage}}
+    \clearpage
+    \la@teacher@backgroundcolor{boxbackground}
+    \par{\raggedright\sectiontitlefont\color{\currentvolcolor}#1}\par
+    \vspace{.5\la@titleafterskip}
+	\thispagestyle{teacherpage}
 	\begin{multicols}{2}
-}
-
-\newenvironment{teacherpage}{%
-	\iftoggle{paracol}{\teachercol@off}{}
-	\la@teacherpage
 }{
 	\end{multicols}
+	\teacherpagefalse
+	\setcounter{teacherpage}{\value{page}}
+	\setcounter{page}{\value{studentpage}}
+	\renewcommand{\thepage}{\arabic{page}}
+	\color{black}
+}
+
+\pretocmd{\la@teacherpage}{\teachercol@off}{}{}
+
+\newenvironment{teachersection}[1]{
+    \teachersectiontrue
+    \begin{la@teacherpage}{#1}
+    \addcontentsline{toc}{section}{#1}
+}{
+    \end{la@teacherpage} 
+    \teachersectionfalse
+}
+
+\newenvironment{teacherintroduction}{
+    \begin{la@teacherpage}{Introdução ao Professor}
+    \addcontentsline{toc}{section}{Introdução ao Professor}
+    }{
+    \end{la@teacherpage}
+}   
+
+\newenvironment{longteacher}[1]{
+    \teacherenvtrue
+    \begin{la@teacherpage}{#1}
+}{
+    \end{la@teacherpage}
+    \clearpage\thispagestyle{livroaberto}\teachercol@on
 }
 
 
+\newcommand{\la@notteacherpage}{\ClassError{livroabertoem}{Outside teachers's page}{%
+	You should only use this command in a teacher page}
+}
 
 % paracol definitions
 \twosided%
 \setcolumnwidth{\la@student@textwidth/\la@teacher@colsep,\la@teacher@textwidth}
-\newcommand{\la@teacher@backgroundcolor}{%
-	\backgroundcolor{c[1] (\la@teacher@innermargin,25mm) (25mm,250mm)}{boxbackground}
+\newcommand{\la@teacher@backgroundcolor}[1]{%
+	\backgroundcolor{c[1] (\la@teacher@innermargin,25mm) (25mm,250mm)}{#1}
 }
 
-\newcommand{\teachercol@on}{     
-	\iftoggle{teacher}{
-		\iftoggle{paracol}{
-		}{
-			\la@teacher@backgroundcolor
-			\begin{paracol}{2} % starts double column at the student's main text.
-			\toggletrue{paracol}
-		}
-	}
+\makepsmarks{empty}{\la@teacher@backgroundcolor{white}}
+\renewcommand{\teachercol@on}{     
+    \ifteacher\ifparacol\else
+		\paracol{2} % starts double column at the student's main text.
+		\paracoltrue
+	\fi\else\fi
 }
 
-\newcommand{\teachercol@off}{
-	\iftoggle{teacher}{
-    \iftoggle{paracol}{
-			\end{paracol}
-			\togglefalse{paracol}
-    }
-	}
+\renewcommand{\teachercol@off}{
+    \ifteacher\ifparacol
+		\endparacol
+		\paracolfalse
+	\else\fi\else\fi
 }
 
 \AtEndDocument{

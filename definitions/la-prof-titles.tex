@@ -1,35 +1,65 @@
-\newcommand{\la@teacher@sidetitle}[2]{%
+\newif\ifteacherenv\teacherenvfalse
+\newenvironment{la@teacher}{%
+    \teacherenvtrue
+	\raggedright
+	\la@widelist
+}{
+    \hfill
+    \la@defaultlist
+    \teacherenvfalse
+}
 
-	{\color{\currentcolor}\bfseries\vspace{1em}
-		{\fontsize{14pt}{0pt}\selectfont #1}\par
-		\vspace{-.8\baselineskip}	
-		\rule{\la@teacher@textwidth}{3pt}
-		{\Large #2}\par
-	}
+\newenvironment{teacher}{
+    \par\switchcolumn
+    \begin{la@teacher}
+}{
+    \end{la@teacher}
+    \switchcolumn
+}
+
+\newenvironment{teacher*}{
+    \par\switchcolumn*
+    \begin{\la@teacher}
+}{
+    \end{\la@teacher}
+    \switchcolumn
+}
+
+\newcommand{\la@teacher@sidetitle}[2]{%
+    \ifteacherenv
+	{
+	    {
+    	    \color{\currentcolor}\bfseries\vspace{1em}
+    		{\fontsize{14pt}{0pt}\selectfont #1}\par
+    		\vspace{-.8\baselineskip}	
+    		\rule{\la@teacher@textwidth}{3pt}
+    		{\linespread{1.2}\Large\raggedright #2}\par
+    	}\normalfont\small
+    }
+	\else
+		\la@notteacherenv
+	\fi
 }
 
 \newcommand{\objectives}[1]{
-	\iftoggle{teacherenv}{%
 		\la@teacher@sidetitle{Objetivos Específicos}{#1}
-	}{%
-		\la@notteacherenv
-	}
 }
 
-
-
 \newcommand{\sugestions}[1]{%
-	\iftoggle{teacherenv}{%
 		\la@teacher@sidetitle{Sugestões e discussões}{#1}
-	}{%
-		\la@notteacherenv
-	}
+}
+\newcommand{\sugestion}[1]{%
+    \ifteacherenv%
+        \paragraph{#1}
+    \else
+        \la@notteacherenv
+    \fi
 }
 
 \newcommand{\answer}[1]{%
-	\iftoggle{teacherenv}{%
 		\la@teacher@sidetitle{Solução}{#1}
-	}{%
-		\la@notteacherenv
-	}
+}
+
+\newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Outside teachers's environment}{%
+	You should only use this command in a teacher environment}
 }

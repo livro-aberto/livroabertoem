@@ -53,27 +53,7 @@
 }
 
 
-% Creates the box with primary color
-\newtcolorbox{la@chapterbox}[1]{
-	parbox = false, blanker, enhanced, breakable, 
-	before skip = \la@titlebeforeskip, after skip = \la@titleafterskip, 
-	left = 3mm, right = 3mm, top = 1em, bottom = 3mm, 
-	leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt, 
-	% text width = .4\la@student@textwidth,
-	colframe = primario, colback = boxbackground, 
-	title = #1, fonttitle = \boxnamefont\vphantom{Ag},
-	boxed title style = {%
-		empty, arc = 0pt, outer arc = 0pt, boxrule = 0pt
-	},
-	attach boxed title to top left = {},
-	underlay boxed title = {%
-		 \coordinate (fnw) at (frame.north west);
-		 \filldraw [draw = primario, fill = primario]
-			($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (6pc,0) % Up from frame and left
-			.. controls +(1.5pc,-1pt) and ($(fnw) + (10.5pc,-1pt)$) .. % curve going down
-		    ($(fnw) + (12pc, -1pt)$) -- cycle;
-	}
-}
+
 
 
 % Requires icon on the format iconname-volume#.pdf, where # is the number of the current volume. 
@@ -86,10 +66,8 @@
 \newcommand{\la@box@icon}{
 	\ifdefined\la@boxicon
 		\includegraphics[width=22pt]{\la@boxicon-\currentvolcolor.pdf}
-		\undef\la@boxicon
-	\else
-    \includegraphics[width=22pt]{notas-\currentvolcolor.pdf}
-  \fi
+	\undef\la@boxicon
+	\else\fi
 }
 
 % Creates the box with current volume color and icon
@@ -118,59 +96,58 @@
 
 % Environments
 
-\newcounter{task}[chapter]
 \newenvironment{task}[1]{\par
 	\refstepcounter{task}
+	\def\@currentlabelname{#1}
+    \task@toc{Atividade \thetask: #1}
 	\bannername{Atividade \thetask}
 	\la@contentsepbanner{#1}
-	\par
+	\par\taskfont
 }{
+    \par{\color{cinza}\rule{\linewidth}{.05pt}}\normalfont
 	\vspace{\la@titlebeforeskip}
 }
 
 \newcounter{example}[chapter]
 \newenvironment{example}[1]{
-	\refstepcounter{example}
+	\refstepcounter{example}\def\@currentlabelname{#1}
 	\begin{la@sectionbox}{#1}{Exemplo \theexample}
 }{
 	\end{la@sectionbox}
 }
 
+\newcounter{observation}[chapter]
 \newenvironment{observation}[1]{
+    \refstepcounter{observation}\def\@currentlabelname{#1}
 	\begin{la@sectionbox}{#1}{Observação}
 }{
 	\end{la@sectionbox}
 }
 
 
-\newcommand{\la@chapterwhat}[1]{
-	\begin{la@chapterbox}{O que?}
-		#1
-	\end{la@chapterbox}
-}	
-
-\newcommand{\la@chapterbecause}[1]{
-	\begin{la@chapterbox}{Por que?}
-		#1
-	\end{la@chapterbox}
-}	
 
 
+\newcounter{reflection}[chapter]
 \newenvironment{reflection}{
+    \refstepcounter{reflection}
 	\boxicon{refletir}
 	\begin{la@volumebox}{Para refletir}
 }{
 	\end{la@volumebox}
 }
 
+\newcounter{knowledge}[chapter]
 \newenvironment{knowledge}{
+    \refstepcounter{knowledge}
 	\boxicon{vcsabia}
 	\begin{la@volumebox}{Você Sabia?}
 }{
 	\end{la@volumebox}
 }
 
+\newcounter{research}[chapter]
 \newenvironment{research}{
+    \refstepcounter{research}
 	\boxicon{notas}
 	\begin{la@volumebox}{Notas}
 }{
