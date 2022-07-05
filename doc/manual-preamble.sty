@@ -1,0 +1,68 @@
+
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{article}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{lmodern}
+\RequirePackage{iftex}
+\ifPDFTeX
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage[utf8]{inputenc}
+  \RequirePackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \RequirePackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \setmainfont[BoldFont=NotoSans-Bold.ttf,ItalicFont=NotoSans-Italic.ttf,BoldItalicFont=NotoSans-BoldItalic.ttf]{NotoSans-Regular.ttf}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \RequirePackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \RequirePackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\RequirePackage{xcolor}
+\IfFileExists{xurl.sty}{\RequirePackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\RequirePackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Manual para a colaboração no livro do ensino médio do projeto Livro Aberto de Matemática},
+  pdfauthor={Tarso Boudet Caldas},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\RequirePackage[margin=3cm]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\RequirePackage[finalizecache=false, frozencache=true]{minted}
+\AtBeginEnvironment{minted}{\let\itshape\relax}
+\RequirePackage{xpatch}
+\xpatchcmd{\mintinline}{\begingroup}{\begingroup\let\itshape\relax}{}{}
+\RequirePackage{dirtree}
+\ifLuaTeX
+  \RequirePackage{selnolig}  % disable illegal ligatures
+\fi
+
+\newmint{latex}
+\newminted{latex}
+\newmintinline{latex}
+\newmintedfile{latex}

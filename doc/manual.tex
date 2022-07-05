@@ -1,0 +1,68 @@
+\documentclass{article}
+
+\usepackage{manual-preamble}
+
+\title{Classe \texttt{livroabertoem}}
+\author{Tarso Boudet Caldas}
+\date{\today}
+
+
+\begin{document}
+
+\begin{abstract}
+	Este documento descreve os comandos e ambientes criados para o projeto do
+	Livro Aberto de Matemática do Ensino Médio, da Associação Livro Aberto em
+	parceria com o IMPA.\footnote{Para mais informações sobre o projeto, acesse
+		\url{https://www.umlivroaberto.org}}
+
+	O principal diferencial da classe \verb|livroaberto| é a possibilidade
+	da criação de um livro para o professor e para o aluno a partir dos
+	mesmos arquivos, bastando escolher a opção \verb|professor| durante a
+	invocação.
+\end{abstract}
+
+\section{Introdução}
+
+A classe \verb|livroabertoem| serve como template para a criação dos
+livros do Ensino Médio da Associação Livro Aberto, isto é, além de
+contar com a interface para a geração do material do aluno e do
+professor, possui também um design gráfico próprio elaborado por Enzo
+Esberard, bolsista da Escola de Belas Artes da UFRJ\@. Os detalhes do
+modelo gráfico serão explicitados em um documento à parte, atualmente
+em desenvolvimento.
+
+Aqui iremos apenas descrever os comandos criados para o desenvolvimento
+de capítulos seguindo a filosofia e sintaxe do projeto da coleção do
+ensino médio.
+
+\section{Pré-requisitos}
+
+Usamos como base a classe \verb|memoir| para o desenvolvimento do
+modelo. Além disso, utilizamos a seguinte lista de pacotes para o a
+criação da interface: \latexinline{multicol}, \latexinline{xstring},
+\latexinline{comment}, \latexinline{xpatch},
+\latexinline{paracol}, \latexinline{xcolor},
+\latexinline{graphicx}, \latexinline{calc},
+\latexinline{tikz}, \latexinline{tcolorbox} e \latexinline{pagecolor}.
+
+
+\section{Divisão do documento}
+
+Os livros do Ensino médio possuem a seguinte hierarquia na divisão dos documentos: \dirtree{%
+  .1 Volume.
+  .2 Capítulo.
+  .3 Seção
+  .4 Explorando.
+  .4 Organizando.
+  .4 Praticando.
+  .4 Saiba Mais.
+  .3 Exercícios.
+  .3 Material Suplementar.
+  .3 Bibliografia.
+}
+
+\subsection{Volume}
+
+É criado com o comando \volume{}
+
+\end{document}

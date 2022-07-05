@@ -1,0 +1,30 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{xcolor}
+\RequirePackage{xurl}
+\RequirePackage{bookmark}
+\RequirePackage[margin=3cm]{geometry}
+\RequirePackage{minted}
+\RequirePackage{xpatch}
+\RequirePackage{dirtree}
+\RequirePackage[brazil]{babel}
+
+\hypersetup{
+  pdftitle={Manual para a colaboração no livro do ensino médio do projeto Livro Aberto de Matemática},
+  pdfauthor={Tarso Boudet Caldas},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+}
+\urlstyle{same} % disable monospaced font for URLs
+
+\newmint{latex}{}
+\newminted{latex}{}
+\newmintinline{latex}{}
+\newmintedfile{latex}{}
