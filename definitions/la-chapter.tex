@@ -4,70 +4,68 @@
 \setlength{\la@chapterbannerheight}{140pt}
 
 \newcommand{\chapterillustration}[1]{%
-		\def\la@chapterillustration{#1}
+	\def\la@chapterillustration{#1}
 }
 
 \newcommand{\la@chapter@illustration}{
 	\ifdefined\la@chapterillustration
 		\begin{tikzpicture}[remember picture, overlay]
 			\node [anchor = east, inner sep = 0pt] at (current page.east) {
-					\includegraphics[height = \la@student@pageheight]{\la@chapterillustration}
+				\includegraphics[height = \la@student@pageheight]{\la@chapterillustration}
 			};
 		\end{tikzpicture}
 		\undef\la@chapterillustration
 	\else\fi
 }
 
-% Creates the box with primary color
-\newtcolorbox{la@chapterbox}[1]{
-	parbox = false, blanker, enhanced, breakable, 
-	before skip = \la@titlebeforeskip, after skip = \la@titleafterskip, 
-	left = 3mm, right = 3mm, top = 1em, bottom = 3mm, 
-	leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt, 
-	colframe = primario, colback = boxbackground, 
-	title = #1, fonttitle = \boxnamefont\vphantom{Ag},
-	boxed title style = {%
-		empty, arc = 0pt, outer arc = 0pt, boxrule = 0pt
-	},
-	attach boxed title to top left = {},
-	underlay boxed title = {%
-		 \coordinate (fnw) at (frame.north west);
-		 \filldraw [draw = primario, fill = primario]
-			($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (6pc,0) % Up from frame and left
-			.. controls +(1.5pc,-1pt) and ($(fnw) + (10.5pc,-1pt)$) .. % curve going down
-		    ($(fnw) + (12pc, -1pt)$) -- cycle;
+\ifdraft
+	\newenvironment{la@chapterbox}[1]{
+		\subsection{#1}
+	}{}
+\else
+	% Creates the box with primary color
+	\newtcolorbox{la@chapterbox}[1]{
+		parbox = false, blanker, enhanced, breakable,
+		before skip = \la@titlebeforeskip, after skip = \la@titleafterskip,
+		left = 3mm, right = 3mm, top = 1em, bottom = 3mm,
+		leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt,
+		colframe = primario, colback = boxbackground,
+		title = #1, fonttitle = \boxnamefont\vphantom{Ag},
+		boxed title style = {%
+				empty, arc = 0pt, outer arc = 0pt, boxrule = 0pt
+			},
+		attach boxed title to top left = {},
+		underlay boxed title = {%
+				\coordinate (fnw) at (frame.north west);
+				\filldraw [draw = primario, fill = primario]
+				($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (6pc,0) % Up from frame and left
+				.. controls +(1.5pc,-1pt) and ($(fnw) + (10.5pc,-1pt)$) .. % curve going down
+				($(fnw) + (12pc, -1pt)$) -- cycle;
+			}
 	}
-}
+\fi
 
 \newcommand{\chapterwhat}[1]{
-    \def\la@chapterwhat{
-    	\begin{la@chapterbox}{O que?}
-    		#1
-    	\end{la@chapterbox}
-    }
+	\def\la@chapterwhat{
+			\begin{la@chapterbox}{O que?}
+				#1
+			\end{la@chapterbox}
+	}
 }
 
 \newcommand{\chapterbecause}[1]{
-    \def\la@chapterbecause{
-    	\begin{la@chapterbox}{Por que?}
-    		#1
-    	\end{la@chapterbox}
+	\def\la@chapterbecause{
+		\begin{la@chapterbox}{Por que?}
+			#1
+		\end{la@chapterbox}
 	}
-}	
+}
 
 
 \newcounter{la@chapter}
 \providecommand*{\toclevel@la@chapter}{1}
-\newcommand{\la@chapterautores}{%	
-	\ifdefined\la@autores
-		\la@autores
-		\undef\la@autores
-	\else
-		\ifdefined\la@autor
-			\la@autor
-			\undef\la@autor
-		\else\fi
-	\fi
+\newcommand{\la@chapterauthor}{%	
+	\la@author
 }
 
 % \titleclass{\la@chapter}{page}[\chapter]
@@ -76,37 +74,54 @@
 % }
 
 \renewcommand{\chapter}[1]{
-    \def\@currentchaptertitle{#1}
+  \checkoddpage\ifoddpage\else\clearpage\fi
+	\def\@currentchaptertitle{#1}
 	\refstepcounter{chapter}
-  \addcontentsline{toc}{chapter}{\chaptername\space\thechapter: #1}
-	\la@chapter@illustration
+  \pagestyle{empty}
+	\addcontentsline{toc}{chapter}{\chaptername\space\thechapter: #1}
+	\ifdraft
+		\noindent{\huge\color{principal}\bfseries\chaptername\space\thechapter: #1}\\
+		\noindent{\renewcommand{\and}{\par}\semihuge\color{black}\bfseries\la@chapterauthor}
+		\vspace{\la@titleafterskip}
+		\pagestyle{empty}
+		\ifdefined\la@chapterwhat\par\la@chapterwhat\else\fi
+		\ifdefined\la@chapterbecause\la@chapterbecause\else\fi
+    \clearpage
+	\else
+  %   \ifteacher
+		% \ifdefined\la@chapterwhat\par\la@chapterwhat\par\else\fi
+		% \ifdefined\la@chapterbecause\la@chapterbecause\else\fi
+		% \undef\la@chapterwhat
+		% \undef\la@chapterbecause
+  %   \else\fi
+		\la@chapter@illustration
+		\begin{tikzpicture}[remember picture, overlay]
+			\fill [\currentvolcolor] (current page.south west)
+			-- ($(current page.south west) + (0,\la@chapterbannerheight)$)
+			-- ($(current page.south east) + (0,\la@chapterbannerheight)$)
+			-- (current page.south east) -- cycle;
 
-	\begin{tikzpicture}[remember picture, overlay]
-		\fill [\currentvolcolor] (current page.south west) 
-					-- ($(current page.south west) + (0,\la@chapterbannerheight)$) 
-					-- ($(current page.south east) + (0,\la@chapterbannerheight)$) 
-					-- (current page.south east) -- cycle;
+			\node [
+				align = left, font = \vphantom{Ag}, anchor = west, inner sep = 0pt
+			]	at ($(current page.south west) + (30pt,.5\la@chapterbannerheight)$) {
+				\parbox{.425\paperwidth}{
+					\raggedright{\chapternamefont\chaptername\ \thechapter} \\ \chaptertitlefont#1}
+			};
 
-		\node [
-			align = left, font = \vphantom{Ag}, anchor = west, inner sep = 0pt
-		]	at ($(current page.south west) + (30pt,.5\la@chapterbannerheight)$) {
-			\parbox{.425\paperwidth}{
-        \raggedright{\chapternamefont\chaptername\ \thechapter} \\ \chaptertitlefont#1}
-      };
-
-		\node [
-			align = right, font = \vphantom{Ag}, anchor = east, inner sep = 0pt
-		]	at ($(current page.south east) + (-30pt,.5\la@chapterbannerheight)$) {
-			\parbox{.425\paperwidth}{\raggedleft\chapterauthorfont\la@chapterautores}};
-	\end{tikzpicture}
-	\clearpage
-	\la@teacher@backgroundcolor{boxbackground}
-	\ifdefined\la@chapterwhat\la@chapterwhat\else\fi
-	\ifdefined\la@chapterbecause\la@chapterbecause\else\fi
-	\undef\la@chapterwhat
-	\undef\la@chapterbecause
+			\node [
+				align = right, font = \vphantom{Ag}, anchor = east, inner sep = 0pt
+			]	at ($(current page.south east) + (-30pt,.5\la@chapterbannerheight)$) {
+				\parbox{.425\paperwidth}{\raggedleft\chapterauthorfont\la@chapterauthor}};
+		\end{tikzpicture}
+		\ifteacher\flushpage\else\clearpage\fi
+    \ifdefined\la@author\credits\else\fi
+    \ifdefined\la@chapterwhat\la@chapterwhat\else\fi
+    \ifdefined\la@chapterbecause\la@chapterbecause\else\fi
+    \clearpage
+	\fi
+    \undef\la@chapterwhat
+    \undef\la@chapterbecause
 }
-
 
 \chapterstyle{livroaberto}
 \pagestyle{livroaberto}

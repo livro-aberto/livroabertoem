@@ -4,6 +4,7 @@
 % % Redefine as configurações da página de notas para sair do paracol e passar a utilizar multicols
 \renewcommand*{\notedivision}{
     \teachersection{\notesname}
+    \sectioncolor{\currentvolcolor}
 }
 
 %Termina o multicols da página de notas.
@@ -14,24 +15,22 @@
 \renewcommand*{\notesname}{Notas}
 \renewcommand*{\pagerefname}{Página}
 \renewcommand*{\pagenotesubhead}[3]{}
-\renewcommand*{\notenumintext}[1]{{\noindent\hspace{-2.5pt}\bannernamefont\color{linkscolor} Nota #1}}
 
-\renewcommand*{\notenuminnotes}[1]{{\hspace{-2.5pt}\bannernamefont\color{\currentvolcolor} Nota #1.} \space}
+\renewcommand*{\notenumintext}[1]{
+  {\noindent\hspace{-2.5pt}\bannernamefont\color{linkscolor} Nota #1}
+}
+
+\renewcommand*{\notenuminnotes}[1]{
+  {\hspace{-2.5pt}\bannernamefont\color{\currentvolcolor} Nota #1.} \space
+}
 
 \renewcommand\printpageinnoteshyperref[1]{%
-(\hyperref[#1]{\pagerefname\ \pageref*{#1}})\space}
-
+  (\hyperref[#1]{\pagerefname\ \pageref*{#1}})\space
+}
 
 \newcommand{\la@teacher@note}[3]{
 		\leavevmode\pagenote{
-		{
-			\color{\currentvolcolor}\bfseries
-			{\fontsize{14pt}{0pt}\selectfont #1}\par
-			\vspace{-.8\baselineskip}	
-			\rule{\widthof{\fontsize{14pt}{0}\selectfont Sugestões e Discussões}+1em}{3pt}\\[.2em]
-			{\Large #2}
-		}	
-		#3
+      \teachertitle[\currentvolcolor]{#1}{#2} #3
 	}
 }
 

@@ -2,30 +2,26 @@
 \newif\ifhability\habilityfalse
 \newif\ifefhability\efhabilityfalse
 
-\newenvironment{habilities}[1][EM]{%
+\NewDocumentEnvironment{habilities}{ O{EM} O{Habilidades da BNCC} }{%
 	\habilitiestrue
+	\IfStrEq{#1}{EF}{\efhabilitytrue}{}
 	\ifteacherpage
-		\subsection{Habilidades da BNCC}
+      \subsection{#2}
 	\else
 		\la@notteacherpage
 	\fi
-	\IfStrEq{#1}{EF}{\efhabilitytrue}{}
 }{%
 	\habilitiesfalse
 	\ifhability
-		\habilityfalse
-	\else
-		\la@nohability
-	\fi
 }
 
 \newcommand{\hability}[2][]{%
 	\habilitytrue
 	\ifhabilities
 		\ifefhability
-			\paragraph{EM13MAT#2}\la@hability{#2}
+			\paragraph{EF#1MA#2}\la@efhability{#1}{#2}
 		\else
-			\paragraph{EF#1MA#2}\la@emhability{#1}{#2}
+			\paragraph{EM13MAT#2}\la@hability{#2}
 		\fi
 	\else
 		\la@nothabilities
@@ -33,36 +29,36 @@
 }
 
 \newcommand{\la@nothabilities}{%
-	\ClassError{livroaberto}{Outside habilities environment}{%
-		You should only use this command in an habilities environment.
+	\ClassError{livroaberto}{Fora do ambiente de habilidades}{%
+		Você só deve utilizar este comando dentro de um ambiente de \MessageBreak
+		habilidades.
 	}
 }
 
 \newcommand{\la@invalidhability}{%
-	\ClassError{livroaberto}{Invalid hability}{%
-		Either this hability doesn't exist or you left the field empty.\MessageBreak
-		You should enter them by their final three numbers.
+	\ClassError{livroaberto}{Habilidade inválida para o Ensino Médio}{%
+		Esta habilidade não existe para o Ensino Médio. Você deve colocar\MessageBreak
+		os últimos três números da habilidade no hambiente obrigatório.
 	}
 }
 
 \newcommand{\la@invalidefhability}{%
-	\ClassError{livroaberto}{Invalid hability}{%
-		Either this hability doesn't exist or you left the field empty.\MessageBreak
-		You need to enter the first two numbers of the hability
-		on the\MessageBreak
-		first argument and the other two at the second argument
+	\ClassError{livroaberto}{Habilidade Inválida para o Ensino Fundamental}{%
+		Esta habilidade não existe para o Ensino Fundamental. Você deve colocar\MessageBreak
+		o ano da habilidade ('01', por exemplo) como argumento opcional e os\MessageBreak
+		dois números finais da habilidade no argumento obrigatório.
 	}
 }
 
 \newcommand{\la@nohability}{%
-	\ClassError{livroaberto}{Missin habilities}{%
-		You should enter the habilities using the \protect\hability command.
+	\ClassError{livroaberto}{Habildades não inseridas}{%
+		Você deve colocar habilidades usando o comando \protect\hability.
 	}
 }
 
 \newcommand{\la@hability}[1]{
 	\IfStrEqCase{#1}{
-		{101}{%%
+		{101}{%
 				Interpretar criticamente situações econômicas, sociais e fatos relativos às
 				Ciências da Natureza que envolvam a variação de grandezas, pela análise dos gráficos
 				das funções representadas e das taxas de variação, com ou sem apoio de tecnologias
@@ -278,78 +274,80 @@
 	}[\la@invalidhability]
 }
 
-\newcommand{\la@efhability}[2]{
-	\IfStrEqCase{#1}{01}{%
-		\IfStrEqCase{#2}{01}{%
-			Utilizar números naturais como indicador de quantidade ou de ordem em diferentes situações cotidianas e reconhecer situações em que os números não indicam contagem nem ordem, mas sim código de identificação
-		}
-		{02}{%
-			Contar de maneira exata ou aproximada, utilizando diferentes estratégias como o pareamento e outros agrupamentos.
-		}
-		{03}{%
-			Estimar e comparar quantidades de objetos de dois conjuntos (em torno de \num{20} elementos), por estimativa e/ou por correspondência (um a um, dois a dois) para indicar “tem mais”, “tem menos” ou “tem a mesma quantidade”.
-		}
-		{04}{%
-			Contar a quantidade de objetos de coleções até \num{100} unidades e apresentar o resultado por registros verbais e simbólicos, em situações de seu interesse, como jogos, brincadeiras, materiais da sala de aula, entre outros.
-		}
-		{05}{%
-			Comparar números naturais de até duas ordens em situações cotidianas, com e sem suporte da reta numérica.
-		}
-		{06}{%
-			Construir fatos básicos da adição e utilizá-los em procedimentos de cálculo para resolver problemas
-		}
-		{07}{%
-			Compor e decompor número de até duas ordens, por meio de diferentes adições, com o suporte de material manipulável, contribuindo para a compreensão de características do sistema de numeração decimal e o desenvolvimento de estratégias de cálculo.
-		}
-		{08}{%
-			Resolver e elaborar problemas de adição e de subtração, envolvendo números de até dois algarismos, com os significados de juntar, acrescentar, separar e retirar, com o suporte de imagens e/ou material manipulável, utilizando estratégias e formas de registro pessoais.
-		}
-		{09}{%
-			Organizar e ordenar objetos familiares ou representações por figuras, por meio de atributos, tais como cor, forma e medida.
-		}
-		{10}{%
-			Descrever, após o reconhecimento e a explicitação de um padrão (ou regularidade), os elementos ausentes em sequências recursivas de números naturais, objetos ou figuras.
-		}
-		{11}{%
-			Descrever a localização de pessoas e de objetos no espaço em relação à sua própria posição, utilizando termos como à direita, à esquerda, em frente, atrás.
-		}
-		{12}{%
-			Descrever a localização de pessoas e de objetos no espaço segundo um dado ponto de referência, compreendendo que, para a utilização de termos que se referem à posição, como direita, esquerda, em cima, em baixo, é necessário explicitar-se o referencial.
-		}
-		{13}{%
-			Relacionar figuras geométricas espaciais (cones, cilindros, esferas e blocos retangulares) a objetos familiares do mundo físico.
-		}
-		{14}{%
-			Identificar e nomear figuras planas (círculo, quadrado, retângulo e triângulo) em desenhos apresentados em diferentes disposições ou em contornos de faces de sólidos geométricos.
-		}
-		{15}{%
-			Comparar comprimentos, capacidades ou massas, utilizando termos como mais alto, mais baixo, mais comprido, mais curto, mais grosso, mais fino, mais largo, mais pesado,
-		}
-		{16}{%
-			Relatar em linguagem verbal ou não verbal sequência de acontecimentos relativos a um dia, utilizando, quando possível, os horários dos eventos.
-		}
-		{17}{%
-			Reconhecer e relacionar períodos do dia, dias da semana e meses do ano, utilizando calendário, quando necessário.
-		}
-		{18}{%
-			Produzir a escrita de uma data, apresentando o dia, o mês e o ano, e indicar o dia da semana de uma data, consultando calendários.
-		}
-		{19}{%
-			Reconhecer e relacionar valores de moedas e cédulas do sistema monetário brasileiro para resolver situações simples do cotidiano do estudante.
-		}
-		{20}{%
-			Classificar eventos envolvendo o acaso, tais como “acontecerá com certeza”, “talvez aconteça” e “é impossível acontecer”, em situações do cotidiano.
-		}
-		{21}{%
-			Ler dados expressos em tabelas e em gráficos de colunas simples.
-		}
-		{22}{%
-			Realizar pesquisa, envolvendo até duas variáveis categóricas de seu interesse e universo de até 30 elementos, e organizar dados por meio de representações pessoais.
-		}[\la@invalidefhability]
-	}
-	{02}{%
-		\IfStrEqCase{#2}{01}{%
-			{01}{%
+\newcommand{\la@efhability}[2]{%
+	\IfStrEqCase{#1}{%
+		{01}{%
+				\IfStrEqCase{#2}{%
+					{01}{%
+							Utilizar números naturais como indicador de quantidade ou de ordem em diferentes situações cotidianas e reconhecer situações em que os números não indicam contagem nem ordem, mas sim código de identificação
+						}
+						{02}{%
+							Contar de maneira exata ou aproximada, utilizando diferentes estratégias como o pareamento e outros agrupamentos.
+						}
+						{03}{%
+							Estimar e comparar quantidades de objetos de dois conjuntos (em torno de \num{20} elementos), por estimativa e/ou por correspondência (um a um, dois a dois) para indicar “tem mais”, “tem menos” ou “tem a mesma quantidade”.
+						}
+						{04}{%
+							Contar a quantidade de objetos de coleções até \num{100} unidades e apresentar o resultado por registros verbais e simbólicos, em situações de seu interesse, como jogos, brincadeiras, materiais da sala de aula, entre outros.
+						}
+						{05}{%
+							Comparar números naturais de até duas ordens em situações cotidianas, com e sem suporte da reta numérica.
+						}
+						{06}{%
+							Construir fatos básicos da adição e utilizá-los em procedimentos de cálculo para resolver problemas
+						}
+						{07}{%
+							Compor e decompor número de até duas ordens, por meio de diferentes adições, com o suporte de material manipulável, contribuindo para a compreensão de características do sistema de numeração decimal e o desenvolvimento de estratégias de cálculo.
+						}
+						{08}{%
+							Resolver e elaborar problemas de adição e de subtração, envolvendo números de até dois algarismos, com os significados de juntar, acrescentar, separar e retirar, com o suporte de imagens e/ou material manipulável, utilizando estratégias e formas de registro pessoais.
+						}
+						{09}{%
+							Organizar e ordenar objetos familiares ou representações por figuras, por meio de atributos, tais como cor, forma e medida.
+						}
+						{10}{%
+							Descrever, após o reconhecimento e a explicitação de um padrão (ou regularidade), os elementos ausentes em sequências recursivas de números naturais, objetos ou figuras.
+						}
+						{11}{%
+							Descrever a localização de pessoas e de objetos no espaço em relação à sua própria posição, utilizando termos como à direita, à esquerda, em frente, atrás.
+						}
+						{12}{%
+							Descrever a localização de pessoas e de objetos no espaço segundo um dado ponto de referência, compreendendo que, para a utilização de termos que se referem à posição, como direita, esquerda, em cima, em baixo, é necessário explicitar-se o referencial.
+						}
+						{13}{%
+							Relacionar figuras geométricas espaciais (cones, cilindros, esferas e blocos retangulares) a objetos familiares do mundo físico.
+						}
+						{14}{%
+							Identificar e nomear figuras planas (círculo, quadrado, retângulo e triângulo) em desenhos apresentados em diferentes disposições ou em contornos de faces de sólidos geométricos.
+						}
+						{15}{%
+							Comparar comprimentos, capacidades ou massas, utilizando termos como mais alto, mais baixo, mais comprido, mais curto, mais grosso, mais fino, mais largo, mais pesado,
+						}
+						{16}{%
+							Relatar em linguagem verbal ou não verbal sequência de acontecimentos relativos a um dia, utilizando, quando possível, os horários dos eventos.
+						}
+						{17}{%
+							Reconhecer e relacionar períodos do dia, dias da semana e meses do ano, utilizando calendário, quando necessário.
+						}
+						{18}{%
+							Produzir a escrita de uma data, apresentando o dia, o mês e o ano, e indicar o dia da semana de uma data, consultando calendários.
+						}
+						{19}{%
+							Reconhecer e relacionar valores de moedas e cédulas do sistema monetário brasileiro para resolver situações simples do cotidiano do estudante.
+						}
+						{20}{%
+							Classificar eventos envolvendo o acaso, tais como “acontecerá com certeza”, “talvez aconteça” e “é impossível acontecer”, em situações do cotidiano.
+						}
+						{21}{%
+							Ler dados expressos em tabelas e em gráficos de colunas simples.
+						}
+						{22}{%
+							Realizar pesquisa, envolvendo até duas variáveis categóricas de seu interesse e universo de até 30 elementos, e organizar dados por meio de representações pessoais.
+						}
+				}
+			}
+			{02}{%
+				\IfStrEqCase{#2}{01}{%
 					Comparar e ordenar números naturais (até a ordem de centenas) pela
 					compreensão de características do sistema de numeração decimal (valor posicional e função
 					do zero).
@@ -450,940 +448,954 @@
 					categóricas de seu interesse, organizando os dados coletados em listas, tabelas e gráficos de
 					colunas simples.
 				}
-		}[\la@invalidefhability]
-	}
-	{03}{%
-		{01}{%
-				Ler, escrever e comparar números naturais de até a ordem de unidade de milhar,
-				estabelecendo relações entre os registros numéricos e em língua materna.
-			}
-			{02}{%
-				Identificar características do sistema de numeração decimal, utilizando a
-				composição e a decomposição de número natural de até quatro ordens.
 			}
 			{03}{%
-				Construir e utilizar fatos básicos da adição e da multiplicação para o cálculo
-				mental ou escrito.
+				\IfStrEqCase{#2}{%
+					{01}{
+							Ler, escrever e comparar números naturais de até a ordem de unidade de milhar,
+							estabelecendo relações entre os registros numéricos e em língua materna.
+						}
+						{02}{%
+							Identificar características do sistema de numeração decimal, utilizando a
+							composição e a decomposição de número natural de até quatro ordens.
+						}
+						{03}{%
+							Construir e utilizar fatos básicos da adição e da multiplicação para o cálculo
+							mental ou escrito.
+						}
+						{04}{%
+							Estabelecer a relação entre números naturais e pontos da reta numérica para
+							utilizá-la na ordenação dos números naturais e também na construção de fatos da adição e da
+							subtração, relacionando-os com deslocamentos para a direita ou para a esquerda.
+						}
+						{05}{%
+							Utilizar diferentes procedimentos de cálculo mental e escrito, inclusive os
+							convencionais, para resolver problemas significativos envolvendo adição e subtração com
+							números naturais.
+						}
+						{06}{%
+							Resolver e elaborar problemas de adição e subtração com os significados de
+							juntar, acrescentar, separar, retirar, comparar e completar quantidades, utilizando diferentes
+							estratégias de cálculo exato ou aproximado, incluindo cálculo mental.
+						}
+						{07}{%
+							Resolver e elaborar problemas de multiplicação (por 2, 3, 4, 5 e 10) com os
+							significados de adição de parcelas iguais e elementos apresentados em disposição retangular,
+							utilizando diferentes estratégias de cálculo e registros.
+						}
+						{08}{%
+							Resolver e elaborar problemas de divisão de um número natural por outro (até
+							10), com resto zero e com resto diferente de zero, com os significados de repartição equitativa
+							e de medida, por meio de estratégias e registros pessoais.
+						}
+						{09}{%
+							Associar o quociente de uma divisão com resto zero de um número natural por 2,
+							3, 4, 5 e 10 às ideias de metade, terça, quarta, quinta e décima partes.
+						}
+						{10}{%
+							Identificar regularidades em sequências ordenadas de números naturais,
+							resultantes da realização de adições ou subtrações sucessivas, por um mesmo número,
+							descrever uma regra de formação da sequência e determinar elementos faltantes ou seguintes.
+						}
+						{11}{%
+							Compreender a ideia de igualdade para escrever diferentes sentenças de adições
+							ou de subtrações de dois números naturais que resultem na mesma soma ou diferença.
+						}
+						{12}{%
+							Descrever e representar, por meio de esboços de trajetos ou utilizando croquis
+							e maquetes, a movimentação de pessoas ou de objetos no espaço, incluindo mudanças de
+							direção e sentido, com base em diferentes pontos de referência.
+						}
+						{13}{%
+							Associar figuras geométricas espaciais (cubo, bloco retangular, pirâmide, cone,
+							cilindro e esfera) a objetos do mundo físico e nomear essas figuras.
+						}
+						{14}{%
+							Descrever características de algumas figuras geométricas espaciais (prismas
+							retos, pirâmides, cilindros, cones), relacionando-as com suas planificações.
+						}
+						{15}{%
+							Classificar e comparar figuras planas (triângulo, quadrado, retângulo, trapézio
+							e paralelogramo) em relação a seus lados (quantidade, posições relativas e comprimento) e
+							vértices.
+						}
+						{16}{%
+							Reconhecer figuras congruentes, usando sobreposição e desenhos em malhas
+							quadriculadas ou triangulares, incluindo o uso de tecnologias digitais.
+						}
+						{17}{%
+							Reconhecer que o resultado de uma medida depende da unidade de medida
+							utilizada.
+						}
+						{18}{%
+							Escolher a unidade de medida e o instrumento mais apropriado para medições de
+							comprimento, tempo e capacidade.
+						}
+						{19}{%
+							Estimar, medir e comparar comprimentos, utilizando unidades de medida
+							não padronizadas e padronizadas mais usuais (metro, centímetro e milímetro) e diversos
+							instrumentos de medida.
+						}
+						{20}{%
+							Estimar e medir capacidade e massa, utilizando unidades de medida não
+							padronizadas e padronizadas mais usuais (litro, mililitro, quilograma, grama e miligrama),
+							reconhecendo-as em leitura de rótulos e embalagens, entre outros.
+						}
+						{21}{%
+							Comparar, visualmente ou por superposição, áreas de faces de objetos, de figuras
+							planas ou de desenhos.
+						}
+						{22}{%
+							Ler e registrar medidas e intervalos de tempo, utilizando relógios (analógico e
+							digital) para informar os horários de início e término de realização de uma atividade e sua
+							duração.
+						}
+						{23}{%
+							Ler horas em relógios digitais e em relógios analógicos e reconhecer a relação
+							entre hora e minutos e entre minuto e segundos.
+						}
+						{24}{%
+							Resolver e elaborar problemas que envolvam a comparação e a equivalência de
+							valores monetários do sistema brasileiro em situações de compra, venda e troca.
+						}
+						{25}{%
+							Identificar, em eventos familiares aleatórios, todos os resultados possíveis,
+							estimando os que têm maiores ou menores chances de ocorrência.
+						}
+						{26}{%
+							Resolver problemas cujos dados estão apresentados em tabelas de dupla
+							entrada, gráficos de barras ou de colunas.
+						}
+						{27}{%
+							Ler, interpretar e comparar dados apresentados em tabelas de dupla entrada,
+							gráficos de barras ou de colunas, envolvendo resultados de pesquisas significativas, utilizando
+							termos como maior e menor frequência, apropriando-se desse tipo de linguagem para
+							compreender aspectos da realidade sociocultural significativos.
+						}
+						{28}{%
+							Realizar pesquisa envolvendo variáveis categóricas em um universo de até 50
+							elementos, organizar os dados coletados utilizando listas, tabelas simples ou de dupla entrada
+							e representá-los em gráficos de colunas simples, com e sem uso de tecnologias digitais.
+						}
+				}
 			}
 			{04}{%
-				Estabelecer a relação entre números naturais e pontos da reta numérica para
-				utilizá-la na ordenação dos números naturais e também na construção de fatos da adição e da
-				subtração, relacionando-os com deslocamentos para a direita ou para a esquerda.
+				\IfStrEqCase{#2}{%
+					{01}{%
+							Ler, escrever e ordenar números naturais até a ordem de dezenas de milhar.
+						}
+						{02}{%
+							Mostrar, por decomposição e composição, que todo número natural pode ser escrito
+							por meio de adições e multiplicações por potências de dez, para compreender o sistema de
+							numeração decimal e desenvolver estratégias de cálculo.
+						}
+						{03}{%
+							Resolver e elaborar problemas com números naturais envolvendo adição e subtração,
+							utilizando estratégias diversas, como cálculo, cálculo mental e algoritmos, além de fazer estimativas
+							do resultado.
+						}
+						{04}{%
+							Utilizar as relações entre adição e subtração, bem como entre multiplicação e divisão,
+							para ampliar as estratégias de cálculo.
+						}
+						{05}{%
+							Utilizar as propriedades das operações para desenvolver estratégias de cálculo.
+						}
+						{06}{%
+							Resolver e elaborar problemas envolvendo diferentes significados da multiplicação
+							(adição de parcelas iguais, organização retangular e proporcionalidade), utilizando estratégias
+							diversas, como cálculo por estimativa, cálculo mental e algoritmos.
+						}
+						{07}{%
+							Resolver e elaborar problemas de divisão cujo divisor tenha no máximo dois algarismos,
+							envolvendo os significados de repartição equitativa e de medida, utilizando estratégias diversas,
+							como cálculo por estimativa, cálculo mental e algoritmos.
+						}
+						{08}{%
+							Resolver, com o suporte de imagem e/ou material manipulável, problemas simples
+							de contagem, como a determinação do número de agrupamentos possíveis ao se combinar cada
+							elemento de uma coleção com todos os elementos de outra, utilizando estratégias e formas de
+							registro pessoais.
+						}
+						{09}{%
+							Reconhecer as frações unitárias mais usuais (\(\frac{1}{2}\), \(\frac{1}{3}\), \(\frac{1}{4}\), \(\frac{1}{5}\), \(\frac{1}{10}\) e \(\frac{1}{100}\)) como
+							unidades de medida menores do que uma unidade, utilizando a reta numérica como recurso.
+						}
+						{10}{%
+							Reconhecer que as regras do sistema de numeração decimal podem ser estendidas
+							para a representação decimal de um número racional e relacionar décimos e centésimos com a
+							representação do sistema monetário brasileiro.
+						}
+						{11}{%
+							Identificar regularidades em sequências numéricas compostas por múltiplos de um
+							número natural.
+						}
+						{12}{%
+							Reconhecer, por meio de investigações, que há grupos de números naturais para os
+							quais as divisões por um determinado número resultam em restos iguais, identificando regularidades.
+						}
+						{13}{%
+							Reconhecer, por meio de investigações, utilizando a calculadora quando necessário, as
+							relações inversas entre as operações de adição e de subtração e de multiplicação e de divisão, para
+							aplicá-las na resolução de problemas.
+						}
+						{14}{%
+							Reconhecer e mostrar, por meio de exemplos, que a relação de igualdade existente
+							entre dois termos permanece quando se adiciona ou se subtrai um mesmo número a cada um desses
+							termos.
+						}
+						{15}{%
+							Determinar o número desconhecido que torna verdadeira uma igualdade que envolve as
+							operações fundamentais com números naturais.
+						}
+						{01}{%
+							Ler, escrever e ordenar números naturais até a ordem de dezenas de milhar.
+						}
+						{02}{%
+							Mostrar, por decomposição e composição, que todo número natural pode ser escrito
+							por meio de adições e multiplicações por potências de dez, para compreender o sistema de
+							numeração decimal e desenvolver estratégias de cálculo.
+						}
+						{03}{%
+							Resolver e elaborar problemas com números naturais envolvendo adição e subtração,
+							utilizando estratégias diversas, como cálculo, cálculo mental e algoritmos, além de fazer estimativas
+							do resultado.
+						}
+						{04}{%
+							Utilizar as relações entre adição e subtração, bem como entre multiplicação e divisão,
+							para ampliar as estratégias de cálculo.
+						}
+						{05}{%
+							Utilizar as propriedades das operações para desenvolver estratégias de cálculo.
+						}
+						{06}{%
+							Resolver e elaborar problemas envolvendo diferentes significados da multiplicação
+							(adição de parcelas iguais, organização retangular e proporcionalidade), utilizando estratégias
+							diversas, como cálculo por estimativa, cálculo mental e algoritmos.
+						}
+						{07}{%
+							Resolver e elaborar problemas de divisão cujo divisor tenha no máximo dois algarismos,
+							envolvendo os significados de repartição equitativa e de medida, utilizando estratégias diversas,
+							como cálculo por estimativa, cálculo mental e algoritmos.
+						}
+						{08}{%
+							Resolver, com o suporte de imagem e/ou material manipulável, problemas simples
+							de contagem, como a determinação do número de agrupamentos possíveis ao se combinar cada
+							elemento de uma coleção com todos os elementos de outra, utilizando estratégias e formas de
+							registro pessoais.
+						}
+						{09}{%
+							Reconhecer as frações unitárias mais usuais (\(\frac{1}{2}\), \(\frac{1}{3}\), \(\frac{1}{4}\), \(\frac{1}{5}\), \(\frac{1}{10}\) e \(\frac{1}{100}\)) como
+							unidades de medida menores do que uma unidade, utilizando a reta numérica como recurso.
+						}
+						{10}{%
+							Reconhecer que as regras do sistema de numeração decimal podem ser estendidas
+							para a representação decimal de um número racional e relacionar décimos e centésimos com a
+							representação do sistema monetário brasileiro.
+						}
+						{11}{%
+							Identificar regularidades em sequências numéricas compostas por múltiplos de um
+							número natural.
+						}
+						{12}{%
+							Reconhecer, por meio de investigações, que há grupos de números naturais para os
+							quais as divisões por um determinado número resultam em restos iguais, identificando regularidades.
+						}
+						{13}{%
+							Reconhecer, por meio de investigações, utilizando a calculadora quando necessário, as
+							relações inversas entre as operações de adição e de subtração e de multiplicação e de divisão, para
+							aplicá-las na resolução de problemas.
+						}
+						{14}{%
+							Reconhecer e mostrar, por meio de exemplos, que a relação de igualdade existente
+							entre dois termos permanece quando se adiciona ou se subtrai um mesmo número a cada um desses
+							termos.
+						}
+						{15}{%
+							Determinar o número desconhecido que torna verdadeira uma igualdade que envolve as
+							operações fundamentais com números naturais.
+						}
+				}
 			}
 			{05}{%
-				Utilizar diferentes procedimentos de cálculo mental e escrito, inclusive os
-				convencionais, para resolver problemas significativos envolvendo adição e subtração com
-				números naturais.
+				\IfStrEqCase{#2}{%
+					{01}{%
+							Ler, escrever e ordenar números naturais até a ordem das centenas de milhar com
+							compreensão das principais características do sistema de numeração decimal.
+						}
+						{02}{%
+							Ler, escrever e ordenar números racionais na forma decimal com compreensão
+							das principais características do sistema de numeração decimal, utilizando, como recursos, a
+							composição e decomposição e a reta numérica.
+						}
+						{03}{%
+							Identificar e representar frações (menores e maiores que a unidade),
+							associando-as ao resultado de uma divisão ou à ideia de parte de um todo, utilizando a reta
+							numérica como recurso.
+						}
+						{04}{%
+							Identificar frações equivalentes.
+						}
+						{05}{%
+							Comparar e ordenar números racionais positivos (representações fracionária e
+							decimal), relacionando-os a pontos na reta numérica.
+						}
+						{06}{%
+							Associar as representações \qty{10}{\percent}{\percent}, \qty{25}{\percent}, \qty{50}{\percent}, \qty{75}{\percent} e \qty{100}{\percent} respectivamente à
+							décima parte, quarta parte, metade, três quartos e um inteiro, para calcular porcentagens,
+							utilizando estratégias pessoais, cálculo mental e calculadora, em contextos de educação
+							financeira, entre outros.
+						}
+						{07}{%
+							Resolver e elaborar problemas de adição e subtração com números naturais e
+							com números racionais, cuja representação decimal seja finita, utilizando estratégias diversas,
+							como cálculo por estimativa, cálculo mental e algoritmos.
+						}
+						{08}{%
+							Resolver e elaborar problemas de multiplicação e divisão com números naturais e
+							com números racionais cuja representação decimal é finita (com multiplicador natural e divisor
+							natural e diferente de zero), utilizando estratégias diversas, como cálculo por estimativa,
+							cálculo mental e algoritmos.
+						}
+						{09}{%
+							Resolver e elaborar problemas simples de contagem envolvendo o princípio
+							multiplicativo, como a determinação do número de agrupamentos possíveis ao se combinar
+							cada elemento de uma coleção com todos os elementos de outra coleção, por meio de
+							diagramas de árvore ou por tabelas.
+						}
+						{10}{%
+							Concluir, por meio de investigações, que a relação de igualdade existente
+							entre dois membros permanece ao adicionar, subtrair, multiplicar ou dividir cada um desses
+							membros por um mesmo número, para construir a noção de equivalência.
+						}
+						{11}{%
+							Resolver e elaborar problemas cuja conversão em sentença matemática seja uma
+							igualdade com uma operação em que um dos termos é desconhecido.
+						}
+						{12}{%
+							Resolver problemas que envolvam variação de proporcionalidade direta entre
+							duas grandezas, para associar a quantidade de um produto ao valor a pagar, alterar as
+							quantidades de ingredientes de receitas, ampliar ou reduzir escala em mapas, entre outros.
+						}
+						{13}{%
+							Resolver problemas envolvendo a partilha de uma quantidade em duas partes
+							desiguais, tais como dividir uma quantidade em duas partes, de modo que uma seja o dobro
+							da outra, com compreensão da ideia de razão entre as partes e delas com o todo.
+						}
+						{14}{%
+							Utilizar e compreender diferentes representações para a localização de objetos
+							no plano, como mapas, células em planilhas eletrônicas e coordenadas geográficas, a fim de
+							desenvolver as primeiras noções de coordenadas cartesianas.
+						}
+						{15}{%
+							Interpretar, descrever e representar a localização ou movimentação de objetos no
+							plano cartesiano (1º quadrante), utilizando coordenadas cartesianas, indicando mudanças de
+							direção e de sentido e giros.
+						}
+						{16}{%
+							Associar figuras espaciais a suas planificações (prismas, pirâmides, cilindros e
+							cones) e analisar, nomear e comparar seus atributos.
+						}
+						{17}{%
+							Reconhecer, nomear e comparar polígonos, considerando lados, vértices e
+							ângulos, e desenhá-los, utilizando material de desenho ou tecnologias digitais.
+						}
+						{18}{%
+							Reconhecer a congruência dos ângulos e a proporcionalidade entre os lados
+							correspondentes de figuras poligonais em situações de ampliação e de redução em malhas
+							quadriculadas e usando tecnologias digitais.
+						}
+						{19}{%
+							Resolver e elaborar problemas envolvendo medidas das grandezas comprimento,
+							área, massa, tempo, temperatura e capacidade, recorrendo a transformações entre as unidades
+							mais usuais em contextos socioculturais.
+						}
+						{20}{%
+							Concluir, por meio de investigações, que figuras de perímetros iguais podem
+							ter áreas diferentes e que, também, figuras que têm a mesma área podem ter perímetros
+							diferentes.
+						}
+						{21}{%
+							Reconhecer volume como grandeza associada a sólidos geométricos e medir
+							volumes por meio de empilhamento de cubos, utilizando, preferencialmente, objetos concretos.
+						}
+						{22}{%
+							Apresentar todos os possíveis resultados de um experimento aleatório,
+							estimando se esses resultados são igualmente prováveis ou não.
+						}
+						{23}{%
+							Determinar a probabilidade de ocorrência de um resultado em eventos aleatórios,
+							quando todos os resultados possíveis têm a mesma chance de ocorrer (equiprováveis).
+						}
+						{24}{%
+							Interpretar dados estatísticos apresentados em textos, tabelas e gráficos (colunas
+							ou linhas), referentes a outras áreas do conhecimento ou a outros contextos, como saúde e
+							trânsito, e produzir textos com o objetivo de sintetizar conclusões.
+						}
+						{25}{%
+							Realizar pesquisa envolvendo variáveis categóricas e numéricas, organizar dados
+							coletados por meio de tabelas, gráficos de colunas, pictóricos e de linhas, com e sem uso de
+							tecnologias digitais, e apresentar texto escrito sobre a finalidade da pesquisa e a síntese dos
+							resultados.
+						}
+				}
 			}
 			{06}{%
-				Resolver e elaborar problemas de adição e subtração com os significados de
-				juntar, acrescentar, separar, retirar, comparar e completar quantidades, utilizando diferentes
-				estratégias de cálculo exato ou aproximado, incluindo cálculo mental.
+				\IfStrEqCase{#2}{%
+					{01}{%
+							Comparar, ordenar, ler e escrever números naturais e números racionais cuja
+							representação decimal é finita, fazendo uso da reta numérica.
+						}
+						{02}{%
+							Reconhecer o sistema de numeração decimal, como o que prevaleceu no mundo
+							ocidental, e destacar semelhanças e diferenças com outros sistemas, de modo a sistematizar suas
+							principais características (base, valor posicional e função do zero), utilizando, inclusive, a composição
+							e decomposição de números naturais e números racionais em sua representação decimal.
+						}
+						{03}{%
+							Resolver e elaborar problemas que envolvam cálculos (mentais ou escritos, exatos
+							ou aproximados) com números naturais, por meio de estratégias variadas, com compreensão
+							dos processos neles envolvidos com e sem uso de calculadora.
+						}
+						{04}{%
+							Construir algoritmo em linguagem natural e representá-lo por fluxograma que
+							indique a resolução de um problema simples (por exemplo, se um número natural qualquer é
+							par).
+						}
+						{05}{%
+							Classificar números naturais em primos e compostos, estabelecer relações entre
+							números, expressas pelos termos “é múltiplo de”, “é divisor de”, “é fator de”, e estabelecer, por
+							meio de investigações, critérios de divisibilidade por \num{2}, \num{3}, \num{4}, \num{5}, \num{6}, \num{8}, \num{9}, \num{10}, \num{100} e \num{1000}.
+						}
+						{06}{%
+							Resolver e elaborar problemas que envolvam as ideias de múltiplo e de divisor.
+						}
+						{07}{%
+							Compreender, comparar e ordenar frações associadas às ideias de partes de
+							inteiros e resultado de divisão, identificando frações equivalentes.
+						}
+						{08}{%
+							Reconhecer que os números racionais positivos podem ser expressos nas formas
+							fracionária e decimal, estabelecer relações entre essas representações, passando de uma
+							representação para outra, e relacioná-los a pontos na reta numérica.
+						}
+						{09}{%
+							Resolver e elaborar problemas que envolvam o cálculo da fração de uma
+							quantidade e cujo resultado seja um número natural, com e sem uso de calculadora.
+						}
+						{10}{%
+							Resolver e elaborar problemas que envolvam adição ou subtração com números
+							racionais positivos na representação fracionária.
+						}
+						{11}{%
+							Resolver e elaborar problemas com números racionais positivos na representação
+							decimal, envolvendo as quatro operações fundamentais e a potenciação, por meio de
+							estratégias diversas, utilizando estimativas e arredondamentos para verificar a razoabilidade de
+							respostas, com e sem uso de calculadora.
+						}
+						{12}{%
+							Fazer estimativas de quantidades e aproximar números para múltiplos da potência
+							de 10 mais próxima.
+						}
+						{13}{%
+							Resolver e elaborar problemas que envolvam porcentagens, com base na ideia
+							de proporcionalidade, sem fazer uso da “regra de três”, utilizando estratégias pessoais, cálculo
+							mental e calculadora, em contextos de educação financeira, entre outros.
+						}
+						{14}{%
+							Reconhecer que a relação de igualdade matemática não se altera ao adicionar,
+							subtrair, multiplicar ou dividir os seus dois membros por um mesmo número e utilizar essa
+							noção para determinar valores desconhecidos na resolução de problemas.
+						}
+						{15}{%
+							Resolver e elaborar problemas que envolvam a partilha de uma quantidade em
+							duas partes desiguais, envolvendo relações aditivas e multiplicativas, bem como a razão entre
+							as partes e entre uma das partes e o todo.
+						}
+						{16}{%
+							Associar pares ordenados de números a pontos do plano cartesiano do 1º
+							quadrante, em situações como a localização dos vértices de um polígono.
+						}
+						{17}{%
+							Quantificar e estabelecer relações entre o número de vértices, faces e arestas
+							de prismas e pirâmides, em função do seu polígono da base, para resolver problemas e
+							desenvolver a percepção espacial.
+						}
+						{18}{%
+							Reconhecer, nomear e comparar polígonos, considerando lados, vértices e
+							ângulos, e classificá-los em regulares e não regulares, tanto em suas representações no plano
+							como em faces de poliedros.
+						}
+						{19}{%
+							Identificar características dos triângulos e classificá-los em relação às medidas dos
+							lados e dos ângulos.
+						}
+						{20}{%
+							Identificar características dos quadriláteros, classificá-los em relação a lados e a
+							ângulos e reconhecer a inclusão e a intersecção de classes entre eles.
+						}
+						{21}{%
+							Construir figuras planas semelhantes em situações de ampliação e de redução,
+							com o uso de malhas quadriculadas, plano cartesiano ou tecnologias digitais.
+						}
+						{22}{%
+							Utilizar instrumentos, como réguas e esquadros, ou softwares para representações
+							de retas paralelas e perpendiculares e construção de quadriláteros, entre outros.
+						}
+						{23}{%
+							Construir algoritmo para resolver situações passo a passo (como na construção
+							de dobraduras ou na indicação de deslocamento de um objeto no plano segundo pontos de
+							referência e distâncias fornecidas etc.).
+						}
+						{24}{%
+							Resolver e elaborar problemas que envolvam as grandezas comprimento, massa,
+							tempo, temperatura, área (triângulos e retângulos), capacidade e volume (sólidos formados
+							por blocos retangulares), sem uso de fórmulas, inseridos, sempre que possível, em contextos
+							oriundos de situações reais e/ou relacionadas às outras áreas do conhecimento.
+						}
+						{25}{%
+							Reconhecer a abertura do ângulo como grandeza associada às figuras geométricas.
+						}
+						{26}{%
+							Resolver problemas que envolvam a noção de ângulo em diferentes contextos e
+							em situações reais, como ângulo de visão.
+						}
+						{27}{%
+							Determinar medidas da abertura de ângulos, por meio de transferidor e/ou
+							tecnologias digitais.
+						}
+						{28}{%
+							Interpretar, descrever e desenhar plantas baixas simples de residências e vistas aéreas.
+						}
+						{29}{%
+							Analisar e descrever mudanças que ocorrem no perímetro e na área de um
+							quadrado ao se ampliarem ou reduzirem, igualmente, as medidas de seus lados, para
+							compreender que o perímetro é proporcional à medida do lado, o que não ocorre com a área.
+						}
+						{30}{%
+							Calcular a probabilidade de um evento aleatório, expressando-a por número
+							racional (forma fracionária, decimal e percentual) e comparar esse número com a probabilidade
+							obtida por meio de experimentos sucessivos.
+						}
+						{31}{%
+							Identificar as variáveis e suas frequências e os elementos constitutivos (título, eixos,
+							legendas, fontes e datas) em diferentes tipos de gráfico.
+						}
+						{32}{%
+							Interpretar e resolver situações que envolvam dados de pesquisas sobre contextos
+							ambientais, sustentabilidade, trânsito, consumo responsável, entre outros, apresentadas pela
+							mídia em tabelas e em diferentes tipos de gráficos e redigir textos escritos com o objetivo de
+							sintetizar conclusões.
+						}
+						{33}{%
+							Planejar e coletar dados de pesquisa referente a práticas sociais escolhidas pelos
+							alunos e fazer uso de planilhas eletrônicas para registro, representação e interpretação das
+							informações, em tabelas, vários tipos de gráficos e texto.
+						}
+						{34}{%
+							Interpretar e desenvolver fluxogramas simples, identificando as relações entre
+							os objetos representados (por exemplo, posição de cidades considerando as estradas que as
+							unem, hierarquia dos funcionários de uma empresa etc.).
+						}
+				}
 			}
 			{07}{%
-				Resolver e elaborar problemas de multiplicação (por 2, 3, 4, 5 e 10) com os
-				significados de adição de parcelas iguais e elementos apresentados em disposição retangular,
-				utilizando diferentes estratégias de cálculo e registros.
+				\IfStrEqCase{#2}{%
+					{01}{%
+							Resolver e elaborar problemas com números naturais, envolvendo as noções de
+							divisor e de múltiplo, podendo incluir máximo divisor comum ou mínimo múltiplo comum, por
+							meio de estratégias diversas, sem a aplicação de algoritmos.
+						}
+						{02}{%
+							Resolver e elaborar problemas que envolvam porcentagens, como os que lidam
+							com acréscimos e decréscimos simples, utilizando estratégias pessoais, cálculo mental e
+							calculadora, no contexto de educação financeira, entre outros.
+						}
+						{03}{%
+							Comparar e ordenar números inteiros em diferentes contextos, incluindo o
+							histórico, associá-los a pontos da reta numérica e utilizá-los em situações que envolvam adição
+							e subtração.
+						}
+						{04}{%
+							Resolver e elaborar problemas que envolvam operações com números inteiros.
+						}
+						{05}{%
+							Resolver um mesmo problema utilizando diferentes algoritmos.
+						}
+						{06}{%
+							Reconhecer que as resoluções de um grupo de problemas que têm a mesma
+							estrutura podem ser obtidas utilizando os mesmos procedimentos.
+						}
+						{07}{%
+							Representar por meio de um fluxograma os passos utilizados para resolver um
+							grupo de problemas.
+						}
+						{08}{%
+							Comparar e ordenar frações associadas às ideias de partes de inteiros, resultado
+							da divisão, razão e operador.
+						}
+						{09}{%
+							Utilizar, na resolução de problemas, a associação entre razão e fração, como a
+							fração 2/3 para expressar a razão de duas partes de uma grandeza para três partes da mesma
+							ou três partes de outra grandeza.
+						}
+						{10}{%
+							Comparar e ordenar números racionais em diferentes contextos e associá-los a
+							pontos da reta numérica.
+						}
+						{11}{%
+							Compreender e utilizar a multiplicação e a divisão de números racionais, a relação
+							entre elas e suas propriedades operatórias.
+						}
+						{12}{%
+							Resolver e elaborar problemas que envolvam as operações com números racionais.
+						}
+						{13}{%
+							Compreender a ideia de variável, representada por letra ou símbolo, para expressar
+							relação entre duas grandezas, diferenciando-a da ideia de incógnita.
+						}
+						{14}{%
+							Classificar sequências em recursivas e não recursivas, reconhecendo que o
+							conceito de recursão está presente não apenas na matemática, mas também nas artes e na
+							literatura.
+						}
+						{15}{%
+							Utilizar a simbologia algébrica para expressar regularidades encontradas em
+							sequências numéricas.
+						}
+						{16}{%
+							Reconhecer se duas expressões algébricas obtidas para descrever a regularidade
+							de uma mesma sequência numérica são ou não equivalentes.
+						}
+						{17}{%
+							Resolver e elaborar problemas que envolvam variação de proporcionalidade
+							direta e de proporcionalidade inversa entre duas grandezas, utilizando sentença algébrica para
+							expressar a relação entre elas.
+						}
+						{18}{%
+							Resolver e elaborar problemas que possam ser representados por equações
+							polinomiais de 1\textordmasculine grau, redutíveis à forma \(ax + b = c\), fazendo uso das propriedades da igualdade.
+						}
+						{19}{%
+							Realizar transformações de polígonos representados no plano cartesiano,
+							decorrentes da multiplicação das coordenadas de seus vértices por um número inteiro.
+						}
+						{20}{%
+							Reconhecer e representar, no plano cartesiano, o simétrico de figuras em relação
+							aos eixos e à origem.
+						}
+						{21}{%
+							Reconhecer e construir figuras obtidas por simetrias de translação, rotação e reflexão,
+							usando instrumentos de desenho ou softwares de geometria dinâmica e vincular esse estudo a
+							representações planas de obras de arte, elementos arquitetônicos, entre outros.
+						}
+						{22}{%
+							Construir circunferências, utilizando compasso, reconhecê-las como lugar
+							geométrico e utilizá-las para fazer composições artísticas e resolver problemas que envolvam
+							objetos equidistantes.
+						}
+						{23}{%
+							Verificar relações entre os ângulos formados por retas paralelas cortadas por uma
+							transversal, com e sem uso de softwares de geometria dinâmica.
+						}
+						{24}{%
+							Construir triângulos, usando régua e compasso, reconhecer a condição de
+							existência do triângulo quanto à medida dos lados e verificar que a soma das medidas dos
+							ângulos internos de um triângulo é 180°.
+						}
+						{25}{%
+							Reconhecer a rigidez geométrica dos triângulos e suas aplicações, como na construção
+							de estruturas arquitetônicas (telhados, estruturas metálicas e outras) ou nas artes plásticas.
+						}
+						{26}{%
+							Descrever, por escrito e por meio de um fluxograma, um algoritmo para a construção de
+							um triângulo qualquer, conhecidas as medidas dos três lados.
+						}
+						{27}{%
+							Calcular medidas de ângulos internos de polígonos regulares, sem o uso
+							de fórmulas, e estabelecer relações entre ângulos internos e externos de polígonos,
+							preferencialmente vinculadas à construção de mosaicos e de ladrilhamentos.
+						}
+						{28}{%
+							Descrever, por escrito e por meio de um fluxograma, um algoritmo para a
+							construção de um polígono regular (como quadrado e triângulo equilátero), conhecida a
+							medida de seu lado.
+						}
+						{29}{%
+							Resolver e elaborar problemas que envolvam medidas de grandezas inseridos em
+							contextos oriundos de situações cotidianas ou de outras áreas do conhecimento, reconhecendo
+							que toda medida empírica é aproximada.
+						}
+						{30}{%
+							Resolver e elaborar problemas de cálculo de medida do volume de blocos retangulares,
+							envolvendo as unidades usuais (metro cúbico, decímetro cúbico e centímetro cúbico).
+						}
+						{31}{%
+							Estabelecer expressões de cálculo de área de triângulos e de quadriláteros.
+						}
+						{32}{%
+							Resolver e elaborar problemas de cálculo de medida de área de figuras planas que
+							podem ser decompostas por quadrados, retângulos e/ou triângulos, utilizando a equivalência
+							entre áreas.
+						}
+						{33}{%
+							Estabelecer o número como a razão entre a medida de uma circunferência e seu
+							diâmetro, para compreender e resolver problemas, inclusive os de natureza histórica.
+						}
+						{34}{%
+							Planejar e realizar experimentos aleatórios ou simulações que envolvem cálculo de
+							probabilidades ou estimativas por meio de frequência de ocorrências.
+						}
+						{35}{%
+							Compreender, em contextos significativos, o significado de média estatística como
+							indicador da tendência de uma pesquisa, calcular seu valor e relacioná-lo, intuitivamente, com a
+							amplitude do conjunto de dados.
+						}
+						{36}{%
+							Planejar e realizar pesquisa envolvendo tema da realidade social, identificando a
+							necessidade de ser censitária ou de usar amostra, e interpretar os dados para comunicá-los por
+							meio de relatório escrito, tabelas e gráficos, com o apoio de planilhas eletrônicas.
+						}
+						{37}{%
+							Interpretar e analisar dados apresentados em gráfico de setores divulgados pela
+							mídia e compreender quando é possível ou conveniente sua utilização.
+						}
+				}
 			}
 			{08}{%
-				Resolver e elaborar problemas de divisão de um número natural por outro (até
-				10), com resto zero e com resto diferente de zero, com os significados de repartição equitativa
-				e de medida, por meio de estratégias e registros pessoais.
+				\IfStrEqCase{#2}{%
+					{01}{%
+							Efetuar cálculos com potências de expoentes inteiros e aplicar esse conhecimento
+							na representação de números em notação científica.
+						}
+						{02}{%
+							Resolver e elaborar problemas usando a relação entre potenciação e radiciação,
+							para representar uma raiz como potência de expoente fracionário.
+						}
+						{03}{%
+							Resolver e elaborar problemas de contagem cuja resolução envolva a aplicação
+							do princípio multiplicativo.
+						}
+						{04}{%
+							Resolver e elaborar problemas, envolvendo cálculo de porcentagens, incluindo o
+							uso de tecnologias digitais.
+						}
+						{05}{%
+							Reconhecer e utilizar procedimentos para a obtenção de uma fração geratriz
+							para uma dízima periódica.
+						}
+						{06}{%
+							Resolver e elaborar problemas que envolvam cálculo do valor numérico de
+							expressões algébricas, utilizando as propriedades das operações.
+						}
+						{07}{%
+							Associar uma equação linear de 1\textordmasculine grau com duas incógnitas a uma reta no plano
+							cartesiano.
+						}
+						{08}{%
+							Resolver e elaborar problemas relacionados ao seu contexto próximo, que
+							possam ser representados por sistemas de equações de 1\textordmasculine grau com duas incógnitas e
+							interpretá-los, utilizando, inclusive, o plano cartesiano como recurso.
+						}
+						{09}{%
+							Resolver e elaborar, com e sem uso de tecnologias, problemas que possam ser
+							representados por equações polinomiais de 2\textordmasculine grau do tipo \(ax2 = b\).
+						}
+						{10}{%
+							Identificar a regularidade de uma sequência numérica ou figural não recursiva
+							e construir um algoritmo por meio de um fluxograma que permita indicar os números ou as
+							figuras seguintes.
+						}
+						{11}{%
+							Identificar a regularidade de uma sequência numérica recursiva e construir um
+							algoritmo por meio de um fluxograma que permita indicar os números seguintes.
+						}
+						{12}{%
+							Identificar a natureza da variação de duas grandezas, diretamente, inversamente
+							proporcionais ou não proporcionais, expressando a relação existente por meio de sentença
+							algébrica e representá-la no plano cartesiano.
+						}
+						{13}{%
+							Resolver e elaborar problemas que envolvam grandezas diretamente ou
+							inversamente proporcionais, por meio de estratégias variadas.
+						}
+						{14}{%
+							Demonstrar propriedades de quadriláteros por meio da identificação da
+							congruência de triângulos.
+						}
+						{15}{%
+							Construir, utilizando instrumentos de desenho ou softwares de geometria
+							dinâmica, mediatriz, bissetriz, ângulos de 90°, 60°, 45° e 30° e polígonos regulares.
+						}
+						{16}{%
+							Descrever, por escrito e por meio de um fluxograma, um algoritmo para a
+							construção de um hexágono regular de qualquer área, a partir da medida do ângulo central e
+							da utilização de esquadros e compasso.
+						}
+						{17}{%
+							Aplicar os conceitos de mediatriz e bissetriz como lugares geométricos na
+							resolução de problemas.
+						}
+						{18}{%
+							Reconhecer e construir figuras obtidas por composições de transformações
+							geométricas (translação, reflexão e rotação), com o uso de instrumentos de desenho ou de
+							softwares de geometria dinâmica.
+						}
+						{19}{%
+							Resolver e elaborar problemas que envolvam medidas de área de figuras
+							geométricas, utilizando expressões de cálculo de área (quadriláteros, triângulos e círculos), em
+							situações como determinar medida de terrenos.
+						}
+						{20}{%
+							Reconhecer a relação entre um litro e um decímetro cúbico e a relação entre litro
+							e metro cúbico, para resolver problemas de cálculo de capacidade de recipientes.
+						}
+						{21}{%
+							Resolver e elaborar problemas que envolvam o cálculo do volume de recipiente
+							cujo formato é o de um bloco retangular.
+						}
+						{22}{%
+							Calcular a probabilidade de eventos, com base na construção do espaço amostral,
+							utilizando o princípio multiplicativo, e reconhecer que a soma das probabilidades de todos os
+							elementos do espaço amostral é igual a 1.
+						}
+						{23}{%
+							Avaliar a adequação de diferentes tipos de gráficos para representar um conjunto
+							de dados de uma pesquisa.
+						}
+						{24}{%
+							Classificar as frequências de uma variável contínua de uma pesquisa em classes,
+							de modo que resumam os dados de maneira adequada para a tomada de decisões.
+						}
+						{25}{%
+							Obter os valores de medidas de tendência central de uma pesquisa estatística
+							(média, moda e mediana) com a compreensão de seus significados e relacioná-los com a
+							dispersão de dados, indicada pela amplitude.
+						}
+						{26}{%
+							Selecionar razões, de diferentes naturezas (física, ética ou econômica), que
+							justificam a realização de pesquisas amostrais e não censitárias, e reconhecer que a seleção
+							da amostra pode ser feita de diferentes maneiras (amostra casual simples, sistemática e
+							estratificada).
+						}
+						{27}{%
+							Planejar e executar pesquisa amostral, selecionando uma técnica de amostragem
+							adequada, e escrever relatório que contenha os gráficos apropriados para representar os
+							conjuntos de dados, destacando aspectos como as medidas de tendência central, a amplitude
+							e as conclusões.
+						}
+				}
 			}
 			{09}{%
-				Associar o quociente de uma divisão com resto zero de um número natural por 2,
-				3, 4, 5 e 10 às ideias de metade, terça, quarta, quinta e décima partes.
-			}
-			{10}{%
-				Identificar regularidades em sequências ordenadas de números naturais,
-				resultantes da realização de adições ou subtrações sucessivas, por um mesmo número,
-				descrever uma regra de formação da sequência e determinar elementos faltantes ou seguintes.
-			}
-			{11}{%
-				Compreender a ideia de igualdade para escrever diferentes sentenças de adições
-				ou de subtrações de dois números naturais que resultem na mesma soma ou diferença.
-			}
-			{12}{%
-				Descrever e representar, por meio de esboços de trajetos ou utilizando croquis
-				e maquetes, a movimentação de pessoas ou de objetos no espaço, incluindo mudanças de
-				direção e sentido, com base em diferentes pontos de referência.
-			}
-			{13}{%
-				Associar figuras geométricas espaciais (cubo, bloco retangular, pirâmide, cone,
-				cilindro e esfera) a objetos do mundo físico e nomear essas figuras.
-			}
-			{14}{%
-				Descrever características de algumas figuras geométricas espaciais (prismas
-				retos, pirâmides, cilindros, cones), relacionando-as com suas planificações.
-			}
-			{15}{%
-				Classificar e comparar figuras planas (triângulo, quadrado, retângulo, trapézio
-				e paralelogramo) em relação a seus lados (quantidade, posições relativas e comprimento) e
-				vértices.
-			}
-			{16}{%
-				Reconhecer figuras congruentes, usando sobreposição e desenhos em malhas
-				quadriculadas ou triangulares, incluindo o uso de tecnologias digitais.
-			}
-			{17}{%
-				Reconhecer que o resultado de uma medida depende da unidade de medida
-				utilizada.
-			}
-			{18}{%
-				Escolher a unidade de medida e o instrumento mais apropriado para medições de
-				comprimento, tempo e capacidade.
-			}
-			{19}{%
-				Estimar, medir e comparar comprimentos, utilizando unidades de medida
-				não padronizadas e padronizadas mais usuais (metro, centímetro e milímetro) e diversos
-				instrumentos de medida.
-			}
-			{20}{%
-				Estimar e medir capacidade e massa, utilizando unidades de medida não
-				padronizadas e padronizadas mais usuais (litro, mililitro, quilograma, grama e miligrama),
-				reconhecendo-as em leitura de rótulos e embalagens, entre outros.
-			}
-			{21}{%
-				Comparar, visualmente ou por superposição, áreas de faces de objetos, de figuras
-				planas ou de desenhos.
-			}
-			{22}{%
-				Ler e registrar medidas e intervalos de tempo, utilizando relógios (analógico e
-				digital) para informar os horários de início e término de realização de uma atividade e sua
-				duração.
-			}
-			{23}{%
-				Ler horas em relógios digitais e em relógios analógicos e reconhecer a relação
-				entre hora e minutos e entre minuto e segundos.
-			}
-			{24}{%
-				Resolver e elaborar problemas que envolvam a comparação e a equivalência de
-				valores monetários do sistema brasileiro em situações de compra, venda e troca.
-			}
-			{25}{%
-				Identificar, em eventos familiares aleatórios, todos os resultados possíveis,
-				estimando os que têm maiores ou menores chances de ocorrência.
-			}
-			{26}{%
-				Resolver problemas cujos dados estão apresentados em tabelas de dupla
-				entrada, gráficos de barras ou de colunas.
-			}
-			{27}{%
-				Ler, interpretar e comparar dados apresentados em tabelas de dupla entrada,
-				gráficos de barras ou de colunas, envolvendo resultados de pesquisas significativas, utilizando
-				termos como maior e menor frequência, apropriando-se desse tipo de linguagem para
-				compreender aspectos da realidade sociocultural significativos.
-			}
-			{28}{%
-				Realizar pesquisa envolvendo variáveis categóricas em um universo de até 50
-				elementos, organizar os dados coletados utilizando listas, tabelas simples ou de dupla entrada
-				e representá-los em gráficos de colunas simples, com e sem uso de tecnologias digitais.
-			}
-	}
-	{04}{%
-		{01}{%
-				Ler, escrever e ordenar números naturais até a ordem de dezenas de milhar.
-			}
-			{02}{%
-				Mostrar, por decomposição e composição, que todo número natural pode ser escrito
-				por meio de adições e multiplicações por potências de dez, para compreender o sistema de
-				numeração decimal e desenvolver estratégias de cálculo.
-			}
-			{03}{%
-				Resolver e elaborar problemas com números naturais envolvendo adição e subtração,
-				utilizando estratégias diversas, como cálculo, cálculo mental e algoritmos, além de fazer estimativas
-				do resultado.
-			}
-			{04}{%
-				Utilizar as relações entre adição e subtração, bem como entre multiplicação e divisão,
-				para ampliar as estratégias de cálculo.
-			}
-			{05}{%
-				Utilizar as propriedades das operações para desenvolver estratégias de cálculo.
-			}
-			{06}{%
-				Resolver e elaborar problemas envolvendo diferentes significados da multiplicação
-				(adição de parcelas iguais, organização retangular e proporcionalidade), utilizando estratégias
-				diversas, como cálculo por estimativa, cálculo mental e algoritmos.
-			}
-			{07}{%
-				Resolver e elaborar problemas de divisão cujo divisor tenha no máximo dois algarismos,
-				envolvendo os significados de repartição equitativa e de medida, utilizando estratégias diversas,
-				como cálculo por estimativa, cálculo mental e algoritmos.
-			}
-			{08}{%
-				Resolver, com o suporte de imagem e/ou material manipulável, problemas simples
-				de contagem, como a determinação do número de agrupamentos possíveis ao se combinar cada
-				elemento de uma coleção com todos os elementos de outra, utilizando estratégias e formas de
-				registro pessoais.
-			}
-			{09}{%
-				Reconhecer as frações unitárias mais usuais (\(\frac{1}{2}\), \(\frac{1}{3}\), \(\frac{1}{4}\), \(\frac{1}{5}\), \(\frac{1}{10}\) e \(\frac{1}{100}\)) como
-				unidades de medida menores do que uma unidade, utilizando a reta numérica como recurso.
-			}
-			{10}{%
-				Reconhecer que as regras do sistema de numeração decimal podem ser estendidas
-				para a representação decimal de um número racional e relacionar décimos e centésimos com a
-				representação do sistema monetário brasileiro.
-			}
-			{11}{%
-				Identificar regularidades em sequências numéricas compostas por múltiplos de um
-				número natural.
-			}
-			{12}{%
-				Reconhecer, por meio de investigações, que há grupos de números naturais para os
-				quais as divisões por um determinado número resultam em restos iguais, identificando regularidades.
-			}
-			{13}{%
-				Reconhecer, por meio de investigações, utilizando a calculadora quando necessário, as
-				relações inversas entre as operações de adição e de subtração e de multiplicação e de divisão, para
-				aplicá-las na resolução de problemas.
-			}
-			{14}{%
-				Reconhecer e mostrar, por meio de exemplos, que a relação de igualdade existente
-				entre dois termos permanece quando se adiciona ou se subtrai um mesmo número a cada um desses
-				termos.
-			}
-			{15}{%
-				Determinar o número desconhecido que torna verdadeira uma igualdade que envolve as
-				operações fundamentais com números naturais.
-			}
-			{01}{%
-				Ler, escrever e ordenar números naturais até a ordem de dezenas de milhar.
-			}
-			{02}{%
-				Mostrar, por decomposição e composição, que todo número natural pode ser escrito
-				por meio de adições e multiplicações por potências de dez, para compreender o sistema de
-				numeração decimal e desenvolver estratégias de cálculo.
-			}
-			{03}{%
-				Resolver e elaborar problemas com números naturais envolvendo adição e subtração,
-				utilizando estratégias diversas, como cálculo, cálculo mental e algoritmos, além de fazer estimativas
-				do resultado.
-			}
-			{04}{%
-				Utilizar as relações entre adição e subtração, bem como entre multiplicação e divisão,
-				para ampliar as estratégias de cálculo.
-			}
-			{05}{%
-				Utilizar as propriedades das operações para desenvolver estratégias de cálculo.
-			}
-			{06}{%
-				Resolver e elaborar problemas envolvendo diferentes significados da multiplicação
-				(adição de parcelas iguais, organização retangular e proporcionalidade), utilizando estratégias
-				diversas, como cálculo por estimativa, cálculo mental e algoritmos.
-			}
-			{07}{%
-				Resolver e elaborar problemas de divisão cujo divisor tenha no máximo dois algarismos,
-				envolvendo os significados de repartição equitativa e de medida, utilizando estratégias diversas,
-				como cálculo por estimativa, cálculo mental e algoritmos.
-			}
-			{08}{%
-				Resolver, com o suporte de imagem e/ou material manipulável, problemas simples
-				de contagem, como a determinação do número de agrupamentos possíveis ao se combinar cada
-				elemento de uma coleção com todos os elementos de outra, utilizando estratégias e formas de
-				registro pessoais.
-			}
-			{09}{%
-				Reconhecer as frações unitárias mais usuais (\(\frac{1}{2}\), \(\frac{1}{3}\), \(\frac{1}{4}\), \(\frac{1}{5}\), \(\frac{1}{10}\) e \(\frac{1}{100}\)) como
-				unidades de medida menores do que uma unidade, utilizando a reta numérica como recurso.
-			}
-			{10}{%
-				Reconhecer que as regras do sistema de numeração decimal podem ser estendidas
-				para a representação decimal de um número racional e relacionar décimos e centésimos com a
-				representação do sistema monetário brasileiro.
-			}
-			{11}{%
-				Identificar regularidades em sequências numéricas compostas por múltiplos de um
-				número natural.
-			}
-			{12}{%
-				Reconhecer, por meio de investigações, que há grupos de números naturais para os
-				quais as divisões por um determinado número resultam em restos iguais, identificando regularidades.
-			}
-			{13}{%
-				Reconhecer, por meio de investigações, utilizando a calculadora quando necessário, as
-				relações inversas entre as operações de adição e de subtração e de multiplicação e de divisão, para
-				aplicá-las na resolução de problemas.
-			}
-			{14}{%
-				Reconhecer e mostrar, por meio de exemplos, que a relação de igualdade existente
-				entre dois termos permanece quando se adiciona ou se subtrai um mesmo número a cada um desses
-				termos.
-			}
-			{15}{%
-				Determinar o número desconhecido que torna verdadeira uma igualdade que envolve as
-				operações fundamentais com números naturais.
-			}
-	}
-	{05}{%
-		{01}{%
-				Ler, escrever e ordenar números naturais até a ordem das centenas de milhar com
-				compreensão das principais características do sistema de numeração decimal.
-			}
-			{02}{%
-				Ler, escrever e ordenar números racionais na forma decimal com compreensão
-				das principais características do sistema de numeração decimal, utilizando, como recursos, a
-				composição e decomposição e a reta numérica.
-			}
-			{03}{%
-				Identificar e representar frações (menores e maiores que a unidade),
-				associando-as ao resultado de uma divisão ou à ideia de parte de um todo, utilizando a reta
-				numérica como recurso.
-			}
-			{04}{%
-				Identificar frações equivalentes.
-			}
-			{05}{%
-				Comparar e ordenar números racionais positivos (representações fracionária e
-				decimal), relacionando-os a pontos na reta numérica.
-			}
-			{06}{%
-        Associar as representações \qty{10}{\percent}{\percent}, \qty{25}{\percent}, \qty{50}{\percent}, \qty{75}{\percent} e \qty{100}{\percent} respectivamente à
-				décima parte, quarta parte, metade, três quartos e um inteiro, para calcular porcentagens,
-				utilizando estratégias pessoais, cálculo mental e calculadora, em contextos de educação
-				financeira, entre outros.
-			}
-			{07}{%
-				Resolver e elaborar problemas de adição e subtração com números naturais e
-				com números racionais, cuja representação decimal seja finita, utilizando estratégias diversas,
-				como cálculo por estimativa, cálculo mental e algoritmos.
-			}
-			{08}{%
-				Resolver e elaborar problemas de multiplicação e divisão com números naturais e
-				com números racionais cuja representação decimal é finita (com multiplicador natural e divisor
-				natural e diferente de zero), utilizando estratégias diversas, como cálculo por estimativa,
-				cálculo mental e algoritmos.
-			}
-			{09}{%
-				Resolver e elaborar problemas simples de contagem envolvendo o princípio
-				multiplicativo, como a determinação do número de agrupamentos possíveis ao se combinar
-				cada elemento de uma coleção com todos os elementos de outra coleção, por meio de
-				diagramas de árvore ou por tabelas.
-			}
-			{10}{%
-				Concluir, por meio de investigações, que a relação de igualdade existente
-				entre dois membros permanece ao adicionar, subtrair, multiplicar ou dividir cada um desses
-				membros por um mesmo número, para construir a noção de equivalência.
-			}
-			{11}{%
-				Resolver e elaborar problemas cuja conversão em sentença matemática seja uma
-				igualdade com uma operação em que um dos termos é desconhecido.
-			}
-			{12}{%
-				Resolver problemas que envolvam variação de proporcionalidade direta entre
-				duas grandezas, para associar a quantidade de um produto ao valor a pagar, alterar as
-				quantidades de ingredientes de receitas, ampliar ou reduzir escala em mapas, entre outros.
-			}
-			{13}{%
-				Resolver problemas envolvendo a partilha de uma quantidade em duas partes
-				desiguais, tais como dividir uma quantidade em duas partes, de modo que uma seja o dobro
-				da outra, com compreensão da ideia de razão entre as partes e delas com o todo.
-			}
-			{14}{%
-				Utilizar e compreender diferentes representações para a localização de objetos
-				no plano, como mapas, células em planilhas eletrônicas e coordenadas geográficas, a fim de
-				desenvolver as primeiras noções de coordenadas cartesianas.
-			}
-			{15}{%
-				Interpretar, descrever e representar a localização ou movimentação de objetos no
-				plano cartesiano (1º quadrante), utilizando coordenadas cartesianas, indicando mudanças de
-				direção e de sentido e giros.
-			}
-			{16}{%
-				Associar figuras espaciais a suas planificações (prismas, pirâmides, cilindros e
-				cones) e analisar, nomear e comparar seus atributos.
-			}
-			{17}{%
-				Reconhecer, nomear e comparar polígonos, considerando lados, vértices e
-				ângulos, e desenhá-los, utilizando material de desenho ou tecnologias digitais.
-			}
-			{18}{%
-				Reconhecer a congruência dos ângulos e a proporcionalidade entre os lados
-				correspondentes de figuras poligonais em situações de ampliação e de redução em malhas
-				quadriculadas e usando tecnologias digitais.
-			}
-			{19}{%
-				Resolver e elaborar problemas envolvendo medidas das grandezas comprimento,
-				área, massa, tempo, temperatura e capacidade, recorrendo a transformações entre as unidades
-				mais usuais em contextos socioculturais.
-			}
-			{20}{%
-				Concluir, por meio de investigações, que figuras de perímetros iguais podem
-				ter áreas diferentes e que, também, figuras que têm a mesma área podem ter perímetros
-				diferentes.
-			}
-			{21}{%
-				Reconhecer volume como grandeza associada a sólidos geométricos e medir
-				volumes por meio de empilhamento de cubos, utilizando, preferencialmente, objetos concretos.
-			}
-			{22}{%
-				Apresentar todos os possíveis resultados de um experimento aleatório,
-				estimando se esses resultados são igualmente prováveis ou não.
-			}
-			{23}{%
-				Determinar a probabilidade de ocorrência de um resultado em eventos aleatórios,
-				quando todos os resultados possíveis têm a mesma chance de ocorrer (equiprováveis).
-			}
-			{24}{%
-				Interpretar dados estatísticos apresentados em textos, tabelas e gráficos (colunas
-				ou linhas), referentes a outras áreas do conhecimento ou a outros contextos, como saúde e
-				trânsito, e produzir textos com o objetivo de sintetizar conclusões.
-			}
-			{25}{%
-				Realizar pesquisa envolvendo variáveis categóricas e numéricas, organizar dados
-				coletados por meio de tabelas, gráficos de colunas, pictóricos e de linhas, com e sem uso de
-				tecnologias digitais, e apresentar texto escrito sobre a finalidade da pesquisa e a síntese dos
-				resultados.
-			}
-	}
-	{06}{%
-		{01}{%
-				Comparar, ordenar, ler e escrever números naturais e números racionais cuja
-				representação decimal é finita, fazendo uso da reta numérica.
-			}
-			{02}{%
-				Reconhecer o sistema de numeração decimal, como o que prevaleceu no mundo
-				ocidental, e destacar semelhanças e diferenças com outros sistemas, de modo a sistematizar suas
-				principais características (base, valor posicional e função do zero), utilizando, inclusive, a composição
-				e decomposição de números naturais e números racionais em sua representação decimal.
-			}
-			{03}{%
-				Resolver e elaborar problemas que envolvam cálculos (mentais ou escritos, exatos
-				ou aproximados) com números naturais, por meio de estratégias variadas, com compreensão
-				dos processos neles envolvidos com e sem uso de calculadora.
-			}
-			{04}{%
-				Construir algoritmo em linguagem natural e representá-lo por fluxograma que
-				indique a resolução de um problema simples (por exemplo, se um número natural qualquer é
-				par).
-			}
-			{05}{%
-				Classificar números naturais em primos e compostos, estabelecer relações entre
-				números, expressas pelos termos “é múltiplo de”, “é divisor de”, “é fator de”, e estabelecer, por
-				meio de investigações, critérios de divisibilidade por \num{2}, \num{3}, \num{4}, \num{5}, \num{6}, \num{8}, \num{9}, \num{10}, \num{100} e \num{1000}.
-			}
-			{06}{%
-				Resolver e elaborar problemas que envolvam as ideias de múltiplo e de divisor.
-			}
-			{07}{%
-				Compreender, comparar e ordenar frações associadas às ideias de partes de
-				inteiros e resultado de divisão, identificando frações equivalentes.
-			}
-			{08}{%
-				Reconhecer que os números racionais positivos podem ser expressos nas formas
-				fracionária e decimal, estabelecer relações entre essas representações, passando de uma
-				representação para outra, e relacioná-los a pontos na reta numérica.
-			}
-			{09}{%
-				Resolver e elaborar problemas que envolvam o cálculo da fração de uma
-				quantidade e cujo resultado seja um número natural, com e sem uso de calculadora.
-			}
-			{10}{%
-				Resolver e elaborar problemas que envolvam adição ou subtração com números
-				racionais positivos na representação fracionária.
-			}
-			{11}{%
-				Resolver e elaborar problemas com números racionais positivos na representação
-				decimal, envolvendo as quatro operações fundamentais e a potenciação, por meio de
-				estratégias diversas, utilizando estimativas e arredondamentos para verificar a razoabilidade de
-				respostas, com e sem uso de calculadora.
-			}
-			{12}{%
-				Fazer estimativas de quantidades e aproximar números para múltiplos da potência
-				de 10 mais próxima.
-			}
-			{13}{%
-				Resolver e elaborar problemas que envolvam porcentagens, com base na ideia
-				de proporcionalidade, sem fazer uso da “regra de três”, utilizando estratégias pessoais, cálculo
-				mental e calculadora, em contextos de educação financeira, entre outros.
-			}
-			{14}{%
-				Reconhecer que a relação de igualdade matemática não se altera ao adicionar,
-				subtrair, multiplicar ou dividir os seus dois membros por um mesmo número e utilizar essa
-				noção para determinar valores desconhecidos na resolução de problemas.
-			}
-			{15}{%
-				Resolver e elaborar problemas que envolvam a partilha de uma quantidade em
-				duas partes desiguais, envolvendo relações aditivas e multiplicativas, bem como a razão entre
-				as partes e entre uma das partes e o todo.
-			}
-			{16}{%
-				Associar pares ordenados de números a pontos do plano cartesiano do 1º
-				quadrante, em situações como a localização dos vértices de um polígono.
-			}
-			{17}{%
-				Quantificar e estabelecer relações entre o número de vértices, faces e arestas
-				de prismas e pirâmides, em função do seu polígono da base, para resolver problemas e
-				desenvolver a percepção espacial.
-			}
-			{18}{%
-				Reconhecer, nomear e comparar polígonos, considerando lados, vértices e
-				ângulos, e classificá-los em regulares e não regulares, tanto em suas representações no plano
-				como em faces de poliedros.
-			}
-			{19}{%
-				Identificar características dos triângulos e classificá-los em relação às medidas dos
-				lados e dos ângulos.
-			}
-			{20}{%
-				Identificar características dos quadriláteros, classificá-los em relação a lados e a
-				ângulos e reconhecer a inclusão e a intersecção de classes entre eles.
-			}
-			{21}{%
-				Construir figuras planas semelhantes em situações de ampliação e de redução,
-				com o uso de malhas quadriculadas, plano cartesiano ou tecnologias digitais.
-			}
-			{22}{%
-				Utilizar instrumentos, como réguas e esquadros, ou softwares para representações
-				de retas paralelas e perpendiculares e construção de quadriláteros, entre outros.
-			}
-			{23}{%
-				Construir algoritmo para resolver situações passo a passo (como na construção
-				de dobraduras ou na indicação de deslocamento de um objeto no plano segundo pontos de
-				referência e distâncias fornecidas etc.).
-			}
-			{24}{%
-				Resolver e elaborar problemas que envolvam as grandezas comprimento, massa,
-				tempo, temperatura, área (triângulos e retângulos), capacidade e volume (sólidos formados
-				por blocos retangulares), sem uso de fórmulas, inseridos, sempre que possível, em contextos
-				oriundos de situações reais e/ou relacionadas às outras áreas do conhecimento.
-			}
-			{25}{%
-				Reconhecer a abertura do ângulo como grandeza associada às figuras geométricas.
-			}
-			{26}{%
-				Resolver problemas que envolvam a noção de ângulo em diferentes contextos e
-				em situações reais, como ângulo de visão.
-			}
-			{27}{%
-				Determinar medidas da abertura de ângulos, por meio de transferidor e/ou
-				tecnologias digitais.
-			}
-			{28}{%
-				Interpretar, descrever e desenhar plantas baixas simples de residências e vistas aéreas.
-			}
-			{29}{%
-				Analisar e descrever mudanças que ocorrem no perímetro e na área de um
-				quadrado ao se ampliarem ou reduzirem, igualmente, as medidas de seus lados, para
-				compreender que o perímetro é proporcional à medida do lado, o que não ocorre com a área.
-			}
-			{30}{%
-				Calcular a probabilidade de um evento aleatório, expressando-a por número
-				racional (forma fracionária, decimal e percentual) e comparar esse número com a probabilidade
-				obtida por meio de experimentos sucessivos.
-			}
-			{31}{%
-				Identificar as variáveis e suas frequências e os elementos constitutivos (título, eixos,
-				legendas, fontes e datas) em diferentes tipos de gráfico.
-			}
-			{32}{%
-				Interpretar e resolver situações que envolvam dados de pesquisas sobre contextos
-				ambientais, sustentabilidade, trânsito, consumo responsável, entre outros, apresentadas pela
-				mídia em tabelas e em diferentes tipos de gráficos e redigir textos escritos com o objetivo de
-				sintetizar conclusões.
-			}
-			{33}{%
-				Planejar e coletar dados de pesquisa referente a práticas sociais escolhidas pelos
-				alunos e fazer uso de planilhas eletrônicas para registro, representação e interpretação das
-				informações, em tabelas, vários tipos de gráficos e texto.
-			}
-			{34}{%
-				Interpretar e desenvolver fluxogramas simples, identificando as relações entre
-				os objetos representados (por exemplo, posição de cidades considerando as estradas que as
-				unem, hierarquia dos funcionários de uma empresa etc.).
-      }
-	}
-	{07}{%
-		{01}{%
-				Resolver e elaborar problemas com números naturais, envolvendo as noções de
-				divisor e de múltiplo, podendo incluir máximo divisor comum ou mínimo múltiplo comum, por
-				meio de estratégias diversas, sem a aplicação de algoritmos.
-			}
-			{02}{%
-				Resolver e elaborar problemas que envolvam porcentagens, como os que lidam
-				com acréscimos e decréscimos simples, utilizando estratégias pessoais, cálculo mental e
-				calculadora, no contexto de educação financeira, entre outros.
-			}
-			{03}{%
-				Comparar e ordenar números inteiros em diferentes contextos, incluindo o
-				histórico, associá-los a pontos da reta numérica e utilizá-los em situações que envolvam adição
-				e subtração.
-			}
-			{04}{%
-				Resolver e elaborar problemas que envolvam operações com números inteiros.
-			}
-			{05}{%
-				Resolver um mesmo problema utilizando diferentes algoritmos.
-			}
-			{06}{%
-				Reconhecer que as resoluções de um grupo de problemas que têm a mesma
-				estrutura podem ser obtidas utilizando os mesmos procedimentos.
-			}
-			{07}{%
-				Representar por meio de um fluxograma os passos utilizados para resolver um
-				grupo de problemas.
-			}
-			{08}{%
-				Comparar e ordenar frações associadas às ideias de partes de inteiros, resultado
-				da divisão, razão e operador.
-			}
-			{09}{%
-				Utilizar, na resolução de problemas, a associação entre razão e fração, como a
-				fração 2/3 para expressar a razão de duas partes de uma grandeza para três partes da mesma
-				ou três partes de outra grandeza.
-			}
-			{10}{%
-				Comparar e ordenar números racionais em diferentes contextos e associá-los a
-				pontos da reta numérica.
-			}
-			{11}{%
-				Compreender e utilizar a multiplicação e a divisão de números racionais, a relação
-				entre elas e suas propriedades operatórias.
-			}
-			{12}{%
-				Resolver e elaborar problemas que envolvam as operações com números racionais.
-			}
-			{13}{%
-				Compreender a ideia de variável, representada por letra ou símbolo, para expressar
-				relação entre duas grandezas, diferenciando-a da ideia de incógnita.
-			}
-			{14}{%
-				Classificar sequências em recursivas e não recursivas, reconhecendo que o
-				conceito de recursão está presente não apenas na matemática, mas também nas artes e na
-				literatura.
-			}
-			{15}{%
-				Utilizar a simbologia algébrica para expressar regularidades encontradas em
-				sequências numéricas.
-			}
-			{16}{%
-				Reconhecer se duas expressões algébricas obtidas para descrever a regularidade
-				de uma mesma sequência numérica são ou não equivalentes.
-			}
-			{17}{%
-				Resolver e elaborar problemas que envolvam variação de proporcionalidade
-				direta e de proporcionalidade inversa entre duas grandezas, utilizando sentença algébrica para
-				expressar a relação entre elas.
-			}
-			{18}{%
-				Resolver e elaborar problemas que possam ser representados por equações
-				polinomiais de 1\textordmasculine grau, redutíveis à forma \(ax + b = c\), fazendo uso das propriedades da igualdade.
-			}
-      {19}{%
-        Realizar transformações de polígonos representados no plano cartesiano,
-        decorrentes da multiplicação das coordenadas de seus vértices por um número inteiro.
-      }
-			{20}{%
-				Reconhecer e representar, no plano cartesiano, o simétrico de figuras em relação
-				aos eixos e à origem.
-			}
-			{21}{%
-				Reconhecer e construir figuras obtidas por simetrias de translação, rotação e reflexão,
-				usando instrumentos de desenho ou softwares de geometria dinâmica e vincular esse estudo a
-				representações planas de obras de arte, elementos arquitetônicos, entre outros.
-			}
-			{22}{%
-				Construir circunferências, utilizando compasso, reconhecê-las como lugar
-				geométrico e utilizá-las para fazer composições artísticas e resolver problemas que envolvam
-				objetos equidistantes.
-			}
-			{23}{%
-				Verificar relações entre os ângulos formados por retas paralelas cortadas por uma
-				transversal, com e sem uso de softwares de geometria dinâmica.
-			}
-			{24}{%
-				Construir triângulos, usando régua e compasso, reconhecer a condição de
-				existência do triângulo quanto à medida dos lados e verificar que a soma das medidas dos
-				ângulos internos de um triângulo é 180°.
-			}
-			{25}{%
-				Reconhecer a rigidez geométrica dos triângulos e suas aplicações, como na construção
-				de estruturas arquitetônicas (telhados, estruturas metálicas e outras) ou nas artes plásticas.
-			}
-			{26}{%
-				Descrever, por escrito e por meio de um fluxograma, um algoritmo para a construção de
-				um triângulo qualquer, conhecidas as medidas dos três lados.
-			}
-			{27}{%
-				Calcular medidas de ângulos internos de polígonos regulares, sem o uso
-				de fórmulas, e estabelecer relações entre ângulos internos e externos de polígonos,
-				preferencialmente vinculadas à construção de mosaicos e de ladrilhamentos.
-			}
-			{28}{%
-				Descrever, por escrito e por meio de um fluxograma, um algoritmo para a
-				construção de um polígono regular (como quadrado e triângulo equilátero), conhecida a
-				medida de seu lado.
-			}
-			{29}{%
-				Resolver e elaborar problemas que envolvam medidas de grandezas inseridos em
-				contextos oriundos de situações cotidianas ou de outras áreas do conhecimento, reconhecendo
-				que toda medida empírica é aproximada.
-			}
-			{30}{%
-				Resolver e elaborar problemas de cálculo de medida do volume de blocos retangulares,
-				envolvendo as unidades usuais (metro cúbico, decímetro cúbico e centímetro cúbico).
-			}
-			{31}{%
-				Estabelecer expressões de cálculo de área de triângulos e de quadriláteros.
-			}
-			{32}{%
-				Resolver e elaborar problemas de cálculo de medida de área de figuras planas que
-				podem ser decompostas por quadrados, retângulos e/ou triângulos, utilizando a equivalência
-				entre áreas.
-			}
-			{33}{%
-				Estabelecer o número como a razão entre a medida de uma circunferência e seu
-				diâmetro, para compreender e resolver problemas, inclusive os de natureza histórica.
-			}
-			{34}{%
-				Planejar e realizar experimentos aleatórios ou simulações que envolvem cálculo de
-				probabilidades ou estimativas por meio de frequência de ocorrências.
-			}
-			{35}{%
-				Compreender, em contextos significativos, o significado de média estatística como
-				indicador da tendência de uma pesquisa, calcular seu valor e relacioná-lo, intuitivamente, com a
-				amplitude do conjunto de dados.
-			}
-			{36}{%
-				Planejar e realizar pesquisa envolvendo tema da realidade social, identificando a
-				necessidade de ser censitária ou de usar amostra, e interpretar os dados para comunicá-los por
-				meio de relatório escrito, tabelas e gráficos, com o apoio de planilhas eletrônicas.
-			}
-			{37}{%
-				Interpretar e analisar dados apresentados em gráfico de setores divulgados pela
-				mídia e compreender quando é possível ou conveniente sua utilização.
-			}
-	}
-	{08}{%
-		{01}{%
-				Efetuar cálculos com potências de expoentes inteiros e aplicar esse conhecimento
-				na representação de números em notação científica.
-			}
-			{02}{%
-				Resolver e elaborar problemas usando a relação entre potenciação e radiciação,
-				para representar uma raiz como potência de expoente fracionário.
-			}
-			{03}{%
-				Resolver e elaborar problemas de contagem cuja resolução envolva a aplicação
-				do princípio multiplicativo.
-			}
-			{04}{%
-				Resolver e elaborar problemas, envolvendo cálculo de porcentagens, incluindo o
-				uso de tecnologias digitais.
-			}
-			{05}{%
-				Reconhecer e utilizar procedimentos para a obtenção de uma fração geratriz
-				para uma dízima periódica.
-			}
-			{06}{%
-				Resolver e elaborar problemas que envolvam cálculo do valor numérico de
-				expressões algébricas, utilizando as propriedades das operações.
-			}
-			{07}{%
-				Associar uma equação linear de 1\textordmasculine grau com duas incógnitas a uma reta no plano
-				cartesiano.
-			}
-			{08}{%
-				Resolver e elaborar problemas relacionados ao seu contexto próximo, que
-				possam ser representados por sistemas de equações de 1\textordmasculine grau com duas incógnitas e
-				interpretá-los, utilizando, inclusive, o plano cartesiano como recurso.
-			}
-			{09}{%
-				Resolver e elaborar, com e sem uso de tecnologias, problemas que possam ser
-				representados por equações polinomiais de 2\textordmasculine grau do tipo \(ax2 = b\).
-			}
-			{10}{%
-				Identificar a regularidade de uma sequência numérica ou figural não recursiva
-				e construir um algoritmo por meio de um fluxograma que permita indicar os números ou as
-				figuras seguintes.
-			}
-			{11}{%
-				Identificar a regularidade de uma sequência numérica recursiva e construir um
-				algoritmo por meio de um fluxograma que permita indicar os números seguintes.
-			}
-			{12}{%
-				Identificar a natureza da variação de duas grandezas, diretamente, inversamente
-				proporcionais ou não proporcionais, expressando a relação existente por meio de sentença
-				algébrica e representá-la no plano cartesiano.
-			}
-			{13}{%
-				Resolver e elaborar problemas que envolvam grandezas diretamente ou
-				inversamente proporcionais, por meio de estratégias variadas.
-			}
-			{14}{%
-				Demonstrar propriedades de quadriláteros por meio da identificação da
-				congruência de triângulos.
-			}
-			{15}{%
-				Construir, utilizando instrumentos de desenho ou softwares de geometria
-				dinâmica, mediatriz, bissetriz, ângulos de 90°, 60°, 45° e 30° e polígonos regulares.
-			}
-			{16}{%
-				Descrever, por escrito e por meio de um fluxograma, um algoritmo para a
-				construção de um hexágono regular de qualquer área, a partir da medida do ângulo central e
-				da utilização de esquadros e compasso.
-			}
-			{17}{%
-				Aplicar os conceitos de mediatriz e bissetriz como lugares geométricos na
-				resolução de problemas.
-			}
-			{18}{%
-				Reconhecer e construir figuras obtidas por composições de transformações
-				geométricas (translação, reflexão e rotação), com o uso de instrumentos de desenho ou de
-				softwares de geometria dinâmica.
-			}
-			{19}{%
-				Resolver e elaborar problemas que envolvam medidas de área de figuras
-				geométricas, utilizando expressões de cálculo de área (quadriláteros, triângulos e círculos), em
-				situações como determinar medida de terrenos.
-			}
-			{20}{%
-				Reconhecer a relação entre um litro e um decímetro cúbico e a relação entre litro
-				e metro cúbico, para resolver problemas de cálculo de capacidade de recipientes.
-			}
-			{21}{%
-				Resolver e elaborar problemas que envolvam o cálculo do volume de recipiente
-				cujo formato é o de um bloco retangular.
-			}
-			{22}{%
-				Calcular a probabilidade de eventos, com base na construção do espaço amostral,
-				utilizando o princípio multiplicativo, e reconhecer que a soma das probabilidades de todos os
-				elementos do espaço amostral é igual a 1.
-			}
-			{23}{%
-				Avaliar a adequação de diferentes tipos de gráficos para representar um conjunto
-				de dados de uma pesquisa.
-			}
-			{24}{%
-				Classificar as frequências de uma variável contínua de uma pesquisa em classes,
-				de modo que resumam os dados de maneira adequada para a tomada de decisões.
-			}
-			{25}{%
-				Obter os valores de medidas de tendência central de uma pesquisa estatística
-				(média, moda e mediana) com a compreensão de seus significados e relacioná-los com a
-				dispersão de dados, indicada pela amplitude.
-			}
-			{26}{%
-				Selecionar razões, de diferentes naturezas (física, ética ou econômica), que
-				justificam a realização de pesquisas amostrais e não censitárias, e reconhecer que a seleção
-				da amostra pode ser feita de diferentes maneiras (amostra casual simples, sistemática e
-				estratificada).
-			}
-			{27}{%
-				Planejar e executar pesquisa amostral, selecionando uma técnica de amostragem
-				adequada, e escrever relatório que contenha os gráficos apropriados para representar os
-				conjuntos de dados, destacando aspectos como as medidas de tendência central, a amplitude
-				e as conclusões.
-			}
-	}
-	{09}{%
-		{01}{%
-				Reconhecer que, uma vez fixada uma unidade de comprimento, existem
-				segmentos de reta cujo comprimento não é expresso por número racional (como as medidas
-				de diagonais de um polígono e alturas de um triângulo, quando se toma a medida de cada lado
-				como unidade).
-			}
-			{02}{%
-				Reconhecer um número irracional como um número real cuja representação
-				decimal é infinita e não periódica, e estimar a localização de alguns deles na reta numérica.
-			}
-			{03}{%
-				Efetuar cálculos com números reais, inclusive potências com expoentes
-				fracionários.
-			}
-			{04}{%
-				Resolver e elaborar problemas com números reais, inclusive em notação
-				científica, envolvendo diferentes operações.
-			}
-			{05}{%
-				Resolver e elaborar problemas que envolvam porcentagens, com a ideia de
-				aplicação de percentuais sucessivos e a determinação das taxas percentuais, preferencialmente
-				com o uso de tecnologias digitais, no contexto da educação financeira.
-			}
-			{06}{%
-				Compreender as funções como relações de dependência unívoca entre duas
-				variáveis e suas representações numérica, algébrica e gráfica e utilizar esse conceito para
-				analisar situações que envolvam relações funcionais entre duas variáveis.
-			}
-			{07}{%
-				Resolver problemas que envolvam a razão entre duas grandezas de espécies
-				diferentes, como velocidade e densidade demográfica.
-			}
-			{08}{%
-				Resolver e elaborar problemas que envolvam relações de proporcionalidade
-				direta e inversa entre duas ou mais grandezas, inclusive escalas, divisão em partes
-				proporcionais e taxa de variação, em contextos socioculturais, ambientais e de outras áreas.
-			}
-			{09}{%
-				Compreender os processos de fatoração de expressões algébricas, com base em
-				suas relações com os produtos notáveis, para resolver e elaborar problemas que possam ser
-				representados por equações polinomiais do 2º grau.
-			}
-			{10}{%
-				Demonstrar relações simples entre os ângulos formados por retas paralelas
-				cortadas por uma transversal.
-			}
-			{11}{%
-				Resolver problemas por meio do estabelecimento de relações entre arcos,
-				ângulos centrais e ângulos inscritos na circunferência, fazendo uso, inclusive, de softwares de
-				geometria dinâmica.
-			}
-			{12}{%
-				Reconhecer as condições necessárias e suficientes para que dois triângulos
-				sejam semelhantes.
-			}
-			{13}{%
-				Demonstrar relações métricas do triângulo retângulo, entre elas o teorema de
-				Pitágoras, utilizando, inclusive, a semelhança de triângulos.
-			}
-			{14}{%
-				Resolver e elaborar problemas de aplicação do teorema de Pitágoras ou das
-				relações de proporcionalidade envolvendo retas paralelas cortadas por secantes.
-			}
-			{15}{%
-				Descrever, por escrito e por meio de um fluxograma, um algoritmo para a
-				construção de um polígono regular cuja medida do lado é conhecida, utilizando régua e
-				compasso, como também softwares.
-			}
-			{16}{%
-				Determinar o ponto médio de um segmento de reta e a distância entre dois pontos
-				quaisquer, dadas as coordenadas desses pontos no plano cartesiano, sem o uso de fórmulas, e
-				utilizar esse conhecimento para calcular, por exemplo, medidas de perímetros e áreas de figuras
-				planas construídas no plano.
-			}
-			{17}{%
-				Reconhecer vistas ortogonais de figuras espaciais e aplicar esse conhecimento
-				para desenhar objetos em perspectiva.
-			}
-			{18}{%
-				Reconhecer e empregar unidades usadas para expressar medidas muito grandes
-				ou muito pequenas, tais como distância entre planetas e sistemas solares, tamanho de vírus ou
-				de células, capacidade de armazenamento de computadores, entre outros.
-			}
-			{19}{%
-				Resolver e elaborar problemas que envolvam medidas de volumes de prismas e
-				de cilindros retos, inclusive com uso de expressões de cálculo, em situações cotidianas.
-			}
-			{20}{%
-				Reconhecer, em experimentos aleatórios, eventos independentes e dependentes
-				e calcular a probabilidade de sua ocorrência, nos dois casos.
-			}
-			{21}{%
-				Analisar e identificar, em gráficos divulgados pela mídia, os elementos que
-				podem induzir, às vezes propositadamente, erros de leitura, como escalas inapropriadas,
-				legendas não explicitadas corretamente, omissão de informações importantes (fontes e
-				datas), entre outros.
-			}
-			{22}{%
-				Escolher e construir o gráfico mais adequado (colunas, setores, linhas), com
-				ou sem uso de planilhas eletrônicas, para apresentar um determinado conjunto de dados,
-				destacando aspectos como as medidas de tendência central.
-			}
-			{23}{%
-				Planejar e executar pesquisa amostral envolvendo tema da realidade social e
-				comunicar os resultados por meio de relatório contendo avaliação de medidas de tendência central
-				e da amplitude, tabelas e gráficos adequados, construídos com o apoio de planilhas eletrônicas.
-			}
-	}
+				\IfStrEqCase{#2}{%
+					{01}{%
+							Reconhecer que, uma vez fixada uma unidade de comprimento, existem
+							segmentos de reta cujo comprimento não é expresso por número racional (como as medidas
+							de diagonais de um polígono e alturas de um triângulo, quando se toma a medida de cada lado
+							como unidade).
+						}
+						{02}{%
+							Reconhecer um número irracional como um número real cuja representação
+							decimal é infinita e não periódica, e estimar a localização de alguns deles na reta numérica.
+						}
+						{03}{%
+							Efetuar cálculos com números reais, inclusive potências com expoentes
+							fracionários.
+						}
+						{04}{%
+							Resolver e elaborar problemas com números reais, inclusive em notação
+							científica, envolvendo diferentes operações.
+						}
+						{05}{%
+							Resolver e elaborar problemas que envolvam porcentagens, com a ideia de
+							aplicação de percentuais sucessivos e a determinação das taxas percentuais, preferencialmente
+							com o uso de tecnologias digitais, no contexto da educação financeira.
+						}
+						{06}{%
+							Compreender as funções como relações de dependência unívoca entre duas
+							variáveis e suas representações numérica, algébrica e gráfica e utilizar esse conceito para
+							analisar situações que envolvam relações funcionais entre duas variáveis.
+						}
+						{07}{%
+							Resolver problemas que envolvam a razão entre duas grandezas de espécies
+							diferentes, como velocidade e densidade demográfica.
+						}
+						{08}{%
+							Resolver e elaborar problemas que envolvam relações de proporcionalidade
+							direta e inversa entre duas ou mais grandezas, inclusive escalas, divisão em partes
+							proporcionais e taxa de variação, em contextos socioculturais, ambientais e de outras áreas.
+						}
+						{09}{%
+							Compreender os processos de fatoração de expressões algébricas, com base em
+							suas relações com os produtos notáveis, para resolver e elaborar problemas que possam ser
+							representados por equações polinomiais do 2º grau.
+						}
+						{10}{%
+							Demonstrar relações simples entre os ângulos formados por retas paralelas
+							cortadas por uma transversal.
+						}
+						{11}{%
+							Resolver problemas por meio do estabelecimento de relações entre arcos,
+							ângulos centrais e ângulos inscritos na circunferência, fazendo uso, inclusive, de softwares de
+							geometria dinâmica.
+						}
+						{12}{%
+							Reconhecer as condições necessárias e suficientes para que dois triângulos
+							sejam semelhantes.
+						}
+						{13}{%
+							Demonstrar relações métricas do triângulo retângulo, entre elas o teorema de
+							Pitágoras, utilizando, inclusive, a semelhança de triângulos.
+						}
+						{14}{%
+							Resolver e elaborar problemas de aplicação do teorema de Pitágoras ou das
+							relações de proporcionalidade envolvendo retas paralelas cortadas por secantes.
+						}
+						{15}{%
+							Descrever, por escrito e por meio de um fluxograma, um algoritmo para a
+							construção de um polígono regular cuja medida do lado é conhecida, utilizando régua e
+							compasso, como também softwares.
+						}
+						{16}{%
+							Determinar o ponto médio de um segmento de reta e a distância entre dois pontos
+							quaisquer, dadas as coordenadas desses pontos no plano cartesiano, sem o uso de fórmulas, e
+							utilizar esse conhecimento para calcular, por exemplo, medidas de perímetros e áreas de figuras
+							planas construídas no plano.
+						}
+						{17}{%
+							Reconhecer vistas ortogonais de figuras espaciais e aplicar esse conhecimento
+							para desenhar objetos em perspectiva.
+						}
+						{18}{%
+							Reconhecer e empregar unidades usadas para expressar medidas muito grandes
+							ou muito pequenas, tais como distância entre planetas e sistemas solares, tamanho de vírus ou
+							de células, capacidade de armazenamento de computadores, entre outros.
+						}
+						{19}{%
+							Resolver e elaborar problemas que envolvam medidas de volumes de prismas e
+							de cilindros retos, inclusive com uso de expressões de cálculo, em situações cotidianas.
+						}
+						{20}{%
+							Reconhecer, em experimentos aleatórios, eventos independentes e dependentes
+							e calcular a probabilidade de sua ocorrência, nos dois casos.
+						}
+						{21}{%
+							Analisar e identificar, em gráficos divulgados pela mídia, os elementos que
+							podem induzir, às vezes propositadamente, erros de leitura, como escalas inapropriadas,
+							legendas não explicitadas corretamente, omissão de informações importantes (fontes e
+							datas), entre outros.
+						}
+						{22}{%
+							Escolher e construir o gráfico mais adequado (colunas, setores, linhas), com
+							ou sem uso de planilhas eletrônicas, para apresentar um determinado conjunto de dados,
+							destacando aspectos como as medidas de tendência central.
+						}
+						{23}{%
+							Planejar e executar pesquisa amostral envolvendo tema da realidade social e
+							comunicar os resultados por meio de relatório contendo avaliação de medidas de tendência central
+							e da amplitude, tabelas e gráficos adequados, construídos com o apoio de planilhas eletrônicas.
+						}
+				}
+			}
+	}[\la@invalidefhability]
 }

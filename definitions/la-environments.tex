@@ -1,60 +1,34 @@
-\RequirePackage{tcolorbox}
+\ifdraft\else
+	\RequirePackage{tcolorbox}
 	\tcbuselibrary{theorems, listings, breakable, most, skins}
 	\tcbsetforeverylayer{shield externalize}
+\fi
 
 
 % Creates the banner of task environment
 \newcommand{\la@contentsepbanner}[1]{
-	\leavevmode\checkoddpage%
 	\needspace{6em}
+	\ifdraft
+  {{\subsectiontitlefont\color{\currentcolor}\la@bannername: #1}}
+	\else
+		\tikzset{external/export next=false}
 
-	\tikzset{external/export next=false}
+		\begin{tikzpicture}[remember picture, overlay, shift = {(0,0)}]
 
-	\begin{tikzpicture}[remember picture, overlay, shift = {(0,0)}]
+			\draw [\currentcolor,  line width = 3pt]
+			(-\la@student@spinemargin,0) -- (\la@student@textwidth+\la@student@foremargin,0);
+			\node (banner name) [
+					fill, \currentcolor, rectangle, rounded corners=10, anchor = east,
+					minimum width = 100pt, minimum height = 20pt
+				]
+      at (\la@student@textwidth,0) {{\bannernamefont\la@bannername}};
+			\node [anchor = west, outer sep = 0pt, inner sep = 0pt, font = \boxtitlefont]
+      (banner title) at (0,-1.5em) {#1};
 
-		\draw [\currentcolor,  line width = 3pt] 
-      (-\la@student@leftmargin,0) -- (\la@student@textwidth+\la@student@rightmargin,0);
-		\node (banner name) [
-			fill, \currentcolor, rectangle, rounded corners=10, anchor = east,
-      minimum width = 3.5cm, minimum height = 20pt
-    ] 
-			at (\la@student@textwidth,0) {{\bannernamefont \la@bannername}};
-		\node [anchor = west, outer sep = -3pt, inner sep = 0pt] (banner title) at (0,-1.5em) {{\boxtitlefont\noindent#1}};
-
-	\end{tikzpicture}
+		\end{tikzpicture}
 	\vspace{\la@titleafterskip}
+	\fi
 }
-
-
-
-% Creates the box with section colors for examples and observations
-\newtcolorbox{la@sectionbox}[2]{
-	parbox = false, 
-	blanker, enhanced, breakable, 
-	before skip = \la@titlebeforeskip, after skip = \la@titleafterskip, 
-	left = 3mm, right = 3mm, top = 1em, bottom = 3mm, 
-	leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt, 
-	colframe = \currentcolor, colback = boxbackground, 
-	title = #1, fonttitle = \boxtitlefont\vphantom{Ag},
-	attach boxed title to top left = {%
-		% xshift = 3mm
-	},
-	boxed title style = {colback = white, opacityframe = 0,},
-	underlay boxed title = {%
-		\coordinate (fne) at (frame.north east);
-
-		\filldraw [draw = \currentcolor, fill = \currentcolor]
-			($(fne) + (-.2pt,0)$) -- ++ (0,20pt) -- ++ (-6pc,0) % Up from frame and left
-			.. controls +(-1.5pc,-1pt) and ($(fne) + (-10.5pc,-1pt)$) .. % curve going down
-			($(fne) + (-12pc, -1pt)$) -- cycle;
-			
-		\node [anchor = south east, font = \boxnamefont\vphantom{Ag}] at (frame.north east) {#2};
-	}
-}
-
-
-
-
 
 % Requires icon on the format iconname-volume#.pdf, where # is the number of the current volume. 
 % If there are more volumes, you should specify an icon for each volume color. 
@@ -63,124 +37,163 @@
 	\def\la@boxicon{#1}
 }
 
-\newcommand{\la@box@icon}{
+\ifdraft
+	\newenvironment{la@sectionbox}[2]{%
+		\subsection{{\color{\currentcolor} #2: #1}}
+  }{
+      \par{\color{cinza}\rule{\linewidth}{1pt}}\normalfont
+
+  }
+	\newenvironment{la@volumebox}[1]{%
+		\subsection{{\color{\currentvolcolor} #1}}
+	}{
+	\par{\color{cinza}\rule{\linewidth}{1pt}}\normalfont
+}
+\else
+	% Creates the box with section colors for examples and observations
+	\newtcolorbox{la@sectionbox}[2]{
+		parbox = false,
+		blanker, enhanced, breakable,
+		before skip = \la@titlebeforeskip, after skip = \la@titleafterskip,
+		left = 3mm, right = 3mm, top = 1em, bottom = 3mm,
+		leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt,
+		colframe = \currentcolor, colback = boxbackground,
+		title = #1, fonttitle = \boxtitlefont\vphantom{Ag},
+		attach boxed title to top left = {%
+				yshift = 1pt
+			},
+		boxed title style = {colback = white, opacityframe = 0},
+		underlay boxed title = {%
+				\coordinate (fne) at (frame.north east);
+
+				\filldraw [draw = \currentcolor, fill = \currentcolor]
+				($(fne) + (-.2pt,0)$) -- ++ (0,20pt) -- ++ (-6pc,0) % Up from frame and left
+				.. controls +(-1.5pc,-1pt) and ($(fne) + (-10.5pc,-1pt)$) .. % curve going down
+				($(fne) + (-12pc, -1pt)$) -- cycle;
+
+				\node [anchor = south east, font = \boxnamefont\vphantom{Ag}] at ($(frame.north east) + (0,-1pt)$) {#2};
+			}
+	}
+
+\newcommand{\la@box@icon}{%
 	\ifdefined\la@boxicon
 		\includegraphics[width=22pt]{\la@boxicon-\currentvolcolor.pdf}
-	\undef\la@boxicon
+		\undef\la@boxicon
 	\else\fi
 }
 
-% Creates the box with current volume color and icon
-\newtcolorbox{la@volumebox}[1]{
-	parbox = false, blanker, enhanced, breakable, 
-	before skip = \la@titlebeforeskip, after skip = \la@titleafterskip, 
-	left = 3mm, right = 3mm, top = 1em, bottom = 3mm, 
-	leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt, 
-	colframe = \currentvolcolor, colback = boxbackground, 
-	title = #1, fonttitle = \boxnamefont\vphantom{Ag},
-	boxed title style = {%
-		empty, arc = 0pt, outer arc = 0pt, boxrule = 0pt
-	},
-	attach boxed title to top left = {},
-	underlay boxed title = {%
-		 \coordinate (fnw) at (frame.north west);
-		 \filldraw [draw = \currentvolcolor, fill = \currentvolcolor]
-			($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (6pc,0) % Up from frame and left
-			.. controls +(1.5pc, -1pt) and ($(fnw) + (10.5pc,-1pt)$) .. % curve going down
-		    ($(fnw) + (12pc, -1pt)$) -- cycle;
-		 \node [overlay, left of = fnw, node distance = 18pt, yshift = 9pt] {\la@box@icon};
+	% Creates the box with current volume color and icon
+	\newtcolorbox{la@volumebox}[1]{
+		parbox = false, blanker, enhanced, breakable,
+		before skip = \la@titlebeforeskip, after skip = \la@titleafterskip,
+		left = 3mm, right = 3mm, top = 1em, bottom = 3mm,
+		leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt,
+		colframe = \currentvolcolor, colback = boxbackground,
+		title = #1, fonttitle = \boxnamefont\vphantom{Ag},
+		boxed title style = {%
+				empty, arc = 0pt, outer arc = 0pt, boxrule = 0pt
+			},
+		attach boxed title to top left = {yshift=-2pt},
+		underlay boxed title = {%
+				\coordinate (fnw) at (frame.north west);
+				\filldraw [draw = \currentvolcolor, fill = \currentvolcolor]
+				($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (6pc,0) % Up from frame and left
+				.. controls +(1.5pc, -1pt) and ($(fnw) + (10.5pc,-1pt)$) .. % curve going down
+				($(fnw) + (12pc, -1pt)$) -- cycle;
+				\node [overlay, left of = fnw, node distance = 18pt, yshift = 9pt] {\la@box@icon};
+			}
 	}
-}
 
+\fi
 
 
 % Environments
-
 \newenvironment{task}[1]{\par
 	\refstepcounter{task}
 	\def\@currentlabelname{#1}
-    \task@toc{Atividade \thetask: #1}
+	\task@toc{Atividade \thetask: #1}
 	\bannername{Atividade \thetask}
 	\la@contentsepbanner{#1}
 	\par\taskfont
 }{
-    \par{\color{cinza}\rule{\linewidth}{.05pt}}\normalfont
-	\vspace{\la@titlebeforeskip}
+	\par{\color{cinza}\rule{\linewidth}{1pt}}\normalfont
 }
 
 \newcounter{example}[chapter]
 \newenvironment{example}[1]{
 	\refstepcounter{example}\def\@currentlabelname{#1}
 	\begin{la@sectionbox}{#1}{Exemplo \theexample}
-}{
+		}{
 	\end{la@sectionbox}
 }
 
 \newcounter{observation}[chapter]
 \newenvironment{observation}[1]{
-    \refstepcounter{observation}\def\@currentlabelname{#1}
+	\refstepcounter{observation}\def\@currentlabelname{#1}
 	\begin{la@sectionbox}{#1}{Observação}
-}{
+		}{
 	\end{la@sectionbox}
 }
 
 
-
-
 \newcounter{reflection}[chapter]
 \newenvironment{reflection}{
-    \refstepcounter{reflection}
+	\refstepcounter{reflection}
 	\boxicon{refletir}
 	\begin{la@volumebox}{Para refletir}
-}{
+		}{
 	\end{la@volumebox}
 }
 
 \newcounter{knowledge}[chapter]
 \newenvironment{knowledge}{
-    \refstepcounter{knowledge}
+	\refstepcounter{knowledge}
 	\boxicon{vcsabia}
 	\begin{la@volumebox}{Você Sabia?}
-}{
+		}{
 	\end{la@volumebox}
 }
 
 \newcounter{research}[chapter]
 \newenvironment{research}{
-    \refstepcounter{research}
+	\refstepcounter{research}
 	\boxicon{notas}
-	\begin{la@volumebox}{Notas}
-}{
+	\begin{la@volumebox}{Para pesquisar}
+		}{
 	\end{la@volumebox}
 }
 
+\ifdraft
+	\newenvironment{project}{
+		\subsection{Projeto Aplicado} }{}
+\else
+	% Creates the box with current volume color
+	\newtcolorbox{project}{
+		parbox = false, blanker, enhanced, breakable,
+		before skip = \la@titlebeforeskip, after skip = \la@titleafterskip,
+		left = 3mm, right = 3mm, top = 1em, bottom = 3mm,
+		leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt,
+		colframe = principal, colback = boxbackground,
+		title = Projeto Aplicado, fonttitle = \boxnamefont\vphantom{Ag},
+		boxed title style = {%
+				empty, arc = 0pt, outer arc = 0pt, boxrule = 0pt
+			},
+		attach boxed title to top left = {},
+		underlay boxed title = {%
+				\coordinate (fnw) at (frame.north west);
+				\coordinate (fne) at (frame.north east);
 
-% Creates the box with current volume color
-\newtcolorbox{project}{
-	parbox = false, blanker, enhanced, breakable, 
-	before skip = \la@titlebeforeskip, after skip = \la@titleafterskip, 
-	left = 3mm, right = 3mm, top = 1em, bottom = 3mm, 
-	leftrule = 0pt, rightrule = 0pt, toprule = 2pt, bottomrule = 0pt, 
-	colframe = principal, colback = boxbackground, 
-	title = Projeto Aplicado, fonttitle = \boxnamefont\vphantom{Ag},
-	boxed title style = {%
-		empty, arc = 0pt, outer arc = 0pt, boxrule = 0pt
-	},
-	attach boxed title to top left = {},
-	underlay boxed title = {%
-		 \coordinate (fnw) at (frame.north west);
-		 \coordinate (fne) at (frame.north east);
+				\filldraw [draw = \currentvolcolor, fill = \currentvolcolor]
+				($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (12pc,0) % Up from frame and left
+				.. controls +(1.5pc,-1pt) and ($(fnw) + (16.5pc,-1pt)$) .. % curve going down
+				($(fnw) + (18pc, -1pt)$) -- cycle;
 
-		 \filldraw [draw = \currentvolcolor, fill = \currentvolcolor]
-			($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (12pc,0) % Up from frame and left
-			.. controls +(1.5pc,-1pt) and ($(fnw) + (16.5pc,-1pt)$) .. % curve going down
-		    ($(fnw) + (18pc, -1pt)$) -- cycle;
+				\filldraw [draw = principal, fill = principal]
+				($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (8pc,0) % Up from frame and left
+				.. controls +(1.5pc,-1pt) and ($(fnw) + (12.5pc,-1pt)$) .. % curve going down
+				($(fnw) + (14pc, -1pt)$) -- cycle;
 
-		 \filldraw [draw = principal, fill = principal]
-			($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (8pc,0) % Up from frame and left
-			.. controls +(1.5pc,-1pt) and ($(fnw) + (12.5pc,-1pt)$) .. % curve going down
-		    ($(fnw) + (14pc, -1pt)$) -- cycle;
-
-		 \draw [line width = 2pt, principal] ($(fnw) + (0,-1pt)$) -- ($(fne) + (0,-1pt)$);
+				\draw [line width = 2pt, principal] ($(fnw) + (0,-1pt)$) -- ($(fne) + (0,-1pt)$);
+			}
 	}
-}
+\fi

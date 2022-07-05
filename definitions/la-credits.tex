@@ -4,10 +4,8 @@
 \newif\ifauthors%
 
 \renewcommand{\author}[1]{%
-        \renewcommand{\and}{%
-            \authorstrue\\
-        }
-    \def\la@author{#1}
+  \renewcommand{\and}{\authorstrue\\}
+  \def\la@author{#1}
 }
 
 \newcommand{\la@author@table}{%
@@ -16,12 +14,11 @@
 
 \newif\ifrevisao%
 \newcommand{\revision}[1]{%
-  {\renewcommand{\and}{\\}
-    \revisaotrue%
-    \def\la@revisao{%
-      \makecell[tl]{#1}
-    }
-	}
+  \renewcommand{\and}{\\}
+  \revisaotrue%
+  \def\la@revisao{%
+    \makecell[tl]{#1}
+  }
 }
 
 
@@ -38,20 +35,21 @@
 	}
 }
 
-
 \newcommand{\versaodigital}[1]{\def\la@versaodigital{\url{#1}}}
 \newcommand{\ccbysa}{\def\la@ccbysa{1}}
 
 \renewcommand{\leftmark}{\chaptermark}
 \newcommand{\credits}{%
-\begin{titlingpage}
 		\renewcommand{\arraystretch}{1.75}
 		\begin{center}
-			Projeto: {\scshape Livro Aberto de Matemática}
+			Projeto: {\iffonts\scshape\else\fi Livro Aberto de Matemática}
 
-			\noindent \begin{tabular}{lcccr}
-				\includegraphics[scale=.15]{impa} & \quad\quad & \includegraphics[width=3cm]{logo} & \quad\quad & \includegraphics[scale=.24]{obmep}
-			\end{tabular}
+			\noindent 
+      \begin{minipage}{\la@student@textwidth}
+          \includegraphics[scale=.15]{resources/figures/impa}  \hfill
+          \includegraphics[width=3cm]{resources/figures/logo}  \hfill
+          \includegraphics[scale=.24]{resources/figures/obmep}
+      \end{minipage}
 		\end{center}
 
 		\vspace*{.3cm}
@@ -70,11 +68,11 @@
 		\begin{tabular}{p{.2\la@student@textwidth}p{.75\la@student@textwidth}}
 			Título:                                            & \@currentchaptertitle                                                          \\
 
-            \ifdefined\la@versao%
+      \ifdefined\la@versao%
 			Ano/ Versão:                                       & \the\year\space\slash\space  versão \la@versao\ de \today                             \\
 			\else\fi
 
-			Editora                                            & Instituto Nacional de Matem\'atica Pura e Aplicada (IMPA-OS)          \\
+			Editora                                            & Instituto Nacional de Matemática Pura e Aplicada (IMPA-OS)          \\
 
 			Realização:                                        & Olimpíada Brasileira de Matemática das Escolas P\'ublicas (OBMEP) \\
 
@@ -92,7 +90,7 @@
 			Colaboração                                        & \la@colaboracao                                                         \\
 			\else\fi
 
-			Design:                                            & Andreza Moreira (Tangentes Design)                                    \\
+			Design:                                            & Enzo Esberard
 
 			Diagramação:                                       & Tarso Boudet Caldas                                                          \\
 
@@ -110,7 +108,7 @@
 		\end{tabular}
 
 		\vfill
-		\begin{figure}[b]
+
 			\begin{minipage}[l]{5cm}
 				\centering
 
@@ -119,9 +117,9 @@
 				\vspace{1em}
 
 				\ifdefined\la@ccbysa
-					\includegraphics[width=3.5cm]{cc-by-sa1}
+					\includegraphics[width=3.5cm]{resources/figures/cc-by-sa1}
 				\else
-					\includegraphics[width=3.5cm]{cc-by-nc-sa}
+					\includegraphics[width=3.5cm]{resources/figures/cc-by-nc-sa}
 				\fi
 
 			\end{minipage}\hfill
@@ -130,7 +128,7 @@
 				{\large Desenvolvido por}
 
 				\vspace{1em}
-				\includegraphics[width=2.5cm]{logo-associacao}
+				\includegraphics[width=3.5cm]{resources/figures/logo-associacao}
 			\end{minipage}\hfill
 			\begin{minipage}[r]{5cm}
 				\centering
@@ -138,20 +136,18 @@
 				{\large Patrocínio:}
 
 				\vspace{1em}
-				\includegraphics[width=3.5cm]{itau}
+				\includegraphics[width=3.5cm]{resources/figures/itau}
 			\end{minipage}
-		\end{figure}
-    % \teachercol@off
+  \clearpage
 
-	\undef\author%
-	\undef\revision%
-	\revisaofalse%
+    \undef\la@author%
+    \undef\la@revisao%
+    \revisaofalse%
     \authorsfalse%
 
     \undef\la@versao
-	\undef\la@autorcapa
-	\undef\la@graficos
-	\undef\la@versaodigital
-	\undef\la@ccbysa
-\end{titlingpage}
+    \undef\la@autorcapa
+    \undef\la@graficos
+    \undef\la@versaodigital
+    \undef\la@ccbysa
 }

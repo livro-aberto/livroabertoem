@@ -1,5 +1,3 @@
-\RequirePackage[explicit]{titlesec}
-
 %\begin{macrocode}
 \newlength{\la@bannername@width}
 \newlength{\la@bannername@height}
@@ -59,55 +57,65 @@
                                                  -- (tag lower left) 
                                                  -- cycle;
 
-		\node (banner name) [font = \vphantom{A}, anchor = center] at 
-      ($(tag east)!.5!(tag west)$) {{\bannernamefont \la@bannername}};
+		\node (banner name) [font = \vphantom{Ag}, anchor = center] at 
+      ($(tag east)!.5!(tag west) - (0,1pt)$) {{\bannernamefont \la@bannername}};
 }
 %\end{macrocode}
 
 %\begin{macrocode}
 \newcommand{\la@bannerstyle}[1]{
-	\leavevmode\checkoddpage%
-  % \la@default@banner@length
-  \tikzset{external/export next=false}
-	\begin{tikzpicture}[remember picture, overlay]
-		\draw [\currentcolor,  line width = 3pt] (-\la@student@leftmargin-3pt,0) 
-    -- (\la@student@textwidth-7pt,0);
+  \ifdraft
+    {\bannertitlefont\LARGE \la@bannername: #1\par}
+  \else
+    \tikzset{external/export next=false}
+    \begin{tikzpicture}[remember picture, overlay]
+      \draw [\currentcolor,  line width = 3pt] (-\la@student@spinemargin,0) 
+      -- (\la@student@textwidth-7pt,0);
 
-		\la@bannernamestyle
+      \la@bannernamestyle
 
-		\node (banner title) [
-        anchor = east, fill, rectangle, white, inner sep = 0pt,
-        inner sep = 3pt, font = \vphantom{Ag}
-      ]
-			at (\la@student@textwidth,0) {{\bannertitlefont #1}};
-	\end{tikzpicture}
+      \node (banner title) [
+          anchor = east, fill, rectangle, white, inner sep = 0pt,
+          inner sep = 3pt, font = \vphantom{Ag}
+        ]
+        at (\la@student@textwidth,0) {{\bannertitlefont #1}};
+    \end{tikzpicture}
+  \fi
 }
 %\end{macrocode}
 
 
 %\begin{macrocode}
 \newcommand{\la@exercisebanner}{
-  \la@default@banner@length
-	\tikzset{external/export next=false}
-	\begin{tikzpicture}[remember picture, overlay]
-		\draw [principal,  line width = 3pt] (-\la@student@leftmargin-15pt,0) 
-    -- (\la@student@textwidth+\la@student@rightmargin,0);
+  \ifdraft
+  {\bannertitlefont\LARGE \la@bannername}
+  \else
+    \la@default@banner@length
+    \tikzset{external/export next=false}
+    \begin{tikzpicture}[remember picture, overlay]
+      \draw [principal,  line width = 3pt] (-\la@student@spinemargin,0) 
+      -- (\la@student@textwidth+\la@student@rightmargin,0);
 
-		\la@bannernamestyle[shift = {(.5\la@student@textwidth-.5\la@bannername@width+\la@bannername@tip,0)}]
-	\end{tikzpicture}
+      \la@bannernamestyle[shift = {(.5\la@student@textwidth-.5\la@bannername@width+\la@bannername@tip,0)}]
+    \end{tikzpicture}
+  \fi
 }
 %\end{macrocode}
 
 %\begin{macrocode}
 \newcommand{\la@largebannerstyle}{
-  \la@large@banner@length
-	\tikzset{external/export next=false}
-	\begin{tikzpicture}[remember picture, overlay]
-		\draw [principal,  line width = 3pt] (-\la@student@leftmargin,0) 
-      -- (\la@student@textwidth+\la@student@rightmargin,0);
+  \ifdraft
+  {\bannertitlefont\LARGE \la@bannername}
+  \else
+    \la@large@banner@length
+    \tikzset{external/export next=false}
+    \begin{tikzpicture}[remember picture, overlay]
+      \draw [principal,  line width = 3pt] (-\la@student@spinemargin,0) 
+        -- (\la@student@textwidth+\la@student@rightmargin,0);
 
-		\la@bannernamestyle
-	\end{tikzpicture}
+      \la@bannernamestyle
+    \end{tikzpicture}
+  \fi
 }
 %\end{macrocode}
 
@@ -116,12 +124,20 @@
 %\begin{macrocode}
 \newif\ifaftersection
 \setsecheadstyle{\sectiontitlefont\raggedright}
+\setsubsecheadstyle{\subsectiontitlefont\raggedright}
  \pretocmd{\section}{%
-	\cleardoublepage
-    \thispagestyle{livroaberto}
+ \teachersectionfalse
+    \ifteacherpage\teacherpagefalse\else\cleardoublepage\fi
+    \ifteacher\la@teacher@backgroundcolor{boxbackground}\else\fi
+    \pagestyle{livroaberto}
 	\aftersectiontrue
+  \color{black}
 }{}{}
 \setsecindent{0pt}
+
+% \setafterparaskip{.333mu}
+\setbeforeparaskip{0pt}
+
 
 %\begin{macrocode}
 \newcommand{\bannername}[1]{
@@ -136,13 +152,15 @@
 %\end{macrocode}
 
 \newcommand{\la@banner}[1]{
-  \def\@currentlabelname{#1}
-  \addcontentsline{toc}{banner}{\la@bannername: #1}
-  \vspace{\la@titlebeforeskip}
-  \par\la@bannerstyle{#1}
-  \vspace*{\la@titleafterskip}
-  \la@defaultlist
-  \color{black}
+    \def\@currentlabelname{#1}
+    \addcontentsline{toc}{banner}{\la@bannername: #1}
+    \vspace{\la@titlebeforeskip}
+    \par\la@bannerstyle{#1}
+    \ifdraft\else
+    \vspace*{\la@titleafterskip}
+    \fi
+    \la@defaultlist
+    \color{black}
 }
 
 \newcommand{\la@largebanner}{
@@ -173,15 +191,16 @@
 %\begin{macrocode}
 \newcounter{explore}
 \newcommand{\explore}[1]{%
+  % \checkoddpage
 	\sectioncolor{session1}
 	\bannername{Explorando}
-	\thispagestyle{livroaberto}
 	\ifaftersection
-		\clearpage
+    \ifteacher\flushpage\else\clearpage\fi
 		\aftersectionfalse
 	\else	
-		\cleardoublepage%	
+		\ifteacher\flushpage\else\fi\cleardoublepage
 	\fi
+	\pagestyle{livroaberto}
   \refstepcounter{explore}
   \la@banner{#1}
 }

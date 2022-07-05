@@ -32,6 +32,12 @@
 \setlength{\cftbeforebannerskip}{.5em}
 \setlength{\cftbeforetaskskip}{.25em}
 
+\pretocmd{\tableofcontents}{
+  \teachercol@on
+  \ifteacher\setrmarg{\la@teacher@textwidth}\else\fi
+  % \let\textwidth\la@student@textwidth
+}{}{}
+
 % \renewcommand{\cftdot}{}
 % \setpnumwidth{2.55em}
 % \setrmarg{3.55em}

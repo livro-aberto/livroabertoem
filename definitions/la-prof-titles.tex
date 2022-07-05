@@ -1,65 +1,68 @@
 \newif\ifteacherenv\teacherenvfalse
 \newenvironment{la@teacher}{%
-    \teacherenvtrue
+	\teacherenvtrue
 	\raggedright
 	\la@widelist
 }{
-    \hfill
-    \la@defaultlist
-    \teacherenvfalse
+	\hfill
+	\la@defaultlist
+	\teacherenvfalse
 }
 
 \newenvironment{teacher}{
-    \par\switchcolumn
-    \begin{la@teacher}
-}{
-    \end{la@teacher}
-    \switchcolumn
+	\par\switchcolumn
+	\begin{la@teacher}
+		}{
+	\end{la@teacher}
+	\switchcolumn
 }
 
 \newenvironment{teacher*}{
-    \par\switchcolumn*
-    \begin{\la@teacher}
-}{
-    \end{\la@teacher}
-    \switchcolumn
+	\par\switchcolumn*
+	\begin{la@teacher}
+		}{
+	\end{la@teacher}
+	\switchcolumn
+}
+
+\flushbottom
+\clearpage
+\cleardoublepage
+
+\newcommand{\teachertitle}[3][\currentcolor]{
+	\vbox{
+    \color{#1}\bfseries\vspace{1em}
+    {\Large\selectfont #2}\par
+    \vspace{-.8\baselineskip}
+    \rule{\la@teacher@textwidth}{3pt}\par
+    \vspace{-.6\baselineskip}
+    {\large\raggedright #3}\par
+  }%\normalfont\small\color{black}
 }
 
 \newcommand{\la@teacher@sidetitle}[2]{%
-    \ifteacherenv
-	{
-	    {
-    	    \color{\currentcolor}\bfseries\vspace{1em}
-    		{\fontsize{14pt}{0pt}\selectfont #1}\par
-    		\vspace{-.8\baselineskip}	
-    		\rule{\la@teacher@textwidth}{3pt}
-    		{\linespread{1.2}\Large\raggedright #2}\par
-    	}\normalfont\small
-    }
+	\ifteacherenv\par
+    \teachertitle{#1}{#2}
 	\else
 		\la@notteacherenv
 	\fi
 }
 
-\newcommand{\objectives}[1]{
-		\la@teacher@sidetitle{Objetivos Específicos}{#1}
-}
+\newenvironment{objectives}[1]{
+	\la@teacher@sidetitle{Objetivos Específicos}{#1}
+}{}
 
-\newcommand{\sugestions}[1]{%
-		\la@teacher@sidetitle{Sugestões e discussões}{#1}
-}
+\newenvironment{sugestions}[1]{%
+	\la@teacher@sidetitle{Sugestões e discussões}{#1}
+}{}
 \newcommand{\sugestion}[1]{%
-    \ifteacherenv%
-        \paragraph{#1}
-    \else
-        \la@notteacherenv
-    \fi
+	\paragraph{#1}
 }
 
-\newcommand{\answer}[1]{%
-		\la@teacher@sidetitle{Solução}{#1}
-}
+\newenvironment{answer}[1]{%
+	\la@teacher@sidetitle{Solução}{#1}
+}{}
 
 \newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Outside teachers's environment}{%
-	You should only use this command in a teacher environment}
+		You should only use this command in a teacher environment}
 }

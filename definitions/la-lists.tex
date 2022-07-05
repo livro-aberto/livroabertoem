@@ -24,7 +24,6 @@
 		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
 		\pgfpathlineto{\pgfpoint{\pgf@xa+2pt}{\pgf@ya}}
 		\pgfpatharc{270}{180}{2.0pt}
-		%        \pgfpathcurveto{\pgfpoint{\pgf@xc}{\pgf@ya}\pgfpoint{\pgf@xa}{\pgf@ya}\pgfpoint{\pgf@xa}{\pgf@yc}}
 		\pgfpathclose%
 	}
 }
@@ -122,3 +121,12 @@
 		label-width = 14pt
 	}
 }{} % chktex 10 chktex 17
+
+
+\newcommand{\titem}[1]{%
+	\textcolor{\currentcolor}{%
+		\textbf{#1)} % chktex 9
+	}
+} % chktex 10 chktex 17
+
+

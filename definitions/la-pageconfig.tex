@@ -1,5 +1,7 @@
 %\begin{macrocode}
 \RequirePackage{graphicx}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
 \RequirePackage{calc}
 \RequirePackage{tikz}
 %\end{macrocode}
@@ -14,8 +16,6 @@
 %\end{macrocode}
 
 %\begin{macrocode}
-\setlength{\parindent}{0em}
-\setlength{\parskip}{1em}
 \setlength{\la@student@pageheight}{297mm}
 \setlength{\la@student@pagewidth}{210mm}
 \setlength{\la@student@foremargin}{55pt}
@@ -35,6 +35,7 @@
 %\begin{macrocode}
 \checkandfixthelayout%
 %\end{macrocode}
+\easypagecheck
 
 %\begin{macrocode}
 \newlength{\la@student@textwidth}
@@ -42,24 +43,24 @@
 %\end{macrocode}
 
 
-%\begin{macrocode}
-\strictpagecheck%
-\newcommand{\la@student@leftmargin}{%
-	\ifoddpage%
-		\la@student@foremargin
-	\else
-		\la@student@spinemargin
-	\fi
-}
+% %\begin{macrocode}
+% % \strictpagecheck%
+% \newcommand{\la@student@leftmargin}{%
+% 	\ifoddpage%
+% 		\la@student@foremargin
+% 	\else
+% 		\la@student@spinemargin
+% 	\fi
+% }
 
-\newcommand{\la@student@rightmargin}{%
-	\ifoddpage%
-		\la@student@spinemargin
-	\else
-		\la@student@foremargin
-	\fi
-}
-%\end{macrocode}
+% \newcommand{\la@student@rightmargin}{%
+% 	\ifoddpage%
+% 		\la@student@spinemargin
+% 	\else
+% 		\la@student@foremargin
+% 	\fi
+% }
+% %\end{macrocode}
 
 
 %\begin{macrocode}
@@ -87,13 +88,18 @@
 
 \newcommand{\la@footer@icon}{
 	\ifdefined\la@footericon
-		\includegraphics[width=25pt]{\la@footericon-footericon.pdf}
+		\includegraphics[width=25pt]{./resources/figures/\la@footericon-footericon.pdf}
 		\undef\la@footericon
 	\else\fi
 }
 %\end{macrocode}
 
 %Requires volume icon for the footer
+
+
+\newcounter{studentpage}
+\newcounter{teacherpage}
+\setcounter{teacherpage}{0}
 
 % Page number command
 %\begin{macrocode}
@@ -121,10 +127,10 @@
 				($(current page.south west) + (0,\la@footerbaseline)$) 
 				-- ($(current page.south east) + (-\la@student@foremargin,\la@footerbaseline)$);
 
-      \node [anchor = east] at ($(current page.south west) + (.8\la@student@foremargin,\la@footerbaseline)$)  {\footerfont\thepage};
+      \node [anchor = east] at ($(current page.south west) + (.8\la@student@foremargin,\la@footerbaseline)$)  
+        {\ifteacherpage\else\footerfont\thepage\fi};
 
 			\node [fill=white, inner sep=3.5pt] at ($(current page.south east) + (-\la@student@foremargin, \la@footerbaseline)$) {\la@footer@icon};
-
 	\end{tikzpicture}
 }
 %\end{macrocode}
@@ -153,7 +159,8 @@
 				($(current page.south east) + (0,\la@footerbaseline)$) 
 				-- ($(current page.south west) + (\la@student@foremargin,\la@footerbaseline)$);
 
-      \node [anchor = west] at ($(current page.south east) + (-.8\la@student@foremargin,\la@footerbaseline)$)  {\footerfont\thepage};
+      \node [anchor = west] at ($(current page.south east) + (-.8\la@student@foremargin,\la@footerbaseline)$)  
+        {\ifteacherpage\else\footerfont\thepage\fi};
 				
 			\node [fill=white, inner sep=3.5pt] at ($(current page.south west) + (\la@student@foremargin, \la@footerbaseline)$) {\la@footer@icon};
 	\end{tikzpicture}
@@ -162,8 +169,13 @@
 
 %\begin{macrocode}
 \makepagestyle{livroaberto}
-\makeevenfoot{livroaberto}{}{\la@evenpagenumber}{}
-\makeoddfoot{livroaberto}{}{\la@oddpagenumber}{}
+\ifdraft
+  \makeevenfoot{livroaberto}{{\footerfont\color{principal}\thepage}}{}{}
+  \makeoddfoot{livroaberto}{}{}{{\footerfont\color{principal}\thepage}}
+\else
+  \makeevenfoot{livroaberto}{}{\la@evenpagenumber}{}
+  \makeoddfoot{livroaberto}{}{\la@oddpagenumber}{}
+\fi
 
 \makepagestyle{plain}
 \makeevenfoot{plain}{}{}{}

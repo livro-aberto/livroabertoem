@@ -1,5 +1,4 @@
 \RequirePackage{pagecolor}
-\RequirePackage{titlesec}
 \RequirePackage{tikz}
 \RequirePackage{calc}
 
@@ -14,42 +13,59 @@
 	\else\fi
 }
 
-
 \newlength{\la@volume@titlewidth}
 
+\ifdraft
+  \newcommand{\volume}[1]{
+    {
+    \thispagestyle{empty}
+      \centering
+      \begin{minipage}{.7\textwidth}
+        \LARGE\raggedright
+        Esta é uma versão de rascunho para a produção do conteúdo dos livros. Quando estiver
+        satisfeito(a) com o conteúdo, retire as opções \texttt{rascunho} (ou \texttt{draft}) 
+        e \texttt{nofonts} do comando \texttt{documentclass} para gerar o pdf no modelo final.
+        \vspace{1em}
 
-\newcounter{volume}
-\newcommand{\volume}[1]{
-	\refstepcounter{volume}
-	\pagecolor{\currentvolcolor}
-	\thispagestyle{empty}
-	\begin{tikzpicture}[remember picture, overlay]
-	    \node [font=\titlefont\color{white}\vphantom{Ag},
-	           inner sep = 0pt, outer sep = 0pt, align = left,
-	           anchor = north
-	       ] at ($(current page.north west)!.5!(current page.north east) - (0,1.5\uppermargin)$) 
-	        {
-	        \begin{minipage}{\widthof{\Huge Livro Aberto de Matemática}}
-	            \raggedright
-    	        \Huge Livro Aberto de Matemática \\
-    	        \large\subtitlefont Colecão do Ensino Médio \\[.5em]
-    	        \volumetitlefont #1
-	        \end{minipage}
-	        };
-		\node at ($(current page.center)-(0,\uppermargin)$) {\la@volume@illustration};
-		\node [anchor = south east, inner sep = 0pt, outer sep = 0pt] at 
-		    ($(current page.south east) + (-\la@student@spinemargin, \la@student@lowermargin)$) {%
+        Submeta suas dúvidas e/ou problemas no nosso repositório no GitHub: \url{https://github.com/livro-aberto/livroabertoem/issues}
+      \end{minipage}
+    }
+    \newpage
+  }
+\else
+	\newcounter{volume}
+	\newcommand{\volume}[1]{
+		\refstepcounter{volume}
+		\pagecolor{\currentvolcolor}
+		\thispagestyle{empty}
+		\begin{tikzpicture}[remember picture, overlay]
+			\node [font=\titlefont\color{white}\vphantom{Ag},
+				inner sep = 0pt, outer sep = 0pt, align = left,
+				anchor = north
+			] at ($(current page.north west)!.5!(current page.north east) - (0,1.5\uppermargin)$)
+			{
+				\begin{minipage}{\widthof{\Huge Livro Aberto de Matemática}}
+					\raggedright
+					\Huge Livro Aberto de Matemática \\
+					\large\subtitlefont Colecão do Ensino Médio \\[.5em]
+					\volumetitlefont #1
+				\end{minipage}
+			};
+			\node at ($(current page.center)-(0,\uppermargin)$) {\la@volume@illustration};
+			\node [anchor = south east, inner sep = 0pt, outer sep = 0pt] at
+			($(current page.south east) + (-\la@student@spinemargin, \la@student@lowermargin)$) {%
 				\includegraphics[width = 100pt]{impa-capa.png}
 			};
-		\node [
-			anchor = south west, inner sep = 0pt, outer sep = 0pt,
-			font = \vphantom{Ag}\volumeauthorfont, text width = .55\la@student@textwidth,
-			align = left
-		] at ($(current page.south west) + (\la@student@foremargin, \la@student@lowermargin)$)
-		{Associação Livro Aberto de Matemática};
-	\end{tikzpicture}
-	\newpage
-	\pagecolor{white}
-	\pagestyle{empty}
-	\teachercol@on\la@teacher@backgroundcolor{white}
-}
+			\node [
+				anchor = south west, inner sep = 0pt, outer sep = 0pt,
+				font = \vphantom{Ag}\volumeauthorfont, text width = .55\la@student@textwidth,
+				align = left
+			] at ($(current page.south west) + (\la@student@foremargin, \la@student@lowermargin)$)
+			{Associação Livro Aberto de Matemática};
+		\end{tikzpicture}
+		\newpage
+		\pagecolor{white}
+		\pagestyle{empty}
+    \ifteacher\teachercol@on\fi
+	}
+\fi

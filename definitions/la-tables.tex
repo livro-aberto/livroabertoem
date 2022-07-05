@@ -3,38 +3,32 @@
 \newcolumntype{f}{>{\(}c<{\)}}
 \newcolumntype{g}[1]{>{\(}e{#1}<{\)}}
 
-\RequirePackage{colortbl}
-	\newcommand{\tmat}[1]{%
-		\cellcolor{%
-			\currentcolor!80
-		}
-		\textcolor{white}{%
-			\bm{#1}
-		}
-	}
+\@ifpackageloaded{supertabular}{
+  \newcommand{\tbltobecontinued}[1]{%
+    \multicolumn{#1}{r}{\footnotesize Continua na próxima página}\\
+  }
+  \newcommand{\tblcontinuation}[1]{
+    \multicolumn{#1}{r}{\footnotesize Continuação da página anterior}\\
+  }
 
-	\newcommand{\tcolor}[1]{%
-		\cellcolor{%
-			\currentcolor!80
-		}
-		\textcolor{white}{%
-			\textbf{#1}
-		}
-	}
-
-	\newcommand{\tmcol}[3]{%
-		\multicolumn{#1}{#2}{%
-			\cellcolor{%
-				\currentcolor!80
-			}
-			\textcolor{white}{%
-				\textbf{#3}
-			}
-		}
-	}
-
-	\newcommand{\titem}[1]{%
-		\textcolor{\currentcolor}{%
-			\textbf{#1)} % chktex 9
-		}
-	} % chktex 10 chktex 17
+  \newcommand{\supertabularheading}[2]{
+    \tablefirsthead{
+      \toprule
+      #2
+      \midrule
+    }
+    \tablehead{
+      \tblcontinuation{#1} \\
+      \toprule
+      #2
+      \midrule
+     }
+    \tabletail{
+      \bottomrule
+      \tbltobecontinued{#1} \\
+     }
+    \tablelasttail{
+      \bottomrule
+    }
+  }
+}{}

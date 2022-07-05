@@ -33,53 +33,42 @@
 
 \checkandfixthelayout%
 
-\newcounter{studentpage}
-\newcounter{teacherpage}
-
 \makepagestyle{teacherpage}
+
+\ifdraft
+% \makeevenfoot{teacherpage}{{\footerfont\color{\currentvolcolor}\thepage}}{}{}
+% \makeoddfoot{teacherpage}{}{}{{\footerfont\color{\currentvolcolor}\thepage}}
+\else
 \makeevenfoot{teacherpage}{}{\la@evenpagenumber[\currentvolcolor]}{}
 \makeoddfoot{teacherpage}{}{\la@oddpagenumber[\currentvolcolor]}{}
+\fi
 
-\newif\ifteacherpage\teacherpagefalse
-\newif\ifteachersection\teachersectionfalse
 \newenvironment{la@teacherpage}[1]{%
-    \clearpage
-	\teacherpagetrue
-    \renewcommand{\thepage}{\arabic{chapter}.\Alph{page}}
-    \setcounter{studentpage}{\value{page}}
-    \setcounter{page}{\value{teacherpage}}
-    \clearpage
-    \la@teacher@backgroundcolor{boxbackground}
-    \par{\raggedright\sectiontitlefont\color{\currentvolcolor}#1}\par
-    \vspace{.5\la@titleafterskip}
-	\thispagestyle{teacherpage}
-	\begin{multicols}{2}
+  \teacherpagetrue
+  \checkoddpage\ifoddpage\else\clearpage\fi
+  \par{\sectiontitlefont\raggedright #1}\par
+  \pagestyle{teacherpage}
 }{
-	\end{multicols}
 	\teacherpagefalse
-	\setcounter{teacherpage}{\value{page}}
-	\setcounter{page}{\value{studentpage}}
-	\renewcommand{\thepage}{\arabic{page}}
-	\color{black}
+  % \cleardoublepage
+ %  \leavevmode\checkoddpage
+ %  \ifoddpage\else
+ %  \addtocounter{studentpage}{-1}
+ %  \fi
+	% \setcounter{page}{\value{studentpage}}
 }
-
-\pretocmd{\la@teacherpage}{\teachercol@off}{}{}
 
 \newenvironment{teachersection}[1]{
+    \cleardoublepage
     \teachersectiontrue
-    \begin{la@teacherpage}{#1}
-    \addcontentsline{toc}{section}{#1}
-}{
-    \end{la@teacherpage} 
-    \teachersectionfalse
-}
+    \begin{la@teacherpage}{Para o professor: #1}
+    \addcontentsline{toc}{section}{Para o professor: #1}
+}{\end{la@teacherpage}}
 
 \newenvironment{teacherintroduction}{
-    \begin{la@teacherpage}{Introdução ao Professor}
+  \begin{la@teacherpage}{Introdução ao Professor}
     \addcontentsline{toc}{section}{Introdução ao Professor}
-    }{
-    \end{la@teacherpage}
-}   
+}{\end{la@teacherpage}}
 
 \newenvironment{longteacher}[1]{
     \teacherenvtrue
@@ -90,18 +79,22 @@
 }
 
 
-\newcommand{\la@notteacherpage}{\ClassError{livroabertoem}{Outside teachers's page}{%
-	You should only use this command in a teacher page}
+\newcommand{\la@notteacherpage}{\ClassError{livroabertoem}{Fora da página do professor}{%
+	Você deve usar este comando apenas na página do professor.}
 }
 
 % paracol definitions
 \twosided%
 \setcolumnwidth{\la@student@textwidth/\la@teacher@colsep,\la@teacher@textwidth}
+
 \newcommand{\la@teacher@backgroundcolor}[1]{%
 	\backgroundcolor{c[1] (\la@teacher@innermargin,25mm) (25mm,250mm)}{#1}
 }
 
 \makepsmarks{empty}{\la@teacher@backgroundcolor{white}}
+\makepsmarks{livroaberto}{\la@teacher@backgroundcolor{boxbackground}}
+\makepsmarks{teacherpage}{\la@teacher@backgroundcolor{boxbackground}}
+
 \renewcommand{\teachercol@on}{     
     \ifteacher\ifparacol\else
 		\paracol{2} % starts double column at the student's main text.
@@ -116,7 +109,8 @@
 	\else\fi\else\fi
 }
 
+
 \AtEndDocument{
-	\clearpage
+	\flushpage
     \teachercol@off%
 }

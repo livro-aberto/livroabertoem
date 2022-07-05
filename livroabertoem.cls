@@ -12,11 +12,11 @@
 
 \def\input@path{
 	{definitions/}
-	{class-options}
-	{figures}
-	{resources}
-	{resources/figures}
-	{resources/fonts}
+		{class-options}
+		{figures}
+		{resources}
+		{resources/figures}
+		{resources/fonts}
 }
 
 \RequirePackage{multicol}
@@ -25,43 +25,52 @@
 \RequirePackage{xpatch}
 \RequirePackage{paracol}
 
-
-\input{definitions/la-color.tex}
-\input{definitions/la-pageconfig.tex}
-% \input{la-commands.tex}
-
-
+\newif\ifdraft\draftfalse
 \newif\ifparacol\paracolfalse
 \newif\ifteacher\teacherfalse
 \newif\iffonts\fontstrue
+\newif\ifteacherpage\teacherpagefalse
+\newif\ifteachersection\teachersectionfalse
 
+\DeclareOption{draft}
+{
+	\drafttrue
+}
+
+\DeclareOption{rascunho}
+{
+	\drafttrue
+}
+
+\DeclareOption{nofonts}
+{
+	\fontsfalse
+}
+
+\ProcessOptions%
+
+\input{definitions/la-color.tex}
+\input{definitions/la-pageconfig.tex}
 \input{definitions/la-section.tex}
 \input{definitions/la-toc.tex}
 \input{definitions/la-environments.tex}
 \input{definitions/la-chapter.tex}
 \input{definitions/la-volume.tex}
-
-\DeclareOption{nofonts}
-{
-    \fontsfalse
-}
+\input{definitions/la-fonts.tex}
 
 \DeclareOption{teacher}
-{	
-    \teachertrue
+{
+	\teachertrue
 	\input{class-options/la-professor.tex}
 }
 
 \DeclareOption{professor}
-{	
-    \teachertrue
+{
+	\teachertrue
 	\input{class-options/la-professor.tex}
 }
 \ProcessOptions%
 
-\iffonts
-    \input{definitions/la-fonts.tex}
-\else\fi
 
 \ifteacher\else
 	\excludecomment{teacherpage}

@@ -23,7 +23,9 @@
 	\newcommand{\Q}{\mathbb{Q}}
 	\newcommand{\Z}{\mathbb{Z}}
 	\newcommand{\N}{\mathbb{N}}
-	
+
+
+\iffonts
 \RequirePackage{unicode-math}
 \setmathfont{latinmodern-math.otf}
 
@@ -39,3 +41,7 @@
         bbit/{greek}->sfbbit
     }
 ]
+\else
+\RequirePackage{amssymb}
+\fi
+
