@@ -8,34 +8,32 @@
 
 \newcommand{\la@volume@illustration}{
 	\ifdefined\la@volumeillustration
-		\includegraphics[width=360bp]{\la@volumeillustration-volicon.pdf}
+		\includegraphics[width=360bp]{\la@volumeillustration}
 		\undef\la@volumeillustration
 	\else\fi
 }
 
 \newlength{\la@volume@titlewidth}
 
-\ifdraft
-  \newcommand{\volume}[1]{
-    {
-    \thispagestyle{empty}
-      \centering
+\newcounter{volume}
+\newcommand{\volume}[1]{
+	\def\@currentvoltitle{#1}
+	\refstepcounter{volume}
+	\ifdraft
+		\thispagestyle{empty}
+    \begin{center}
       \begin{minipage}{.7\textwidth}
         \LARGE\raggedright
         Esta é uma versão de rascunho para a produção do conteúdo dos livros. Quando estiver
-        satisfeito(a) com o conteúdo, retire as opções \texttt{rascunho} (ou \texttt{draft}) 
+        satisfeito(a) com o conteúdo, retire as opções \texttt{rascunho} (ou \texttt{draft})
         e \texttt{nofonts} do comando \texttt{documentclass} para gerar o pdf no modelo final.
         \vspace{1em}
 
         Submeta suas dúvidas e/ou problemas no nosso repositório no GitHub: \url{https://github.com/livro-aberto/livroabertoem/issues}
       \end{minipage}
-    }
-    \newpage
-  }
-\else
-	\newcounter{volume}
-	\newcommand{\volume}[1]{
-		\refstepcounter{volume}
+    \end{center}
+		% \newpage
+	\else
 		\pagecolor{\currentvolcolor}
 		\thispagestyle{empty}
 		\begin{tikzpicture}[remember picture, overlay]
@@ -54,7 +52,7 @@
 			\node at ($(current page.center)-(0,\uppermargin)$) {\la@volume@illustration};
 			\node [anchor = south east, inner sep = 0pt, outer sep = 0pt] at
 			($(current page.south east) + (-\la@student@spinemargin, \la@student@lowermargin)$) {%
-				\includegraphics[width = 100pt]{impa-capa.png}
+				\includegraphics[width = 100pt]{resources/figures/logo-impa-positiva}
 			};
 			\node [
 				anchor = south west, inner sep = 0pt, outer sep = 0pt,
@@ -66,6 +64,6 @@
 		\newpage
 		\pagecolor{white}
 		\pagestyle{empty}
-    \ifteacher\teachercol@on\fi
-	}
-\fi
+		\ifteacher\teachercol@on\fi
+	\fi
+}

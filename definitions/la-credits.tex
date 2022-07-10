@@ -4,21 +4,21 @@
 \newif\ifauthors%
 
 \renewcommand{\author}[1]{%
-  \renewcommand{\and}{\authorstrue\\}
-  \def\la@author{#1}
+	\renewcommand{\and}{\authorstrue\\}
+	\def\la@author{#1}
 }
 
 \newcommand{\la@author@table}{%
-    \makecell[tl]{\la@author}
+	\makecell[tl]{\la@author}
 }
 
 \newif\ifrevisao%
 \newcommand{\revision}[1]{%
-  \renewcommand{\and}{\\}
-  \revisaotrue%
-  \def\la@revisao{%
-    \makecell[tl]{#1}
-  }
+	\renewcommand{\and}{\\}
+	\revisaotrue%
+	\def\la@revisao{%
+		\makecell[tl]{#1}
+	}
 }
 
 
@@ -40,114 +40,138 @@
 
 \renewcommand{\leftmark}{\chaptermark}
 \newcommand{\credits}{%
-		\renewcommand{\arraystretch}{1.75}
+	\renewcommand{\arraystretch}{1.75}
+
+	\begin{minipage}{\la@student@textwidth}
 		\begin{center}
-			Projeto: {\iffonts\scshape\else\fi Livro Aberto de Matemática}
+			Projeto: {
+			\iffonts%
+				\scshape
+			\else
+			\fi%
+			Livro Aberto de Matemática}\medskip
 
-			\noindent 
-      \begin{minipage}{\la@student@textwidth}
-          \includegraphics[scale=.15]{resources/figures/impa}  \hfill
-          \includegraphics[width=3cm]{resources/figures/logo}  \hfill
-          \includegraphics[scale=.24]{resources/figures/obmep}
-      \end{minipage}
+      \begin{minipage}[l]{5cm}\centering
+				\includegraphics[width=3.5cm]{resources/figures/logo-impa-negativa}  
+			\end{minipage}\hfill
+      \begin{minipage}[c]{5cm}\centering
+				\includegraphics[width=3cm]{resources/figures/logo-livroaberto}  
+			\end{minipage}\hfill
+      \begin{minipage}[r]{5cm}\centering
+				\includegraphics[width=4.5cm]{resources/figures/logo-obmep-negativa}
+			\end{minipage}
 		\end{center}
+	\end{minipage}
 
-		\vspace*{.3cm}
+	\vspace*{.3cm}
 
-		Cadastre-se como colaborador no site do projeto: \url{umlivroaberto.com}
+	Cadastre-se como colaborador no site do projeto:
+	\url{umlivroaberto.com}
 
-		\vspace{.5em}
+	\vspace{.5em}
 
-		\ifdefined\la@versaodigital
-			% Versão digital do capítulo:
+	% \ifdefined\la@versaodigital
+	% Versão digital do capítulo:
 
-			% \la@versaodigital
-			% \vspace{.5em}
+	% \la@versaodigital
+	% \vspace{.5em}
+	% \else\fi
+	\begin{tabular}
+		{p{.2\la@student@textwidth}p{.75\la@student@textwidth}}
+		Título:                                &
+		\ifdefined%
+			\@currentchaptertitle\@currentchaptertitle
+		\else
+			\@currentvoltitle
+		\fi%
+		\\
+
+		\ifdefined\la@versao%
+		Ano/ Versão:                           & \the\year\space\slash\space  versão \la@versao\ de \today  \\
 		\else\fi
 
-		\begin{tabular}{p{.2\la@student@textwidth}p{.75\la@student@textwidth}}
-			Título:                                            & \@currentchaptertitle                                                          \\
+		Editora                                & Instituto Nacional de Matemática Pura e Aplicada (IMPA-OS) \\
 
-      \ifdefined\la@versao%
-			Ano/ Versão:                                       & \the\year\space\slash\space  versão \la@versao\ de \today                             \\
-			\else\fi
+		Realização:                            & Olimpíada Brasileira de Matemática das Escolas P\'ublicas
+		(OBMEP)                                                                                             \\
 
-			Editora                                            & Instituto Nacional de Matemática Pura e Aplicada (IMPA-OS)          \\
+		Produção:                              & Associação Livro Aberto                                    \\
 
-			Realização:                                        & Olimpíada Brasileira de Matemática das Escolas P\'ublicas (OBMEP) \\
+		Coordenação:                           & Fabio Simas e Augusto Teixeira
+		(\url{livroaberto@impa.br})                                                                         \\
 
-			Produção:                                          & Associação Livro Aberto                                               \\
+		\ifauthors Autores \else Autor (a) \fi & \la@author@table                                           \\
 
-			Coordenação:                                       & Fabio Simas e Augusto Teixeira (\url{livroaberto@impa.br})            \\
+		\ifrevisao
+		Revisão:                               & \la@revisao                                                \\
+		\fi
 
-			\ifauthors Autores \else Autor (a) \fi  & \la@author@table        \\
+		\ifdefined\la@colaboracao
+		Colaboração                            & \la@colaboracao                                            \\
+		\else\fi
 
-			\ifrevisao
-			Revisão:                                           &  \la@revisao            \\
+		Design:                                & Enzo Esberard                                              \\
+
+		Diagramação:                           & Tarso Boudet Caldas                                        \\
+
+		\ifdefined\la@ilustracao
+		Ilustrações:                           & \la@ilustracao                                             \\
+		\else\fi
+
+		\ifdefined\la@graficos
+		Gráficos:                              & \la@graficos                                               \\
+		\else\fi
+
+		\ifdefined\la@autorcapa
+		Capa:                                  & \la@autorcapa                                              \\
+		\else\fi
+	\end{tabular}
+
+	\vfill
+
+	\begin{minipage}{\la@student@textwidth}
+		\begin{minipage}[l]{5cm}
+			\centering
+
+			{\large Licença:}
+
+			\vspace{1em}
+
+			\ifdefined%
+				\la@ccbysa
+				\includegraphics[width=3.5cm]{resources/figures/cc-by-sa1}
+			\else
+				\includegraphics[width=3.5cm]{resources/figures/cc-by-nc-sa}
 			\fi
 
-			\ifdefined\la@colaboracao
-			Colaboração                                        & \la@colaboracao                                                         \\
-			\else\fi
+		\end{minipage}
+		\hfill
+		\begin{minipage}[c]{5cm}
+			\centering
+			{\large Desenvolvido por}
 
-			Design:                                            & Enzo Esberard
+			\vspace{1em}
+			\includegraphics[width=3.5cm]{resources/figures/logo-associacao}
+		\end{minipage}
+		\hfill
+		\begin{minipage}[r]{5cm}
+			\centering
 
-			Diagramação:                                       & Tarso Boudet Caldas                                                          \\
+			{\large Patrocínio:}
 
-			\ifdefined\la@ilustracao
-			Ilustrações:                                       & \la@ilustracao                                                          \\
-			\else\fi
+			\vspace{1em}
+			\includegraphics[width=3.5cm]{resources/figures/itau}
+		\end{minipage}
+	\end{minipage}
 
-			\ifdefined\la@graficos
-			Gráficos:                                          & \la@graficos                                                            \\
-			\else\fi
+	\undef\la@author%
+	\undef\la@revisao%
+	\revisaofalse%
+	\authorsfalse%
 
-			\ifdefined\la@autorcapa
-			Capa:                                              & \la@autorcapa                                                           \\
-			\else\fi
-		\end{tabular}
-
-		\vfill
-
-			\begin{minipage}[l]{5cm}
-				\centering
-
-				{\large Licença:}
-
-				\vspace{1em}
-
-				\ifdefined\la@ccbysa
-					\includegraphics[width=3.5cm]{resources/figures/cc-by-sa1}
-				\else
-					\includegraphics[width=3.5cm]{resources/figures/cc-by-nc-sa}
-				\fi
-
-			\end{minipage}\hfill
-			\begin{minipage}[c]{5cm}
-				\centering
-				{\large Desenvolvido por}
-
-				\vspace{1em}
-				\includegraphics[width=3.5cm]{resources/figures/logo-associacao}
-			\end{minipage}\hfill
-			\begin{minipage}[r]{5cm}
-				\centering
-
-				{\large Patrocínio:}
-
-				\vspace{1em}
-				\includegraphics[width=3.5cm]{resources/figures/itau}
-			\end{minipage}
-  \clearpage
-
-    \undef\la@author%
-    \undef\la@revisao%
-    \revisaofalse%
-    \authorsfalse%
-
-    \undef\la@versao
-    \undef\la@autorcapa
-    \undef\la@graficos
-    \undef\la@versaodigital
-    \undef\la@ccbysa
+	\undef\la@versao
+	\undef\la@autorcapa
+	\undef\la@graficos
+	\undef\la@versaodigital
+	\undef\la@ccbysa
 }
