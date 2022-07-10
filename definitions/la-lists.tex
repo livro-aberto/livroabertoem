@@ -1,5 +1,5 @@
 \RequirePackage{tikz}
-\RequirePackage{enumitem}
+\RequirePackage[inline]{enumitem}
 
 \pgfdeclareshape{enumbox}{%
 	\inheritsavedanchors[from=rectangle]
@@ -87,10 +87,16 @@
 
 \newcommand{\la@defaultlist}{
 	\setlist[enumerate]{%
-		label = \protect\titem{\alph*}
+		label = \protect\titem{\alph*}, topsep = \parskip, itemsep = .75\parskip
 	}
+	\setlist[enumerate,2]{%
+		label = \titem{\alph*}, topsep = \parskip, itemsep = .75\parskip %chktex 9
+	}
+	\setlist[enumerate,3]{%
+		label = \titem{\roman*)}, topsep = \parskip, itemsep = .75\parskip %chktex 9
+	} %chktex 10
 	\setlist[itemize]{%
-		label = \protect\itemcoloredsquare%
+		label = \protect\itemcoloredsquare, topsep = \parskip, itemsep = .75\parskip%
 	}
 } 
 
@@ -105,13 +111,13 @@
 
 \newcommand{\la@exerciselist}{%
 	\setlist[enumerate]{%
-		label = {\color{blue}\arabic*.}
+		label = {\color{blue}\arabic*.}, topsep = \parskip, itemsep = .75\parskip
 	}
 	\setlist[enumerate,2]{%
-		label = \textit{\alph*)} %chktex 9
+		label = \textit{\alph*)}, topsep = \parskip, itemsep = .75\parskip %chktex 9
 	}
 	\setlist[enumerate,3]{%
-		label = \textit{\roman*)} %chktex 9
+		label = \textit{\roman*)}, topsep = \parskip, itemsep = .75\parskip %chktex 9
 	} %chktex 10
 } %chktex 10
 

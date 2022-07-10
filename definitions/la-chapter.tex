@@ -74,7 +74,7 @@
 % }
 
 \renewcommand{\chapter}[1]{
-  \checkoddpage\ifoddpage\else\clearpage\fi
+  \cleardoublepage
 	\def\@currentchaptertitle{#1}
 	\refstepcounter{chapter}
   \pagestyle{empty}
@@ -114,7 +114,7 @@
 				\parbox{.425\paperwidth}{\raggedleft\chapterauthorfont\la@chapterauthor}};
 		\end{tikzpicture}
 		\ifteacher\flushpage\else\clearpage\fi
-    \ifdefined\la@author\credits\else\fi
+    \ifdefined\la@author\credits\clearpage\else\fi
     \ifdefined\la@chapterwhat\la@chapterwhat\else\fi
     \ifdefined\la@chapterbecause\la@chapterbecause\else\fi
     \clearpage

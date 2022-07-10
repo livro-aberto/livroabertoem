@@ -136,7 +136,7 @@
 \setsecindent{0pt}
 
 % \setafterparaskip{.333mu}
-\setbeforeparaskip{0pt}
+\setbeforeparaskip{2pt}
 
 
 %\begin{macrocode}
@@ -152,6 +152,7 @@
 %\end{macrocode}
 
 \newcommand{\la@banner}[1]{
+    \filbreak
     \def\@currentlabelname{#1}
     \addcontentsline{toc}{banner}{\la@bannername: #1}
     \vspace{\la@titlebeforeskip}
@@ -164,6 +165,7 @@
 }
 
 \newcommand{\la@largebanner}{
+    \filbreak
   \def\@currentlabelname{\la@bannername}
   \addcontentsline{toc}{section}{\la@bannername}
   \vspace{\la@titlebeforeskip}
@@ -179,6 +181,7 @@
         \clearpage
         \addcontentsline{toc}{section}{Exercícios}
     }{
+        \filbreak
         \addcontentsline{toc}{banner}{Exercícios}
   }
   \vspace{\la@titlebeforeskip}

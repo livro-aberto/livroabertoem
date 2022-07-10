@@ -45,8 +45,8 @@
 
 \newenvironment{la@teacherpage}[1]{%
   \teacherpagetrue
-  \checkoddpage\ifoddpage\else\clearpage\fi
-  \par{\sectiontitlefont\raggedright #1}\par
+  \cleardoublepage
+  \par\begin{flushleft}{\sectiontitlefont #1}\end{flushleft}\par
   \pagestyle{teacherpage}
 }{
 	\teacherpagefalse

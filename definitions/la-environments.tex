@@ -7,7 +7,7 @@
 
 % Creates the banner of task environment
 \newcommand{\la@contentsepbanner}[1]{
-	\needspace{6em}
+	% \needspace{6em}
 	\ifdraft
   {{\subsectiontitlefont\color{\currentcolor}\la@bannername: #1}}
 	\else
@@ -109,6 +109,7 @@
 
 % Environments
 \newenvironment{task}[1]{\par
+  \filbreak
 	\refstepcounter{task}
 	\def\@currentlabelname{#1}
 	\task@toc{Atividade \thetask: #1}
