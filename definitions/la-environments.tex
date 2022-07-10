@@ -136,6 +136,22 @@
 	\end{la@sectionbox}
 }
 
+\newcounter{definition}[chapter]
+\newenvironment{definition}[1]{
+	\refstepcounter{definition}\def\@currentlabelname{#1}
+	\begin{la@sectionbox}{#1}{Definição}
+		}{
+	\end{la@sectionbox}
+}
+
+\newcounter{theorem}[chapter]
+\newenvironment{theorem}[1]{
+	\refstepcounter{theorem}\def\@currentlabelname{#1}
+	\begin{la@sectionbox}{#1}{Teorema}
+		}{
+	\end{la@sectionbox}
+}
+
 
 \newcounter{reflection}[chapter]
 \newenvironment{reflection}{
