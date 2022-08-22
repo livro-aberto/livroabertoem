@@ -8,6 +8,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{\filename}
 
+\pdfvariable minorversion=6
+
 \LoadClass{memoir}
 
 \def\input@path{
@@ -21,27 +23,29 @@
 
 \RequirePackage{multicol}
 \RequirePackage{xstring}
+\RequirePackage{verbatim}
 \RequirePackage{comment} % Comando excludecomment para remover os comandos do material do professor
 \RequirePackage{xpatch}
 \RequirePackage{paracol}
+\RequirePackage{ragged2e}
 
+\newif\iffonts\fontstrue
 \newif\ifdraft\draftfalse
 \newif\ifparacol\paracolfalse
 \newif\ifteacher\teacherfalse
-\newif\iffonts\fontstrue
 \newif\ifteacherpage\teacherpagefalse
 \newif\ifteachersection\teachersectionfalse
+\newif\ifafterteachersection\afterteachersectionfalse
+\newif\ifafterteacherintroduction\afterteacherintroductiontrue
 
 \DeclareOption{draft}
 {
 	\drafttrue
 }
-
 \DeclareOption{rascunho}
 {
 	\drafttrue
 }
-
 \DeclareOption{nofonts}
 {
 	\fontsfalse
@@ -63,7 +67,6 @@
 	\teachertrue
 	\input{class-options/la-professor.tex}
 }
-
 \DeclareOption{professor}
 {
 	\teachertrue

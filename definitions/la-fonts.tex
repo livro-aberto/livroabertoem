@@ -2,33 +2,22 @@
   \RequirePackage{anyfontsize}
   \RequirePackage[no-math]{fontspec}
 	\setmainfont{NotoSans-Regular.ttf}[
-		% Path = resources/fonts/,
+		Path = resources/fonts/,
 		BoldFont = {NotoSans-SemiBold.ttf},
 		ItalicFont = {NotoSans-Italic.ttf},
 		BoldItalicFont = {NotoSans-SemiBoldItalic.ttf},
 	]
 	
     \newfontfamily{\taskfont}{NotoSans-Medium.ttf}[
-        % Path = resources/fonts/,
+        Path = resources/fonts/,
         BoldFont = {NotoSans-Bold.ttf},
         ItalicFont = {NotoSans-Italic.ttf},
         BoldItalicFont = {NotoSans-BoldItalic.ttf}
     ]
     
-	\newfontfamily{\subtitlefont}{Montserrat-Bold.ttf}%[Path = resources/fonts/]
-	\newfontfamily{\titlefont}{Montserrat-Black.ttf}%[Path = resources/fonts/]
-	\newfontfamily{\titlenumfont}{Montserrat-ExtraBold.ttf}%[Path = resources/fonts/]
-  \renewcommand{\normalsize}{\fontsize{11}{13.2}\selectfont}
-  \renewcommand{\small}{\fontsize{10}{12}\selectfont}
-  \renewcommand{\large}{\fontsize{12}{14.4}\selectfont}
-  \renewcommand{\Large}{\fontsize{14}{16.8}\selectfont}
-  \renewcommand{\LARGE}{\fontsize{16}{19.2}\selectfont}
-  \renewcommand{\huge}{\fontsize{22}{28.4}\selectfont}
-  \renewcommand{\Huge}{\fontsize{28}{33.6}\selectfont}
-  \renewcommand{\HUGE}{\fontsize{40}{48}\selectfont}
-  \newcommand{\semihuge}{\fontsize{18}{21.6}\selectfont}
-  \newcommand{\semiHuge}{\fontsize{26}{31.2}\selectfont}
-  \newcommand{\EXHUGE}{\fontsize{108}{129.6}\selectfont}
+	\newfontfamily{\subtitlefont}{Montserrat-Bold.ttf}[Path = resources/fonts/]
+	\newfontfamily{\titlefont}{Montserrat-Black.ttf}[Path = resources/fonts/]
+	\newfontfamily{\titlenumfont}{Montserrat-ExtraBold.ttf}[Path = resources/fonts/]
 \else
   \renewcommand\normalfont{\sffamily}
   \renewcommand{\familydefault}{\sfdefault}
@@ -36,18 +25,19 @@
   \def\subtitlefont{\sffamily\bfseries}
   \def\titlenumfont{\sffamily\bfseries}
   \def\taskfont{\sffamily}
-  \renewcommand{\normalsize}{\fontsize{13}{14}\selectfont}
-  \renewcommand{\small}{\fontsize{11}{12}\selectfont}
-  \renewcommand{\large}{\fontsize{14}{16.8}\selectfont}
-  \renewcommand{\Large}{\fontsize{16}{19.2}\selectfont}
-  \renewcommand{\LARGE}{\fontsize{18}{21.6}\selectfont}
-  \renewcommand{\huge}{\fontsize{22}{30}\selectfont}
-  \renewcommand{\Huge}{\fontsize{28}{33.6}\selectfont}
-  \renewcommand{\HUGE}{\fontsize{40}{48}\selectfont}
-  \newcommand{\semihuge}{\fontsize{18}{21.6}\selectfont}
-  \newcommand{\semiHuge}{\fontsize{26}{31.2}\selectfont}
-  \newcommand{\EXHUGE}{\fontsize{108}{129.6}\selectfont}
 \fi
+
+\renewcommand{\small}{\fontsize{10}{12}\selectfont}
+\renewcommand{\normalsize}{\fontsize{11}{13.2}\selectfont}
+\renewcommand{\large}{\fontsize{12}{14.4}\selectfont}
+\renewcommand{\Large}{\fontsize{14}{16.8}\selectfont}
+\renewcommand{\LARGE}{\fontsize{16}{19.2}\selectfont}
+\renewcommand{\huge}{\fontsize{22}{26.4}\selectfont}
+\renewcommand{\Huge}{\fontsize{28}{33.6}\selectfont}
+\renewcommand{\HUGE}{\fontsize{40}{48}\selectfont}
+\newcommand{\semihuge}{\fontsize{18}{21.6}\selectfont}
+\newcommand{\semiHuge}{\fontsize{26}{31.2}\selectfont}
+\newcommand{\EXHUGE}{\fontsize{108}{129.6}\selectfont}
 
 \newcommand{\volumenumfont}{%
 	\EXHUGE\fontsize{108}{129.6}\selectfont
@@ -74,19 +64,15 @@
 }
 
 \newcommand{\sectiontitlefont}{%
-	\huge\ifteacherpage%
+  \huge\ifteacherpage%
     \color{\currentvolcolor}%
   \else%
     \color{principal}
-  \fi\titlefont\iffonts\scshape\else\fi
+  \fi\titlefont\scshape
 }
 
 \newcommand{\subsectiontitlefont}{%
-  \Large\ifteacherpage%
-    \color{\currentvolcolor}%
-  \else%
-    \color{principal}%
-  \fi\subtitlefont%
+  \Large\color{\currentcolor}\subtitlefont%
 }
 
 \newcommand{\bannernamefont}{%

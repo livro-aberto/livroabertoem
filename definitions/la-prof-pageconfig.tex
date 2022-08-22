@@ -44,31 +44,36 @@
 \fi
 
 \newenvironment{la@teacherpage}[1]{%
-  \teacherpagetrue
-  \cleardoublepage
-  \par\begin{flushleft}{\sectiontitlefont #1}\end{flushleft}\par
+  \ifafterteacherintroduction
+  \afterteacherintroductionfalse
+  \else
+    \cleardoublepage
+  \fi
+  \thispagestyle{teacherpage}
   \pagestyle{teacherpage}
+  \sectioncolor{\currentvolcolor}
+  \teacherpagetrue
+  \la@plainsection*{#1}
 }{
-	\teacherpagefalse
-  % \cleardoublepage
- %  \leavevmode\checkoddpage
- %  \ifoddpage\else
- %  \addtocounter{studentpage}{-1}
- %  \fi
-	% \setcounter{page}{\value{studentpage}}
+  \clearpage
+  \teacherpagefalse
 }
 
 \newenvironment{teachersection}[1]{
-    \cleardoublepage
-    \teachersectiontrue
-    \begin{la@teacherpage}{Para o professor: #1}
+\begin{la@teacherpage}{Para o professor: #1}
     \addcontentsline{toc}{section}{Para o professor: #1}
-}{\end{la@teacherpage}}
+}{\end{la@teacherpage}\afterteachersectiontrue}
+
+\newenvironment{exerciseanswer}{
+\begin{la@teacherpage}{Solução dos exercícios}
+    \addcontentsline{toc}{subsection}{Solução dos exercícios}
+    \la@exerciselist
+}{\end{la@teacherpage}\afterteachersectiontrue}
 
 \newenvironment{teacherintroduction}{
   \begin{la@teacherpage}{Introdução ao Professor}
     \addcontentsline{toc}{section}{Introdução ao Professor}
-}{\end{la@teacherpage}}
+}{\end{la@teacherpage}\afterteacherintroductiontrue}
 
 \newenvironment{longteacher}[1]{
     \teacherenvtrue

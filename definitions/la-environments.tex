@@ -77,7 +77,7 @@
 
 \newcommand{\la@box@icon}{%
 	\ifdefined\la@boxicon
-		\includegraphics[width=22pt]{\la@boxicon-\currentvolcolor.pdf}
+		\includegraphics[width=22pt]{resources/figures/\la@boxicon-\currentvolcolor.pdf}
 		\undef\la@boxicon
 	\else\fi
 }
@@ -109,11 +109,11 @@
 
 % Environments
 \newenvironment{task}[1]{\par
-  \filbreak
-	\refstepcounter{task}
+  \penalty-200
+	\refstepcounter{activity}
 	\def\@currentlabelname{#1}
-	\task@toc{Atividade \thetask: #1}
-	\bannername{Atividade \thetask}
+	\task@toc{Atividade \theactivity: #1}
+	\bannername{Atividade \theactivity}
 	\la@contentsepbanner{#1}
 	\par\taskfont
 }{
@@ -214,3 +214,6 @@
 			}
 	}
 \fi
+
+\renewcommand{\fps@figure}{!htb}
+\renewcommand{\fps@table}{!htb}

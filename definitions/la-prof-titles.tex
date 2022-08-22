@@ -3,10 +3,12 @@
 	\teacherenvtrue
 	\raggedright
 	\la@widelist
+	\small
 }{
-	\hfill
+	\par\hfill
 	\la@defaultlist
 	\teacherenvfalse
+	\normalsize
 }
 
 \newenvironment{teacher}{
@@ -14,7 +16,7 @@
 	\begin{la@teacher}
 		}{
 	\end{la@teacher}
-	\switchcolumn
+	\par\switchcolumn
 }
 
 \newenvironment{teacher*}{
@@ -22,12 +24,8 @@
 	\begin{la@teacher}
 		}{
 	\end{la@teacher}
-	\switchcolumn
+	\par\switchcolumn
 }
-
-\flushbottom
-\clearpage
-\cleardoublepage
 
 \newcommand{\teachertitle}[3][\currentcolor]{
 	\vbox{
@@ -36,13 +34,16 @@
     \vspace{-.8\baselineskip}
     \rule{\la@teacher@textwidth}{3pt}\par
     \vspace{-.6\baselineskip}
-    {\large\raggedright #3}\par
+    {\large\RaggedRight #3}\par
   }%\normalfont\small\color{black}
 }
 
 \newcommand{\la@teacher@sidetitle}[2]{%
-	\ifteacherenv\filbreak\par
+    \vspace{.5\la@titlebeforeskip}
+	\ifteacherenv\penalty-1000\par
     \teachertitle{#1}{#2}
+    \penalty1000\par
+    \vspace{.5\la@titleafterskip}
 	\else
 		\la@notteacherenv
 	\fi
@@ -64,5 +65,5 @@
 }{}
 
 \newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Outside teachers's environment}{%
-		You should only use this command in a teacher environment}
+		Você deve usar este comando somente no ambiente do professor.}
 }

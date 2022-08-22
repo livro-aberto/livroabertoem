@@ -125,9 +125,12 @@
 \newif\ifaftersection
 \setsecheadstyle{\sectiontitlefont\raggedright}
 \setsubsecheadstyle{\subsectiontitlefont\raggedright}
+\let\la@plainsection\section
  \pretocmd{\section}{%
- \teachersectionfalse
-    \ifteacherpage\teacherpagefalse\else\cleardoublepage\fi
+    \afterteachersectionfalse
+    \afterteacherintroductionfalse
+    \ifteacherpage\teacherpagefalse
+    \else\cleardoublepage\fi
     \ifteacher\la@teacher@backgroundcolor{boxbackground}\else\fi
     \pagestyle{livroaberto}
 	\aftersectiontrue
@@ -136,7 +139,7 @@
 \setsecindent{0pt}
 
 % \setafterparaskip{.333mu}
-\setbeforeparaskip{2pt}
+\setbeforeparaskip{.75\la@titlebeforeskip}
 
 
 %\begin{macrocode}
@@ -152,11 +155,10 @@
 %\end{macrocode}
 
 \newcommand{\la@banner}[1]{
-    \filbreak
     \def\@currentlabelname{#1}
     \addcontentsline{toc}{banner}{\la@bannername: #1}
     \vspace{\la@titlebeforeskip}
-    \par\la@bannerstyle{#1}
+    \par\penalty-200\la@bannerstyle{#1}
     \ifdraft\else
     \vspace*{\la@titleafterskip}
     \fi
@@ -165,11 +167,10 @@
 }
 
 \newcommand{\la@largebanner}{
-    \filbreak
   \def\@currentlabelname{\la@bannername}
   \addcontentsline{toc}{section}{\la@bannername}
   \vspace{\la@titlebeforeskip}
-  \par\la@largebannerstyle\par
+  \par\penalty-200\la@largebannerstyle\par
   \vspace*{\la@titleafterskip}
   \la@defaultlist
   \color{black}
@@ -181,7 +182,7 @@
         \clearpage
         \addcontentsline{toc}{section}{Exercícios}
     }{
-        \filbreak
+        \penalty-200
         \addcontentsline{toc}{banner}{Exercícios}
   }
   \vspace{\la@titlebeforeskip}
@@ -197,12 +198,7 @@
   % \checkoddpage
 	\sectioncolor{session1}
 	\bannername{Explorando}
-	\ifaftersection
-    \ifteacher\flushpage\else\clearpage\fi
-		\aftersectionfalse
-	\else	
-		\ifteacher\flushpage\else\fi\cleardoublepage
-	\fi
+	\clearpage
 	\pagestyle{livroaberto}
   \refstepcounter{explore}
   \la@banner{#1}

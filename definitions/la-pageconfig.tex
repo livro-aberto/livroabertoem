@@ -128,7 +128,7 @@
 				-- ($(current page.south east) + (-\la@student@foremargin,\la@footerbaseline)$);
 
       \node [anchor = east] at ($(current page.south west) + (.8\la@student@foremargin,\la@footerbaseline)$)  
-        {\ifteacherpage\else\footerfont\thepage\fi};
+        {\footerfont\thepage};
 
 			\node [fill=white, inner sep=3.5pt] at ($(current page.south east) + (-\la@student@foremargin, \la@footerbaseline)$) {\la@footer@icon};
 	\end{tikzpicture}
@@ -160,7 +160,7 @@
 				-- ($(current page.south west) + (\la@student@foremargin,\la@footerbaseline)$);
 
       \node [anchor = west] at ($(current page.south east) + (-.8\la@student@foremargin,\la@footerbaseline)$)  
-        {\ifteacherpage\else\footerfont\thepage\fi};
+        {\footerfont\thepage};
 				
 			\node [fill=white, inner sep=3.5pt] at ($(current page.south west) + (\la@student@foremargin, \la@footerbaseline)$) {\la@footer@icon};
 	\end{tikzpicture}

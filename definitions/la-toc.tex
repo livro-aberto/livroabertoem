@@ -4,18 +4,17 @@
 
 \newlistentry{banner}{toc}{1}
     \cftsetindents{banner}{2.5em}{3.2em}
-\newlistentry{task}{toc}{2}
-    \cftsetindents{task}{3.25em}{3.2em}
+\newlistentry{activity}{toc}{2}
+    \cftsetindents{activity}{3.25em}{3.2em}
 
 \newif\ifla@taskintoc
 \newcommand{\task@toc}[1]{
     \ifla@taskintoc
-        \addcontentsline{toc}{task}{#1}
+        \addcontentsline{toc}{activity}{#1}
     \else\fi
 }
 \newcommand{\taskintoc}{\la@taskintoctrue}
 \newcommand{\notaskintoc}{\la@taskintocfalse}
-
 
 \renewcommand{\printtoctitle}{\sectiontitlefont}
 \renewcommand{\cftchapterfont}{\LARGE\bfseries}
@@ -24,13 +23,13 @@
 \renewcommand{\cftsectionpagefont}{\Large}
 \renewcommand{\cftbannerfont}{\large}
 \renewcommand{\cftbannerpagefont}{\large}
-\renewcommand{\cfttaskfont}{\normalsize}
-\renewcommand{\cfttaskpagefont}{\normalsize}
+\renewcommand{\cftactivityfont}{\normalsize}
+\renewcommand{\cftactivitypagefont}{\normalsize}
 
 \setlength{\cftbeforechapterskip}{2em}
 \setlength{\cftbeforesectionskip}{1em}
 \setlength{\cftbeforebannerskip}{.5em}
-\setlength{\cftbeforetaskskip}{.25em}
+\setlength{\cftbeforeactivityskip}{.25em}
 
 \pretocmd{\tableofcontents}{
   \teachercol@on

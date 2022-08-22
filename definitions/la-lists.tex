@@ -90,10 +90,10 @@
 		label = \protect\titem{\alph*}, topsep = \parskip, itemsep = .75\parskip
 	}
 	\setlist[enumerate,2]{%
-		label = \titem{\alph*}, topsep = \parskip, itemsep = .75\parskip %chktex 9
+		label = \titem{\roman*}, topsep = \parskip, itemsep = .75\parskip %chktex 9
 	}
 	\setlist[enumerate,3]{%
-		label = \titem{\roman*)}, topsep = \parskip, itemsep = .75\parskip %chktex 9
+		label = \titem{\Alph*)}, topsep = \parskip, itemsep = .75\parskip %chktex 9
 	} %chktex 10
 	\setlist[itemize]{%
 		label = \protect\itemcoloredsquare, topsep = \parskip, itemsep = .75\parskip%
@@ -102,10 +102,16 @@
 
 \newcommand{\la@widelist}{
 	\setlist[enumerate]{%
-		wide, label = \protect\titem{\alph*}, topsep = 0pt, itemsep = 0pt
+		wide, label = \protect\titem{\alph*}, topsep = 0pt, itemsep = 0pt, partopsep = 0pt
 	}
+	\setlist[enumerate,2]{%
+		label = \titem{\roman*}, topsep = 0pt, itemsep = 0pt, left = 1em, partopsep = 0pt %chktex 9
+	}
+	\setlist[enumerate,3]{%
+		label = \titem{\Alph*)}, topsep = 0pt, itemsep = 0pt, left = 1.5em, partopsep = 0pt %chktex 9
+	} %chktex 10
 	\setlist[itemize]{%
-		wide, label = \protect\itemcoloredsquare, topsep = 0pt, itemsep = 0pt%
+		wide, label = \protect\itemcoloredsquare, topsep = 0pt, itemsep = 0pt, partopsep = 0pt%
 	}
 } 
 
