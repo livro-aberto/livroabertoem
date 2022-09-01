@@ -1,32 +1,37 @@
-\newif\ifhabilities\habilitiesfalse
-\newif\ifhability\habilityfalse
-\newif\ifefhability\efhabilityfalse
+\newif\ifhabilities\habilitiesfalse%
+\newif\ifhability\habilityfalse%
 
-\NewDocumentEnvironment{habilities}{ O{EM} O{Habilidades da BNCC} }{%
-	\habilitiestrue
-	\IfStrEq{#1}{EF}{\efhabilitytrue}{}
+\NewDocumentEnvironment{habilities}{ O{Habilidades da BNCC} }{%
+	\habilitiestrue%
 	\ifteacherpage
-      \subsection{#2}
+      \subsection{#1}
 	\else
 		\la@notteacherpage
 	\fi
 }{%
-	\habilitiesfalse
-	\ifhability
+	\habilitiesfalse%
+	\ifhability\habilityfalse%
+  \else\la@nohability\fi
 }
 
-\newcommand{\hability}[2][]{%
-	\habilitytrue
-	\ifhabilities
-		\ifefhability
-			\paragraph{EF#1MA#2}\la@efhability{#1}{#2}
-		\else
-			\paragraph{EM13MAT#2}\la@hability{#2}
-		\fi
+\newcommand{\hability}[1]{%
+	\habilitytrue%
+	\ifhabilities%
+		\paragraph{EM13MAT#1}\la@hability{#1}
 	\else
-		\la@nothabilities
+    \textbf{EM13MAT#1}
 	\fi
 }
+
+\newcommand{\efhability}[2]{%
+	\habilitytrue%
+	\ifhabilities%
+			\paragraph{EF#1MA#2}\la@efhability{#1}{#2}
+	\else
+    \textbf{EF#1MA#2}
+	\fi
+}
+
 
 \newcommand{\la@nothabilities}{%
 	\ClassError{livroaberto}{Fora do ambiente de habilidades}{%
