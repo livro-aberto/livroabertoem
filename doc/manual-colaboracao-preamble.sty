@@ -1,3 +1,5 @@
+\setcounter{secnumdepth}{3}
+
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
@@ -7,24 +9,101 @@
 \RequirePackage{xcolor}
 \RequirePackage{xurl}
 \RequirePackage{bookmark}
-\RequirePackage[margin=3cm]{geometry}
-\RequirePackage{minted}
-\RequirePackage{xpatch}
-\RequirePackage{dirtree}
-\RequirePackage[brazil]{babel}
+\RequirePackage{booktabs}
+\RequirePackage{supertabular}
+\RequirePackage{siunitx}
+\RequirePackage{threeparttable}
+\RequirePackage{makecell}
+\RequirePackage{tikz}
+
 
 \hypersetup{
-  pdftitle={Manual para a colaboração no livro do ensino médio do projeto Livro Aberto de Matemática},
-  pdfauthor={Tarso Boudet Caldas},
-  colorlinks=true,
-  linkcolor={Maroon},
-  filecolor={Maroon},
-  citecolor={Blue},
-  urlcolor={Blue},
+	pdftitle={Manual para a colaboração no livro do ensino médio do projeto Livro Aberto de Matemática},
+	pdfauthor={Tarso Boudet Caldas},
+	colorlinks=true,
+	linkcolor={Maroon},
+	filecolor={Maroon},
+	citecolor={Blue},
+	urlcolor={Blue},
 }
 \urlstyle{same} % disable monospaced font for URLs
 
-\newmint{latex}{}
-\newminted{latex}{}
-\newmintinline{latex}{}
-\newmintedfile{latex}{}
+
+\sisetup{
+  per-mode = symbol,
+  group-separator = {.},
+  output-decimal-marker = {,},
+  range-phrase = { a },
+  range-units = single,
+  detect-mode,
+  retain-zero-uncertainty,
+  drop-zero-decimal=false
+}
+
+\RequirePackage[capitalise,nameinlink,noabbrev,brazilian]{cleveref}
+\renewcommand{\cpageref}[1]{página~\labelcpageref{#1}}
+
+\crefname{research}{Notas}{Notas}
+\crefname{example}{Exemplo}{Exemplos}
+\crefname{activity}{Atividade}{Atividades}
+\crefname{know}{Saiba Mais}{Saiba Mais}
+\crefname{explore}{Explorando}{Explorando}
+\crefname{practice}{Praticando}{Praticando}
+\crefname{definition}{Definição}{Definição}
+\crefname{arrange}{Organizando}{Organizando}
+\crefname{reflection}{Refletindo}{Refletindo}
+\crefname{knowledge}{Você sabia?}{Você sabia?}
+
+
+\RequirePackage[top = 3cm, bottom = 2cm, left = 3 cm, right = 4cm]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\RequirePackage{minted}
+\RequirePackage{xpatch}
+\RequirePackage{dirtree}
+\RequirePackage[brazilian]{babel}
+\RequirePackage{csquotes}
+
+
+
+\newmint[latex]{latex}{linenos}
+\newminted[latexcode]{latex}{linenos}
+\newmintinline[latexinline]{latex}{linenos}
+\newmintedfile[latexfile]{latex}{linenos}
+
+
+\newcommand{\warning}[1]{\marginpar{\paragraph{Atenção:} #1}}
+
+
+\input{../definitions/la-tables.tex}
+\input{../definitions/la-color.tex}
+
+\def\TikZ{Tik\emph{Z}}
+
+
+\newcommand{\colorexample}[1]{%
+  \tikz\filldraw [fill=#1, anchor = center, rounded corners] (0,0) rectangle (2,1);
+}
+
+\RequirePackage{currency}
+\CurrencySetup{pre = true, group-separator = {.}, base = {2}}
+
+\newcommand{\reais}{R\$}
+\DefineCurrency{USD}{%
+  name = {dólar}, plural = {dólares}, iso = {USD}, kind = symbol, symbol = {\$}
+}
+\DefineCurrency{BRL}{%
+  name = {real}, plural = {reais}, iso = {BRL}, kind = symbol, symbol = {\reais}
+}
+\DefineCurrency{EUR}{%
+  name={euro}, plural={euros}, symbol={\euro}, iso={EUR}, kind=symbol
+}
+\CurrencySetup{%
+  pre = true, group-separator = {.}, base = {2}
+}
+
+\let\vBRL\dBRL%
+\let\vUSD\dUSD%
+\let\vEUR\dEUR%

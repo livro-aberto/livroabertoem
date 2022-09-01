@@ -1,0 +1,216 @@
+\section{Colaboração no projeto}\label{sec:producao-capitulo}
+
+Nesta seção iremos detalhar a estrutura padrão dos projetos criados no
+Overleaf para a colaboração entre os autores. Isto envolve
+
+\subsection{Estrutura da pasta}\label{sec:estrutura-da-pasta}
+
+Os arquivos têm a seguinte estrutura.
+
+\dirtree{%
+	.1 capitulo/.
+	.2 class-options/.
+	.3 [arquivos de configuração de opções].
+	.2 definitions/.
+	.3 [arquivos de configuração da classe e do pacote].
+	.2 figuras/.
+	.3 tikz/.
+	.4 [arquivos das figuras em TikZ].
+	.3 tabelas/.
+	.4 [arquivos de tabelas grandes].
+	.3 [figuras do capítulo].
+	.2 resources/.
+	.3 figures/.
+	.4 [imagens padrão da classe].
+	.3 fonts/.
+	.4 [arquivos das fontes usadas].
+	.2 main.tex.
+	.2 capitulo-bibliografia.bib.
+	.2 capitulo-preamble.sty.
+	.2 livroabertoem.cls.
+	.2 livroabertoem-preamble.sty.
+	.2 apresentacao.tex.
+	.2 sec1-nome-da-secao1.tex.
+	.2 sec2-nome-da-secao2.tex.
+	.2 sec3-nome-da-secao3.tex.
+	.2 sec4-exercicios.tex.
+	.2 sec-encerramento.tex.
+}%%
+
+\begin{description}
+	\item[Divida o texto em vários arquivos] Crie um arquivo novo no início de
+		cada seção, isto é, no começo de cada explorando, ou em um comando
+		\latexinline/\section/ de introdução. Isto facilita o processo de
+		edição.
+	\item[Separe o preâmbulo do arquivo principal] Todos os pacotes e comandos
+		que forem usados especificamente no capítulo devem estar em um arquivo
+		de estilo separado, \verb|capitulo-preamble.sty|, contido na pasta do
+		projeto. Isto é para deixar o \verb|main.tex| o mais limpo possível.
+	\item[Evite o acúmulo de pacotes] Se o pacote não está sendo usado, não há
+		necessidade de ser carregado, isto apenas aumenta o tempo de
+		processamento.
+	\item As figuras em \latexinline/tikz/ devem estar em arquivos separados
+	      dentro na pasta \latexinline/tikz/. Mais detalhes na seção sobre
+	      \protect\hyperlink{figuras}{figuras}.
+\end{description}
+
+
+\subsection{Arquivo \texttt{main.tex}}\label{sec:main-tex}
+
+O arquivo \verb|main.tex| é o que será processado, então é onde
+declaramos a classe, os pacotes, os comandos descritos nas
+\cref{sec:pre-volume,sec:pre-capitulo}, e os \verb|input| das seções
+individuais. Sendo assim, começamos este arquivo com as seguintes
+linhas:
+
+\begin{latexcode}
+\documentclass{livroabertoem}
+
+\usepackage{livroabertoem-preamble}
+\usepackage{capitulo-preamble}
+\end{latexcode}
+
+Para acessar o conteúdo do professor, basta inserir a seguinte opção:
+
+\begin{latexcode}
+\documentclass[professor]{livroabertoem}
+\end{latexcode}
+
+As seções podem ser inclusas com o comando
+\latexinline/\input{arquivo}/ após os créditos.
+
+A seguir temos um exemplo de como é a estrutura básica do arquivo
+\verb|main.tex|:
+
+\latexfile{exemplo.tex}
+
+
+\subsection{Conteúdo do aluno}\label{sec:conteudo-aluno}
+
+O conteúdo do aluno é dividido usando os comandos descritos nas
+\cref{sec:comandos-divisao,sec:comandos-ambientes}. No material do
+aluno, temos as seguintes possibilidades de ambientes com título:
+
+\begin{itemize}
+	\item \latexinline/task/ Atividades;
+	\item \latexinline/example/ Exemplo;
+	\item \latexinline/theorem/ Teorema;
+	\item \latexinline/definition/ Definição;
+	\item \latexinline/observation/ Observação;
+\end{itemize}
+
+Eles são da forma
+
+\begin{latexcode}
+\begin{task}{título}
+  ...
+\end{task}
+\end{latexcode}
+
+Temos também ambientes sem título, sendo eles:
+
+\begin{itemize}
+	\item \latexinline/reflection/ Refletindo.
+	\item \latexinline/knowledge/ Você sabia?;
+	\item \latexinline/research/ Notas;
+	\item \latexinline/project/ Projeto aplicado;
+\end{itemize}
+
+sendo da forma
+
+\begin{latexcode}
+\begin{knowledge}
+  ...
+\end{knowledge}
+\end{latexcode}
+
+\subsection{Conteúdo do professor}\label{sec:conteudo-professor}
+
+O conteúdo do professor deve estar sempre presente no ambiente
+\latexinline/teacher/. Há três ambientes de conteúdo do professor:
+
+\begin{itemize}
+	\item \latexinline/objectives/ Objetivos específicos;
+	\item \latexinline/sugestions/ Sugestões e discussões (pode ser
+	      usado o comando \latexinline/\sugestion{titulo}/ para criar um
+	      título para a sugestão);
+	\item \latexinline/answer/ Solução.
+\end{itemize}
+
+Sendo assim, o conteúdo do professor fica na estrutura:
+
+\begin{latexcode}
+\begin{teacher}
+  ...
+
+  \begin{objectives}{titulo}
+    ...
+  \end{objectives}
+
+  \begin{sugestions}{titulo}
+    \sugestion{sugestao} ...
+  \end{sugestions}
+
+  \begin{answer}{titulo}
+    ...
+  \end{answer}
+\end{teacher}
+\end{latexcode}
+
+Estes ambientes são mais comumente usados em atividades, por isso o
+ambiente \latexinline/teacher/ deve estar dentro do ambiente
+\verb|task| neste caso. Se for colocar conteúdo para o professor dentre
+de qualquer um dos outros ambientes do aluno, coloque antes do início
+do ambiente (não haverá nenhum erro, apenas será mais fácil para a
+transição no modelo final, em que isto não é permitido).
+
+\subsubsection{O ambiente \texttt{teacher*}}\label{sec:teacher-estrela}
+
+O pacote \verb|paracol| nos permite criar textos assíncronos em duas
+colunas diferentes, isto é, \emph{colunas paralelas}. Por conta disso,
+o texto da coluna do professor possui uma quebra própria, e nem sempre
+irá estar sincronizado corretamente com o texto do aluno. A solução
+para isto está no ambiente \verb|teacher*|, que sincroniza a coluna do
+professor no local em que o ambiente é inserido. Portanto, se quiser
+que o texto do professor comece na mesma linha de uma atividade, pode
+ser usado este ambiente logo após o início da atividade:
+
+\begin{latexcode}
+  \begin{task}
+    \begin{teacher*}
+      ...
+    \end{teacher*}
+    ...
+  \end{task}
+\end{latexcode}
+
+\subsubsection{Habilidades da BNCC}\label{sec:habilidades}
+
+Um último ambiente para o professor é o ambiente
+\latexinline/habilities/, que deve ser usado dentro de uma seção do
+professor (o ambiente \latexinline/teacher/), para descrever as
+habilidades da BNCC trabalhadas neste capítulo. Ele funciona da
+seguinte forma:
+
+\begin{latexcode}
+\begin{habilities}[titulo]
+  \hability{###}
+  \efhability{##}{##}
+\end{habilities}
+\end{latexcode}
+
+O ambiente cria um título \enquote{Habilidades da BNCC}, mas que pode
+ser mudado a partir de uma opção entre colchetes com o título desejado.
+Dentro deste ambiente, os comandos \latexinline/\hability{###}/ e
+\latexinline/\efhability{##}{##}/ inserem o texto da habilidade
+desejada do ensino médio e do ensino fundamental, respectivamente, onde
+\verb|#| é um dígito, e o argumento obrigatório deve ser o número da
+habilidade. Por exemplo, \latexinline/\habiliy{101}/ corresponde à
+habilidade \textbf{EM13MAT101}, e \latexinline/\efhability{01}{02}/
+corresponde à habilidade \textbf{EF01MA02}.
+
+Estes comandos possuem um funcionamento diferente caso usados fora do
+ambiente \verb|habilities|. Neste caso, eles apenas inserem o código da
+habilidade em negrito, e deve ser usado quando estiver citando uma
+habilidade.
+

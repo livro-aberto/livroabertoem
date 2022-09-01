@@ -1,0 +1,62 @@
+\section{Desenvolvimento do projeto}\label{sec:desenvolvimento-projeto}
+
+\subsection{Classe}
+
+A classe \latexinline/livroabertoem.cls/ é baseada na classe
+\latexinline/memoir.cls/, portanto, utiliza ao máximo os comandos de
+formatação da mesma, e os comandos da classe funcionam no documento. A
+classe possui diversos comandos úteis para a escrita de todo tipo de
+texto, e a
+\href{https://linorg.usp.br/CTAN/macros/latex/contrib/memoir/memman.pdf}{documentação}
+é bem completa, e pode ser consultada caso necessário\footnote{O manual
+	deve servir como referência para a criação de elementos textuais, mas
+	não devem ser utilizados comandos para modificar a diagramação, isto é,
+	fonte, tamanho de página, etc. }. Inclusive é uma classe que emula
+outros pacotes comuns do \LaTeX, portanto, é recomendado verificar se a
+própria classe possui comandos nativos que façam o que você precisa,
+evitando assim a inserção de novos pacotes. Além da classe
+\verb|memoir|, são usados os seguintes pacotes: \texttt{comment,
+	xstring, xpatch, ragged2e, xcolor, graphicx, calc, tikz, tcolorbox,
+	pagecolor, anyfontsize, fontspec} e, por fim, \verb|paracol|, que
+permite que tenhamos a coluna do professor em paralelo à do aluno.%
+
+O pacote
+\href{https://linorg.usp.br/CTAN/macros/latex/contrib/paracol/paracol-man.pdf}{\texttt{paracol}}
+possui algumas incompatibilidades, especialmente com os pacotes
+\verb|multicol| e \verb|longtable|. No segundo caso, isto pode ser
+contornado usando o pacote \verb|supertabular| (ver
+\cref{sec:longtable}). Todos os comandos do \verb|paracol| funcionam
+nesta classe, mas também acompanha suas limitações, por isso é
+recomendado ter a documentação do pacote como consulta caso haja alguma
+dúvida.%
+
+Estão disponíveis três opções, a primeira é a que define a classe, a
+opção \verb|professor| (ou \verb|teacher|), que cria a coluna lateral e
+mostra as páginas de conteúdo exclusivas do material do professor. As
+outras duas opções foram criadas para diminuir o tempo de processamento
+do documento, facilitando o processo de criação do conteúdo, sendo elas
+a opção \verb|rascunho| e a opção \verb|nofonts|:
+\begin{itemize}
+	\item \verb|rascunho| retira todos os elementos visuais do livro que possam aumentar o tempo
+	      de processamento, com exceção das fontes. Além disso, há também a opção \verb|draft|, que trará
+	      os mesmos efeitos de \verb|rascunho|, mas que não insere as figuras (por ser uma opção
+	      vinda da classe \verb|memoir|).
+	\item \verb|nofonts|, como diz o nome, retira todas as fontes do texto e substitui para
+	      fontes padrão do \LaTeX, não carregando o pacote \verb|fontspec|.
+\end{itemize}
+
+Todos os comandos definidos pela classe estão descritos na
+\cref{sec:apressados}.
+
+\subsection{Pacote de estilo}
+
+O pacote \verb|livroabertoem-preamble.cls| serve para as configurações
+de pacotes comuns a todos os capítulos. Aqui são definidas as
+padronizações de listas, figuras, tabelas, página de créditos, figuras
+em \TikZ, bibliografia, modo matemático, hyperlinks, etc. Os pacotes
+utilizados para tal são \texttt{tikz, enumitem, makecell, xurl, float,
+	caption, microtype, babel, biblatex, csquotes, amsmath, amsthm,
+	mathtools, unicode-math, hyperref, cleveref, siunitx} e
+\verb|currency|. Para uma discussão das padronizações e escolhas
+feitas, veja a \cref{sec:padronizacao}.
+

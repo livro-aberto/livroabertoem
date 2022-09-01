@@ -1,0 +1,253 @@
+\section{\texttt{livroabertoem} para apressados}\label{sec:apressados}
+
+Esta seção traz em um formato simplificado os comandos e suas
+descrições diretas, para aqueles que precisam de uma consulta rápida.
+Para exemplos concretos, veja as outras seções do manual.
+
+\subsection{Comandos para divisão do documento}\label{sec:comandos-divisao}
+
+As \cref{tab:divisoes-comandos,tab:divisoes-formatacao}, trazem os
+tipos de divisão do documento, isto é, a divisão por capítulos, seções,
+etc. Todos aqueles comandos que possuem \emph{título} requerem um
+argumento.
+
+\begin{table}[H]
+	\centering\small
+	\begin{tabular}
+		{l>{\raggedright}p{.25\linewidth}cp{.40\linewidth}}
+		\toprule
+		Divisão            & Comando                                                                                      & Hierarquia     & Descrição                                                                                                                                            \\
+		\midrule
+		Volume             & \latexinline/\volume/                                                                        & \(-1\)         & Agrupamento de capítulos de um mesmo assunto (Geometria, Funcões, \ldots).                                                                           \\
+		\addlinespace
+		Capítulo           & \latexinline/\chapter/                                                                       & \(0\)          & Conteúdos específicos dentro de um assunto (Áreas, Função Afim, Ladrilhamento, \ldots).                                                              \\
+		\addlinespace
+		Seção              & \latexinline/\section/                                                                       & \(1\)          & Separa subseções e os \emph{banners}, podendo servir como uma introdução a um explorando.                                                            \\
+		\addlinespace
+		\emph{Banners}     & \latexinline/\explore/, \latexinline/\arrange/, \latexinline/\practice/, \latexinline/\know/ & \(2\)          & Dividem uma seção entre formatos de conteúdos (Explorando, Organizando, Praticando, Saiba Mais)                                                      \\
+		Subseção           & \latexinline/\subsection/                                                                    & \(3\)          & Comando que pode ser utilizado para dividir texto dentro de uma atividade ou dentro de uma das divisões de conteúdo.                                 \\
+		\addlinespace
+		Exercícios         & \latexinline/\exercise/                                                                      & \(1\) ou \(2\) & É também um \emph{banner}, mas que possui alinhamento diferente dos demais, utilizando a cor principal da coleção (azul escuro), e não possui título \\
+		\addlinespace
+		Material Adicional & \latexinline/\additionalmaterial/                                                            & \(1\)          & Seção de conteúdos adicionais fora do texto principal (encartes, fichas, referências, \ldots)                                                        \\
+		\bottomrule
+	\end{tabular}
+	\caption{Formatação das divisões.}\label{tab:divisoes-comandos}
+\end{table}
+
+\begin{table}[H]
+	\centering\small
+	\begin{tabular}{l*{2}{p{.4\linewidth}}}
+		\toprule
+		Divisão               & Função na versão final                                                                                                                                                                                                                                                                                                                                                            & Adaptação na versão de rascunho                                 \\
+		\midrule
+		Volume                & Cria a capa com ícone e nome do volume                                                                                                                                                                                                                                                                                                                                            & Em vez da capa, há um texto substituto.                         \\
+		\addlinespace
+		Capítulo              & Cria uma capa com o ícone vazado (a mesma para capítulos de um mesmo volume),
+		com o nome do capítulo e o nome d(os) professor(es) colaboradores, cria a
+		página de créditos a partir dos comandos usados previamente, junto das
+		caixas \enquote{O quê?} e \enquote{Por que?}
+		                      & Cria apenas um título simplificado, com o nome do capítulo e o nome do professor,
+		com o texto do \enquote{O quê?} e \enquote{Por quê?} na mesma página. Não gera a página de créditos.                                                                                                                                                                                                                                                                                                                                                                        \\
+		\addlinespace
+		Seção                 & Cria um título numerado em uma página de rosto                                                                                                                                                                                                                                                                                                                                    & Sem modificações                                                \\
+		\addlinespace
+		\emph{Banners}        & Cria um \emph{Banner} com a cor da respectiva divisão, o nome da divisão e um título, modificando a cor de elementos do conteúdo.                                                                                                                                                                                                                                                 & Gera apenas um título de subseção genérico, em vez de um banner \\
+		Subseção              & Título simples com a cor do banner atual (Não gera entrada na Tabela de Conteúdos).                                                                                                                                                                                                                                                                                               & Sem alterações.                                                 \\
+		\addlinespace
+		Exercícios            & Cria um \emph{banner} apenas com o nome \enquote{Exercícios}, sem título. É o único \emph{banner} que pode estar em dois tipos de hierarquia. Caso utilize o comando normalmente, ele possui a mesma hierarquia dos outros \emph{banners}, mas caso deseje ter exercícios apenas uma seção de exercício no capítulo, pode-se usar \latexinline/\exercise[section]/, que irá gerar
+		uma quebra de página. & O mesmo que os outros \emph{banners}                                                                                                                                                                                                                                                                                                                                                                                                                \\
+		\addlinespace
+		Material Adicional    & Cria um \emph{banner} com o nome \enquote{Material Adicional}, sem título                                                                                                                                                                                                                                                                                                         & O mesmo que os outros \emph{banners}                            \\
+		\bottomrule
+	\end{tabular}
+	\caption{Comandos de divisão do documento}\label{tab:divisoes-formatacao}
+\end{table}
+
+
+{
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+Em resumo, a hierarquia da tabela de conteúdos é a seguinte:
+
+\dirtree{%
+	.1 Volume.
+	.2 Capítulo.
+	.3 Introdução ao Professor\footnotemark[1].
+	.3 Seção.
+	.4 Para o professor da seção\footnotemark[1].
+	.4 Explorando.
+	.4 Organizando.
+	.4 Praticando.
+	.4 Exercícios da seção.
+	.3 Material Suplementar.
+	.3 Exercícios do capítulo.
+	.3 Notas\footnotemark[1].
+	.3 Bibliografia.
+}%
+\footnotetext[1]{Divisões apenas do material do professor. Ver \cref{subsec:comando-professor}.}
+}
+
+\newpage
+
+\subsection{Comandos de ambientes}\label{sec:comandos-ambientes}
+
+Todos os ambientes passam, na versão de rascunho, a usar título de
+subseção, com as cores indicadas na \cref{tab:ambientes}. Vale lembrar
+que todos os comandos de ambiente precisam estar entre
+\latexinline/\begin{comando}/ \latexinline/\end{comando}/. Se um
+ambiente tem \emph{título}, ele possui um argumento obrigatório.
+
+\begin{table}[htp!]
+	\centering\small
+	\begin{tabular}
+		{llp{.2\linewidth}p{.4\linewidth}}
+		\toprule
+		\centering Ambiente & \centering Comando & \centering Descrição                                             & \centering\arraybackslash Função na versão final                                                                                                                                                                                                                                         \\
+		\midrule
+		Atividade           & \verb|task|        & Auto-explicativo                                                 & Cria um banner na cor da divisão atual (diferente dos de divisão) com o título da atividade à esquerda, e a numeração da atividade à direita. Régua ao final do ambiente, para separar do resto do conteúdo, além de fonte diferenciada, para destacar que o texto pertence à atividade. \\
+		\addlinespace
+		Exemplo             & \verb|example|     & Auto-explicativo                                                 & Cria uma \verb|tcolorbox|, uma caixa com fundo cinza, com título acima da caixa à esquerda, e o nome \enquote{Exemplo} junto da numeração à direita em uma aba acima da caixa, na cor da numeração atual.                                                                                \\
+		\addlinespace
+		Observação          & \verb|observation| & Auto-explicativo                                                 & Cria uma \verb|tcolorbox| no mesmo estilo da de \enquote{Exemplo}, porém sem numeração, apenas com o nome \enquote{Observação}.                                                                                                                                                          \\
+		\addlinespace
+		Teorema             & \verb|theorem|     & Auto-explicativo                                                 & \verb|tcolorbox| no mesmo modelo de \enquote{Observação}                                                                                                                                                                                                                                 \\
+		\addlinespace
+		Definição           & \verb|definition|  & Auto-explicativo                                                 & \verb|tcolorbox| no mesmo modelo de \enquote{Observação}                                                                                                                                                                                                                                 \\
+		\addlinespace
+		Para refletir       & \verb|reflection|  & Caixa para reflexões adicionais relacionadas ao conteúdo         & Cria uma \verb|tcolorbox| no mesmo modelo, porém, sem título, a aba à esquerda apenas com o nome \enquote{Para refletir} e ícone de cérebro à esquerda, ao lado da caixa. A cor utilizada e a cor definida para o volume.                                                                \\
+		\addlinespace
+		Você sabia?         & \verb|knowledge|   & Caixa com curiosidades relacionadas ao conteúdo                  & Cria uma \verb|tcolorbox| no mesmo modelo do \enquote{Para refletir}, porém com ícone de lupa.                                                                                                                                                                                           \\
+		\addlinespace
+		Para pesquisar      & \verb|research|    & Caixa para dar dicas de pesquisa adicional para os alunos        & Mesmo modelo das duas anteriores, porém com ícone de bloco de notas                                                                                                                                                                                                                      \\
+		\addlinespace
+		Projeto aplicado    & \verb|project|     & Caixa para criação de um projeto relacionado à seção ou capítulo & Semelhante às três anteriores, porém sem ícone, e com duas abas, uma em cima da outra                                                                                                                                                                                                    \\
+		\bottomrule
+	\end{tabular}
+
+	\caption{Ambientes definidos pela classe.}\label{tab:ambientes}
+\end{table}
+
+
+\subsection{Comandos do material do professor}\label{subsec:comando-professor}
+
+O material do professor aparece quando se utiliza a opção
+\verb|professor|, da classe. O conteúdo do professor se apresenta em
+duas formas. A primeira é a inclusão de material do professor em
+paralelo ao material do aluno, através dos ambientes \verb|teacher| e
+\verb|teacher*|. (A diferença está na sincronização vertical com o
+material do professor, e é melhor explicada na
+\cref{sec:teacher-estrela}). Há alguns ambientes exclusivos da coluna
+lateral, que podem ser vistos na \cref{tab:teacher-ambientes}. Todos
+possuem o mesmo estilo, sendo o nome do ambiente e o título separados
+por uma régua horizontal, e funcionam da mesma forma na versão de
+rascunho.
+
+\begin{table}[htp!]
+	\centering\small
+	\begin{tabular}{llp{.4\linewidth}}
+		\toprule
+		Ambiente               & Comando           & Descrição                                     \\
+		\midrule
+		Objetivoes Específicos & \verb|objectives| & Os objetivos do conteúdo apresentado
+		(preferencialmente concisos e em forma de lista)                                           \\
+		\addlinespace
+		Sugestões e Discussões & \verb|sugestions| & Uma pequena conversa com o professor
+		sobre o conteúdo, trazendo possibilidades de como conduzir o conteúdo e especificações
+		sobre a execução de atividades. Possui um comando próprio \latexinline/\sugestion/ para
+		enumerar sugestões específicas (divisão da turma, duração, possíveis dificuldades, \ldots) \\
+		\addlinespace
+		Solução                & \verb|answer|     & Auto-explicativo                              \\
+		\bottomrule
+	\end{tabular}
+	\caption{Comandos da coluna lateral do material do professor.}\label{tab:teacher-ambientes}
+\end{table}
+
+É válido lembrar que não é necessário utilizar os ambientes na coluna. É possível inserir
+textos simples, figuras, tabelas etc.
+
+Se o texto que se deseja colocar é grade demais, você pode inserí-lo em
+uma nota, com o comando
+\latexinline/\teachernotes[ambiente]{título}{texto}/, isto é, possui
+dois argumentos obrigatórios e um opcional. Caso não seja declarado
+nenhum dos ambientes da \cref{tab:teacher-ambientes}, então será criado
+um título com uma régua horizontal abaixo, se declarado, será criado um
+título nos mesmos moldes da seção.
+
+A outra forma de conteúdo do professor e a criação de uma nova página
+utilizando a mesma coluna do material do aluno, que chamaremos de
+\emph{página do professor}, que possui um rodapé na cor do volume e uma
+numeração alternativa (em progresso). São criadas através dos ambientes
+
+\begin{itemize}
+	\item \verb|teacherintroduction|: Uma seção introdutória ao professor apresentando o capítulo
+	      como um todo. Não possui título;
+	\item \verb|teachersection|: Uma seção com título, nos mesmos moldes da seção do aluno,
+	      porém não-numerada. Pode ser utilizada como uma forma de introduzir novas seções, junto
+	      do comando \latexinline/\section/ do material do aluno;
+	\item \verb|longteacher|: Página do professor com título, que tem a função de adicionar
+	      textos para o professor que são grandes demais para a coluna lateral. Deve ser evitado,
+	      pois cria disrupção em relação ao material do aluno, podendo trazer conflitos na paginação.
+	      Para textos maiores, utilize as notas aos fim do capítulo. (\cref{sec:notas-professor});
+	\item \verb|ExerciseAnswers|: Ambiente para inserir as respostas das seções de exercício.
+\end{itemize}
+
+Há também o ambiente \verb|habilities| para a inserção de texto de
+habilidades da BNCC. O funcionamento deste é melhor explicado na
+\cref{sec:habilidades}
+
+\paragraph{Observação} O ambiente \verb|teacher| pode ser também usado nas páginas do
+professor.
+
+\subsubsection{Notas finais}\label{sec:notas-professor}
+
+Com frequência o conteúdo desejado para o professor é grande demais
+para a coluna, mas ao mesmo tempo não é suficiente para preencher uma
+página com o ambiente \verb|longteacher|, por isso, usamos o a
+interface de \emph{page notes} da classe \verb|memoir|, que uma seção
+com as notas criadas no meio do texto (algo como notas de rodapé, mas
+no final do texto). Para utilizar a página de notas, basta usar o
+comando anterior para criar um \emph{banner} semelhante ao da coluna
+lateral.
+
+Para que as notas no final do texto sejam geradas no PDF, é necessário
+o comando \latexinline/\printpagenotes/ no final do capítulo (antes da
+bibliografia).
+
+Importante ressaltar que as notas funcionam apenas no ambiente
+\verb|teacher|, e devem estar em um parágrafo separado.
+
+\subsection{Comandos pré-volume}\label{sec:pre-volume}
+
+Alguns comandos devem ser utilizados antes do comando
+\latexinline/\volume/, podendo ser usados no prêambulo também. São
+estes
+
+\begin{itemize}
+	\item \latexinline/\volumecolor/: Define a cor utilizada para elementos gerais do volume, como as capas, algumas das caixas, título da seção do profesor, etc. Algumas cores já foram definidas para os volumes existentes, chamadas \verb|volume#|, onde \#  representa um número de 1 a 5. (Para mais informações sobre cores, consultar a \cref{tab:cores} ou a \cref{subsec:cores})
+	\item \latexinline/\footericon/: Define o ícone utilizado no rodapé das páginas do livro. Não aparece na versão de rascunho.
+	\item \latexinline/\volumeillustration/: Define a figura a ser utilizada na capa do volume.
+	\item \latexinline/\chapterillustration/: Define a figura que será utilizada na capa dos capítulos do volume.
+\end{itemize}
+
+Após o comando \latexinline/\volume/, deve vir a Tabela de Conteúdos,
+inserida com \latexinline/\tableofcontents/.
+
+\subsection{Comandos pré-capítulo}\label{sec:pre-capitulo}
+
+Os seguintes comandos devem ser inseridos antes de
+\latexinline/\chapter/. No caso de capítulos separados ou no primeiro
+capítulo de cada volume, pode ser colocado também no prêambulo do
+documento.
+
+\begin{itemize}
+	\item \latexinline/\author/: nome dos autores separados por \latexinline/\and/
+	\item \latexinline/\revision/: nome dos revisores separados por \latexinline/\and/
+	\item \latexinline/\version/: Versão atual do documento
+	\item \latexinline/\graphicsauthor/: Autor(es) das figuras técnias, separados por \latexinline/\and/ %chktex 36
+	\item \latexinline/\illustrationauthor/: Author(es) das ilustrações do capítulo, separados por \latexinline/\and/. %chktex 36
+	\item \latexinline/\collaboration/: Colaborador(es) do capítulo, separados por \latexinline/\and/. %chktex 36
+	\item \latexinline/\chapterwhat/: Texto introdutório \enquote{O quê?}.
+	\item \latexinline/\chapterbecause/: Texto introdutório \enquote{Por quê?}
+\end{itemize}
+

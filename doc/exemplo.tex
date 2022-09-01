@@ -1,0 +1,47 @@
+\documentclass[professor]{livroabertoem}
+
+\usepackage{livroabertoem-preamble}
+\usepackage{capitulo-preamble}
+
+\volumecolor{volume1}
+\footericon{volume}
+\volumeillustration{capa-volume}
+\chapterillustration{capa-capitulo}
+
+\author{%
+  Roberto \and
+  Alice
+}
+\revision{%
+  João
+}
+
+\chapterwhat{%
+  ...
+} 
+    
+\chapterbecause{
+  ...
+}
+
+\graphicsauthor{Tarso}
+\version{2.0}
+
+\begin{document}
+
+\volume{Volume}
+
+\chapter{Taxa de Variação}\label{cap:capitulo}
+
+\tableofcontents
+
+\input{apresentacao.tex}
+\input{sec1-secao.tex}
+\input{sec2-secao.tex}
+\input{sec3-exercicios.tex}
+
+\nocite{*}
+\printbibliography
+\printpagenotes
+
+\end{document}

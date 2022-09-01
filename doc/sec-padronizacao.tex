@@ -1,0 +1,689 @@
+\section{Orientações para a padronização}%
+\label{sec:padronizacao}
+
+A seguir temos algumas recomendações gerais para facilitar um código
+limpo que ajude na colaboração entre muitos autores, além de padronizar
+o estilo de elementos comuns a todos os livros, como bibliografia,
+referências, uso de unidades, etc.
+
+\subsection{Formatação do código}\label{sec:formatacao}
+
+É bom que o código siga algumas orientações para sua padronização, facilitando
+a leitura por diferentes colaboradores. Estas não são regras, apenas recomendações,
+
+\begin{description}
+	\item[Tente deixar as linhas com cerca de 72 caracteres] Alguns editores de
+		texto, como Vim e Neovim, não quebram a linha automaticamente. Por
+		isso, para facilitar diferentes formas de edição em diversos tamanhos
+		de tela, e também facilitar o alinhamento de elementos do código, tente
+		limitar o número de caracteres em cada linha sempre que possível. Isto
+		pode ser feito quebrando linhas a partir de frases, por exemplo.
+
+	\item[Utilize indentação para os ambientes] Assim, como nos exemplos
+		presentes neste manual, os ambientes devem possuir identação sempre
+		aumentando um grau pra cada aninhamento.
+
+	\item[Modo matemático na sintaxe do \LaTeX] A sintaxe \latexinline/$ $/ e
+		\latexinline/$$ $$/ são para entrar no modo matemático no \TeX. O
+		formato do \LaTeX\ utiliza \latexinline/\( \)/ e \latexinline/\[ \]/
+		respectivemente. No primeiro caso, não há diferença na função, mas o
+		seu uso é recomendado para entender melhor onde se inicia o modo
+		matemático na linha, pois, por exemplo, no caso de se listar diversas
+		variáveis, usamos \latexinline/\(a\), \(b\), \(c\)/, que é melhor para
+		a leitura do que \latexinline/$a$, $b$,  $c$/, especialmente em uma
+		lista grande de variáveis.\footnote{Aqui não usamos
+			\latexinline/\(a, b, c\)/, pois isso impediria a quebra de linha entre
+			as vírgulas. } Já no segundo caso, há uma diferença de espaçamento no
+		modo matemático de \emph{display}, por isso, \textbf{não utilize}
+		\latexinline/$$ $$/. %chktex 45%%chktex 45
+
+	\item [Notas de rodapé devem ficar após a pontuação no texto] Nos casos em que a nota de rodapé
+	      é inserida em uma palavra seguida imediatamente de uma pontuação no texto, a nota de rodapé
+	      fica sempre após a pontuação.
+
+  \item [Para aspas, utilize \latexinline/\enquote{...}/] O pacote \verb|csquotes|
+        possui este comando que pode ser usado em ninho, e irá automatizar
+        a troca de aspas duplas para simples, dependendo do contexto. É recomendado
+        em relação às aspas padrão do \LaTeX\ (escrito com \verb|``...''|) por
+        trazer mais clareza ao código, para facilitar a troca para citações com 
+        referência (Veja \cref{sec:citacoes}), e também elimina a confusão
+        da diferença entre \verb|``...''| e \verb|"..."|.
+
+	\item[Coloque \enquote{\texttt{\%}} no final da linha, caso termine com
+	\enquote{\texttt{\{}}] A quebra de linha no código é lida pelo \LaTeX\
+		como um espaço, por isso
+		\begin{latexcode}
+\enquote{
+ ...
+}
+       \end{latexcode}
+		irá criar um espaço indesejado após o início do comando, sendo assim, é
+		recomendado colocar \texttt{\%} após o início do comando, para que
+		espaço seja ignorado:
+		\begin{latexcode}
+\enquote{%
+ ...
+}
+       \end{latexcode}
+	\item[Use \texttt{\textbackslash} após comandos de texto, caso sejam seguidos
+	de espaço] Comandos no \LaTeX\ ignoram o espaço que vem após o mesmo.
+		Um exemplo disso é
+		\begin{itemize}
+			\item \latexinline/\LaTeX ignora o espaço/: \LaTeX ignora o espaço %chktex 1
+			\item \latexinline/\LaTeX\ insere o espaço corretamente/: \LaTeX\ insere o espaço
+			      corretamente.
+		\end{itemize}
+		Isto é chamado de \emph{espaço de controle}, e também deve ser usado após os pontos
+		de uma abreviação, isto é, \enquote{ex.\ tem um espaço de controle} é escrito com
+		\latexinline{ex.\ tem um espaço de controle}.\footnote{O \TeX\ adiciona um espaço
+		maior após o ponto para separar melhor as frases, mas isto não é desejado quando
+		o ponto é usado para indicar uma abreviação. }
+
+	\item [Coloque \enquote{\latexinline/\@/} antes do ponto final de frases encerradas
+	      com siglas e semelhantes] Quando o ponto final vem após uma palavra apenas com letras
+	      maiúsculas, o \TeX\ entende como uma abreviação, e por isso não insere o espaço maior
+	      (isto acontece, por exemplo, com algarismos romanos). Para corrigir estes casos,
+	      use \enquote{\latexinline/\@/} antes do ponto.
+
+	\item [Se atente ao tipo do traço (curto, médio ou travessão)] O \LaTeX\ possui
+	      três tipos de traço. Um traço curto (\enquote{\texttt{-}}), usado como hífen no meio
+	      das palavras como composição (\enquote{salve-se} é um exemplo);
+	      traço médio (\enquote{\texttt{--}}), usado principalmente para denotar intervalos,
+	      elementos em série, etc (1999--2001 e A--Z são exemplos).
+	      Por fim, há um traço longo que representa o travessão (\enquote{\texttt{---}}),
+	      e deve ser segundo \href{https://pt.wikipedia.org/wiki/Travessão}%
+	      {as devidas regras linguísticas}. Nos primeiros dois casos não deve haver espaço entre
+	      o traço, apenas no terceiro.
+\end{description}
+
+
+\subsection{Referências cruzadas}\label{sec:referencias}
+
+Para nos referirmos a elementos dentro do texto, utilizamos o pacote
+\href{https://linorg.usp.br/CTAN/macros/latex/contrib/cleveref/cleveref.pdf}{\texttt{cleveref}},
+que possui uma interface para \enquote{descobrir} qual o tipo de
+referência desejada, tornando desnecessário escrever algo do tipo
+\latexinline/Tabelas~\ref{tab:divisoes-comandos}/.\footnote{O comando
+	\enquote{\latexinline/~/} insere um \emph{espaço rígido}, isto é, o
+	\LaTeX\ não irá quebrar a linha neste espaço. Deve ser utilizado para
+	juntar iniciais, pronomes de tratamento, números, etc. Por exemplo,
+	\protect\latexinline/Sr.~Tarso B.~Caldas/,
+	\protect\latexinline/Século~XXI/, e outras situações semelhantes. }
+Isto é feito através do comando \latexinline/\cref{label}/. Você pode
+colocar vários \emph{labels} em um comando só, que ele irá criar uma
+lista um um alcance de referências, por exemplo,
+\latexinline/\cref{fig1,fig2,fig3}/ irá inserir \enquote{Figuras 1 a
+	3}, o que também pode ser feito com
+\latexinline/\crefrange{fig1}{fig3}/. Já com
+\latexinline/\cref{fig1,fig2,fig4}/, teremos \enquote{Figuras 1, 2 e
+	4}.%
+
+Todas as divisões e ambientes que possuem título podem ser
+referenciadas, porém, aquelas que não são numeradas podem ter apenas o
+seu título referenciado, que pode ser feito a partir de
+\latexinline/\namecref{label}/.
+
+Por fim, caso queira se referir à página, utilize o comando
+\latexinline/\cpageref{label}/.
+
+\begin{description}
+	\item [Não deixe espaço entre o \emph{label} e o elemento ao qual ele se refere] Para
+	      que o \LaTeX\ identifique exatamente qual o ponto correto da referência, é
+	      necessário que não haja espaços entre, por exemplo, a seção e o \emph{label}:
+	      \latexinline/\section{titulo}\label{sec:titulo}/. Se o label for muito grande
+	      e for desejável quebrar a linha, coloque \enquote{\texttt{\%}}
+	      (vide \cref{sec:formatacao}).
+	\item [Utilize nomes para os \emph{labels}, não números] As referências devem ser
+	      idendificadas pelo que representam, e não por sua ordem, visto que a ordem
+	      de figuras, tabelas, seções,~etc.\ pode mudar. Assim como no caso das figuras
+	      (Ver \cref{sec:figuras}), utilize nomes de fácil reconhecimento do elemento,
+	      de preferência o título ou as primeiras palavras da legenda.
+	\item [Adicione sempre um prefixo aos \emph{labels}] Podemos dividir os \emph{labels} usando
+	      \enquote{\texttt{:}} e, portanto, usar isto para facilitar o reconhecimento da
+	      referência, por exemplo, \latexinline/\label{fig:figura}/ para referenciar figuras.
+	      A \cref{tab:prefixos} apresenta os prefixos escolhidos para cada elemento de texto.
+	      \begin{table}[H]\label{tab:prefixos}
+		      \centering
+		      \begin{threeparttable}
+			      \begin{tabular}
+				      {>{\ttfamily}p{.2\linewidth}p{.3\linewidth}}
+				      \toprule
+				      \normalfont Prefixo & Elemento                \\
+				      \midrule
+				      fig                 & Figura                  \\
+				      tab                 & Tabelas                 \\
+				      cap                 & Capítulos               \\
+				      sec                 & Seções                  \\
+				      exp                 & Explorando              \\
+				      org                 & Organizando             \\
+				      prac                & Praticando              \\
+				      know                & Saiba Mais              \\
+				      exrc                & Exercícios              \\
+				      task                & Atividades              \\
+				      exmp                & Exemplo                 \\
+				      obs                 & Observação              \\
+				      def                 & Definição               \\
+				      thm                 & Teorema                 \\
+				      rfl                 & Refletindo\tnote{*}     \\
+				      kwl                 & Você Sabia?\tnote{*}    \\
+				      rsc                 & Para pesquisar\tnote{*} \\
+				      \bottomrule
+			      \end{tabular}
+			      \begin{tablenotes}
+				      \footnotesize
+				      \item[*] Por estes comandos não possuírem nem título nem numeração, só
+				      podem ser referenciados por suas páginas usando \latexinline/\cpageref/.
+			      \end{tablenotes}
+			      \caption{Prefixos a serem usados na criação de \emph{labels}}
+		      \end{threeparttable}
+	      \end{table}
+	\item [Os \emph{labels} de exercícios seguem outra regra] Os exercícios,
+	      caso façam parte de uma seção, devem levar o nome da seção (\verb|exrc:secao|),
+	      e se for uma seção própria, use o nome do capítulo (\verb|exrc:capitulo|).
+\end{description}
+
+
+\subsection{Cores}\label{sec:cores}
+
+Os livros todos utilizam uma paleta de cores definida para o projeto, e
+não se deve utilizar outras cores na produção de figuras em \TikZ, por
+exemplo. Todas as cores possuem nomes com relação ao seu uso, por
+exemplo, as cores de cada volume recebem o nome do volume utilizado.
+Isso é feito a partir de apelidos para as cores.\footnote{Boa parte
+	destes apelidos deriva de versões antigas do modelo, e servem apenas
+	para evitar conflitos de versão.} A \cref{tab:cores} lista todas as
+cores definidas, seus códigos e os apelidos dados.
+
+\subsubsection{Comandos de cores}
+
+Apesar de termos estas opções todas de cores, recomendamos que priorize
+o uso das cores do volume, da seção atual e da coleção. Nos dois
+primeiros casos, é possível fazer isso com os comandos
+\latexinline/\currentcolor/ e \latexinline/\currentvolcolor/, que devem
+ser utilizados no mesmo lugar onde fosse ser inserida a cor. Já a
+terceira é a primeira cor definida, o azul, também chamado de
+\enquote{\texttt{primario} ou \enquote{\texttt{principal}}}.
+
+\begin{table}[H]\label{tab:cores}
+	\centering
+	\setlength{\tabcolsep}{1em}
+	\begin{tabular}
+		{*{2}{>{\ttfamily}c}>{\ttfamily}c>{\centering\arraybackslash}m{3cm}}
+		\toprule
+		\centering\normalfont Nome da cor & \normalfont Apelidos & \normalfont Código da cor (HTML) & \centering\arraybackslash Exemplo \\
+		\midrule
+		azul                              &
+		\makecell[l]{%
+		principal                                                                                                                       \\
+		cor1                                                                                                                            \\
+		primario                                                                                                                        \\
+		penazul
+		}                                 & \#2747CC             & \colorexample{primario}                                              \\
+		\addlinespace
+		cinza                             &
+		\makecell[l]{%
+		secundario                                                                                                                      \\
+		cor2                                                                                                                            \\
+		grafite                                                                                                                         \\
+		boxbackground
+		}                                 & \#F2F2F2             & \colorexample{cinza}                                                 \\
+		\addlinespace
+		azulclaro                         &
+		\makecell[l]{%
+		session1                                                                                                                        \\
+		atento                                                                                                                          \\
+		terciario                                                                                                                       \\
+		linkscolor                                                                                                                      \\
+		explore
+		}                                 & \#0890FF             & \colorexample{azulclaro}                                             \\
+		\addlinespace
+		verde                             &
+		\makecell[l]{%
+		session2                                                                                                                        \\
+		penverde                                                                                                                        \\
+		praticando
+		}                                 & \#00C642             & \colorexample{verde}                                                 \\
+		\addlinespace
+		vinho                             &
+		\makecell[l]{%
+		session3                                                                                                                        \\
+		destacado                                                                                                                       \\
+		penvinho                                                                                                                        \\
+		know
+		}                                 & \#FF0000             & \colorexample{vinho}                                                 \\
+		\addlinespace
+		laranja                           &
+		\makecell[l]{%
+		session4                                                                                                                        \\
+		penlaranja                                                                                                                      \\
+		arrange
+		}                                 & \#FF6D00             & \colorexample{laranja}                                               \\
+		\addlinespace
+		rosa                              &
+		\makecell[l]{%
+		volume1                                                                                                                         \\
+		topicos
+		}                                 & \#EF117B             & \colorexample{rosa}                                                  \\
+		\addlinespace
+		roxo                              &
+		\makecell[l]{%
+		volume2                                                                                                                         \\
+		estatistica
+		}                                 & \#B83DF9             & \colorexample{roxo}                                                  \\
+		\addlinespace
+		verdeagua                         &
+		\makecell[l]{%
+		volume3                                                                                                                         \\
+		penaqua                                                                                                                         \\
+		geometria
+		}                                 & \#51CEBC             & \colorexample{verdeagua}                                             \\
+		\addlinespace
+		amarelo                           &
+		\makecell[l]{%
+		volume4                                                                                                                         \\
+		funcoes
+		}                                 & \#FFC200             & \colorexample{amarelo}                                               \\
+		\addlinespace
+		cinzaescuro                       &
+		\makecell[l]{%
+		volume5                                                                                                                         \\
+		computacional
+		}                                 & \#939393             & \colorexample{cinzaescuro}                                           \\
+		\bottomrule
+	\end{tabular}
+	\caption{Paleta de cores do projeto}
+\end{table}
+
+
+\subsection{Figuras}\label{sec:figuras}
+
+As figuras correspondentes ao capítulo devem ficar na pasta
+\verb|figuras| e ter todas nomes únicos, em letras maiúsculas, com
+palavras separados por \enquote{\texttt{-}} e preferencialmente em
+PDF.\@ Por exemplo, \verb|categoria-mulheres-na-maratona.pdf|.
+
+\begin{description}
+	\item [Dê nome às figuras que tenham alguma relação ao que elas representam] Para
+	      que seja fácil identificar a figura no texto e nos arquivos, é importante que
+	      o nome delas tenha algum significado atrelado à imagem. Por isso, evite figuras
+	      com apenas números, ou nomeadas pela seção. Caso haja dificuldade na nomeação, use
+	      o conteúdo como referência (título da atividade, por exemplo).
+	\item [Dê legenda às figuras sempre que possível] É importante que as figuras possuam
+	      uma breve descrição, especialmente por questões de acessibilidade.
+	\item [Converta suas figuras para PDF] O melhor formato para se inserir figuras no
+	      \LaTeX\ é PDF, pois ele simplesmente inclui a imagem (isto acontece também com
+	      JPEG, porém PDF é preferível por ser vetorial). No caso de PNG, o programa
+	      tem que converter a figura \textbf{toda vez que o documento é procesado}, por isso
+	      \textbf{não utilize figuras em PNG}. Caso deseje converter suas figuras, há
+	      diversas de se fazer isso, mas a mais ágil é com o programa
+	      \href{https://github.com/myollie/img2pdf}{\texttt{img2pdf}}, que pode ser instalado%
+	      \footnote{Requer python e outras dependências e
+		      bibliotecas relacionadas. Consulte a documentação}
+	      usando \mint{bash}/pip3 install img2pdf/
+	\item [Priorize o uso de medidas relativas para tamanho de figuras] Para que as figuras
+	      consigam ser modificadas com facilidade e para se ter referências para a
+	      padronização é melhor o uso de medidas relativas no lugar de absolutas. Algumas
+	      medidas relativas são \verb|em| (altura da letra \enquote{M} na fonte atual),
+	      \verb|ex| (altura da letra \enquote{x} na fonte atual) e \latexinline/\linewidth/
+	      (largura da linha atual). Também é possível somar e multiplicar por escalar estas
+	      unidades, por exemplo, \latexinline/.8\linewidth/ utiliza \qty{80}{\percent}
+	      da linha atual.
+	\item [Não utilize \latexinline/\textwidth/ como medida] O material do aluno e do
+	      professor possuem tamanhos de texto diferentes. Caso queira utilizar
+	      exatamente a largura da página do aluno como medida, use o comando
+	      \latexinline/\stutextwidth/.
+  \item []
+	\item [Não dê tanta importância ao posicionamento das figuras] durante a
+	      edição, o \LaTeX\ as posiciona sozinha, e já está definido o alinhamento
+	      \verb|!htb| como padrão, além de estarem já centralizadas (não é necessário
+	      o comando\latexinline/\centering/). Sempre que possível deixe as figuras
+	      flutuarem a partir do próprio \LaTeX, e utilize os comandos de referência
+	      para citar as imagens. O posicionamento selecionado pelo \LaTeX\ é feito
+	      a fim de deixar as páginas mais uniformes, a menos que seja muito importante
+	      que a figura fique em um ponto específico no texto,\footnote{Neste caso, pode ser
+		      usado o alinhando \texttt{H} definido pelo pacote
+		      \href{https://linorg.usp.br/CTAN/macros/latex/contrib/float/float.pdf}{\texttt{float}}.}
+	      o que em muitos casos não é imperativo.
+	\item [Legendas devem ficar em cima da figura, usando o comando \latexinline/\caption/]
+	      Já a fonte das figuras (ou descrições complementares) deve ser inserida com
+	      o comando \latexinline/\legend/ logo abaixo da figura.
+\end{description}
+
+Figuras podem ser colocadas simplesmente como, por exemplo:
+
+\begin{latexcode}
+\begin{figure}
+  \caption{Legenda}%
+  \includegraphics[width=.6\linewidth]{nomedafigura}%
+  \label{fig:nomedafigura}
+  \legend{Fonte e/ou texto complementar à legenda}
+\end{figure}
+\end{latexcode}
+
+\subsubsection{Figuras em \TikZ}
+
+É recomendado que figuras em \TikZ\ devem estar em arquivos separados na pasta
+\latexinline/tikz/ e devem ter a extensão \latexinline/.tex/, isto para facilitar
+o processo de \emph{externalização}.\footnote{Incluindo as figuras no meio do texto,
+	o \LaTeX\ irá ter que recalcular a figura toda vez que o texto é processado,
+	o que aumenta bastante o tempo de processamendo com figuras mais complexas, por isso
+	é recomendado que as figuras sejam feitas separadamente, tenham o PDF gerado e seja
+	incluído o PDF em si.}
+
+Caso queira produzir as figuras individualmente no Overleaf, use a
+classe
+\href{https://linorg.usp.br/CTAN/macros/latex/contrib/standalone/standalone.pdf}{\texttt{standalone}}
+junto do pacote \verb|livroabertoem-preamble|, que irá incluir os
+comandos de cores, fontes e as configurações básicas de padronização.%
+
+\begin{latexcode}
+  \documentclass[tikz]{standalone}
+  \usepackage{livroabertoem-preamble}
+
+  \begin{document}
+    \begin{tikzpicture}
+      codigo da figura
+    \end{tikzpicture}
+  \end{document}
+\end{latexcode}
+
+Concluída a figura, faça o \emph{download} do PDF e inclua como as
+demais imagens, com o comando \latexinline/\includegraphics/.
+
+\subsection{Tabelas}\label{sec:tabelas}
+
+As tabelas\footnote{Para mais informações sobre como criar tabelas no
+	\LaTeX, consulte \url{https://en.wikibooks.org/wiki/LaTeX/Tables}}
+devem ser simples e criadas usando a interface do pacote
+\href{https://linorg.usp.br/CTAN/macros/latex/contrib/booktabs/booktabs.pdf}{\latexinline/booktabs/}.
+Elas seguem o padrão:%
+
+\begin{minipage}{.4\linewidth}
+	\begin{latexcode}
+\begin{table}
+  \begin{tabular}{ccc}
+    \toprule
+    A & B & C \\
+    \midrule
+    1 & 2 & 3 \\
+    4 & 5 & 6 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{latexcode}
+\end{minipage}
+\hfill
+\begin{minipage}{.4\linewidth}
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{ccc}
+			\toprule
+			A & B & C \\
+			\midrule
+			1 & 2 & 3 \\
+			4 & 5 & 6 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+\end{minipage}
+
+\begin{description}
+	\item [Não utilize linhas verticais] Elas tornam a tabela muito distrativa e fogem do
+	      padrão de tabelas científicas. Caso queira separar o conteúdo das colunas, aumente
+	      o espaçamento, ou crie uma segunda tabela ao lado.
+	\item [Evite o abuso de linhas horizontais] As linhas verticais têm a função de delimitar
+	      o início, o fim e separar o cabeçalho, por isso, utilize apenas os comandos
+	      \latexinline/\toprule/ para a linha no topo; para a debaixo,
+	      \latexinline/\bottomrule/; para separar o cabeçalho da tabela,
+	      \latexinline/\midrule/.
+
+	      Também é possível linhas horizontais em apenas algumas colunas
+	      utilizando o comando \latexinline/\cmidrule{a-b}/, onde \latexinline/a/
+	      e \latexinline/b/ são as colunas que iniciam e terminam a linha,
+	      respectivamente.\footnote{Mais informações na documentação do pacote
+		      \texttt{booktabs}.}
+	\item [Se precisar de espaço extra entre linhas, use o comando
+        \latexinline/\addlinespace/] Este é um comando que insere uma linha
+        horizontal \enquote{invisível}, e serve como uma separação adicional 
+        caso haja textos longos.
+	\item O espaço entre colunas pode ser ajustado com o comando
+	      \latexinline/\setlength\tabcolsep{medida}/, onde a \verb|medida| padrão
+	      é \qty{5}{pt}
+	\item [O espaço geral entre as linhas pode ser alterado com o comando
+        \latexinline/\renewcommand{\arraystretch}{n}/] Onde \verb|n| multiplica
+	      o valor padrão do espaçamento (útil para tabelas que tenham muito texto
+	      em todas as linhas, mas deve ser dada preferência ao comando
+	      \latexinline/\addlinespace/).
+\end{description}
+
+Além dos tipos padrão, foram definidos os seguintes alinhamentos de coluna para
+facilitar a criação de tabelas.
+
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabular}{cm{.25\linewidth}l}
+		\toprule
+		Tipo de coluna & Descrição                                                            & Definição                                                             \\
+		\midrule
+		\verb|C|       & Coluna \verb|m|, mas centralizada, em vez de alinhamento justificado & \latexinline/\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}/ \\
+		\addlinespace
+		\verb|e|       & Coluna \verb|c| no modo matemático                                   & \latexinline/\newcolumntype{e}{>{\(}c<{\)}}/                          \\
+		\addlinespace
+		\verb|E|       & Coluna \verb|C| no modo matemático                                   & \latexinline/\newcolumntype{E}[1]{>{\(}E{#1}<{\)}}/                   \\
+		\bottomrule
+	\end{tabular}
+	\caption{Tipos de alinhamento definidos pelo pacote \texttt{livroabertoem-preamble}.}
+\end{table}
+
+\subsubsection{Tabelas longas}\label{sec:longtable}
+
+O pacote \verb|longtable| não possui uma boa interação com o pacote
+\verb|paracol|, por conta disso, é recomendado o uso do pacote
+\href{https://linorg.usp.br/CTAN/macros/latex/contrib/supertabular/supertabular.pdf}{\texttt{supertabular}}.%
+
+Para facilitar a criação desse tipo de tabelas, foi criado o comando
+\latexinline/\supertabularheading/, que requer dois argumentos: o
+número de colunas e a linha do cabeçalho, e deve ser usado antes do
+início da tabela. No exemplo a seguir temos uma tabela com sete
+colunas.
+
+\begin{latexcode}
+\begin{center}
+  \supertabularheading{7}{%
+    n_1 & n_2 & n_3 & n_4 & n_5 & n_6 & \text{Configuração}     \\
+  }
+  \topcaption{Exemplo de tabela longa}
+  \begin{supertabular}{*{6}{e}@{\hspace{1em}}m{.15\linewidth}}
+    3   & 7   & 42  &     &     &     & 3-7-42         \\
+    3   & 8   & 24  &     &     &     & 3-8-24         \\
+    3   & 9   & 18  &     &     &     & 3-9-18         \\
+    3   & 10  & 15  &     &     &     & 3-10-15        \\
+    3   & 12  & 12  &     &     &     & 3-12-12        \\
+    4   & 5   & 20  &     &     &     & 4-5-20         \\
+    4   & 6   & 12  &     &     &     & 4-6-12         \\
+    4   & 8   & 8   &     &     &     & 4-8-8          \\
+    5   & 5   & 10  &     &     &     & 5-5-10         \\
+    6   & 6   & 6   &     &     &     & 6-6-6          \\
+    3   & 3   & 4   & 12  &     &     & 3-3-4-12       \\
+    3   & 3   & 6   & 6   &     &     & 3-3-6-6        \\
+    3   & 4   & 4   & 6   &     &     & 3-4-4-6        \\
+    4   & 4   & 4   & 4   &     &     & 4-4-4-4        \\
+    3   & 3   & 3   & 3   & 6   &     & 3-3-3-3-6      \\
+    3   & 3   & 3   & 4   & 4   &     & 3-3-3-4-4      \\
+    3   & 3   & 3   & 3   & 3   & 3   & 3-3-3-3-3-3    \\
+  \end{supertabular}
+\end{center}
+\end{latexcode}
+
+\begin{center}
+	\supertabularheading{7}{%
+		n_1 & n_2 & n_3 & n_4 & n_5 & n_6 & \text{Configuração}     \\
+	}
+	\topcaption{Exemplo de tabela longa}
+	\begin{supertabular}
+		{*{6}{e}@{\hspace{1em}}m{.15\linewidth}}
+		3   & 7   & 42  &     &     &     & 3-7-42         \\ %chktex 8
+		3   & 8   & 24  &     &     &     & 3-8-24         \\ %chktex 8
+		3   & 9   & 18  &     &     &     & 3-9-18         \\ %chktex 8
+		3   & 10  & 15  &     &     &     & 3-10-15        \\ %chktex 8
+		3   & 12  & 12  &     &     &     & 3-12-12        \\ %chktex 8
+		4   & 5   & 20  &     &     &     & 4-5-20         \\ %chktex 8
+		4   & 6   & 12  &     &     &     & 4-6-12         \\ %chktex 8
+		4   & 8   & 8   &     &     &     & 4-8-8          \\ %chktex 8
+		5   & 5   & 10  &     &     &     & 5-5-10         \\ %chktex 8
+		6   & 6   & 6   &     &     &     & 6-6-6          \\ %chktex 8
+		3   & 3   & 4   & 12  &     &     & 3-3-4-12       \\ %chktex 8
+		3   & 3   & 6   & 6   &     &     & 3-3-6-6        \\ %chktex 8
+		3   & 4   & 4   & 6   &     &     & 3-4-4-6        \\ %chktex 8
+		4   & 4   & 4   & 4   &     &     & 4-4-4-4        \\ %chktex 8
+		3   & 3   & 3   & 3   & 6   &     & 3-3-3-3-6      \\ %chktex 8
+		3   & 3   & 3   & 4   & 4   &     & 3-3-3-4-4      \\ %chktex 8
+		3   & 3   & 3   & 3   & 3   & 3   & 3-3-3-3-3-3    \\ %chktex 8
+	\end{supertabular}
+\end{center}
+
+
+É válido ressaltar que não se deve usar o ambiente \verb|table|, mas sim \verb|center|,
+e a legenda deve ser inserida com os comandos \latexinline/\topcaption/ e/ou
+\latexinline/\bottomcaption/, também antes do início da tabela.
+
+Nesta tabela é feito o uso de \verb|*{n}{a}| para gerar várias colunas
+com o mesmo alinhamento, onde \texttt{n} é o número o multiplicador e
+\texttt{a} é o alinhamento desejado. Também é usado
+\verb|@{\hspace{1em}}| para definir um espaço de tamanho \qty{1}{em},
+isto porque \verb|@{s}|, onde \verb|s| é o separador da coluna (é
+permitido usar frases, símbolos matemáticos, espaçamento, etc.).
+
+%TODO: \subsubsection{Quadros}
+
+
+
+\subsubsection{Externalização das tabelas}
+
+Se uma tabela for muito grande e/ou conter muito texto, ela pode tornar
+mais difícil a navegação e visualização do resto do conteúdo do
+arquivo, por isso, nestes casos, é recomendado colocar a tabela em um
+arquivo separado (dentro de umas pasta \verb|tabelas|, a ser criada no
+diretório \verb|figuras|). Feito isso, inclua a tabela com o comando
+\latexinline/\input/ no local desejado. A edição da tabela pode ser,
+assim como na figura em \TikZ, feita usando a classe \verb|standalone|,
+só que neste caso não é necessário baixar o PDF e incluir como figura.
+Se carregado o pacote \verb|standalone| (que acompanha a classe de
+mesmo nome) dentro do arquivo \verb|capitulo-preamble.sty|, basta
+utilizar o comando \latexinline/\input/ que o preâmbulo do arquivo será
+ignorado. Para mais esclarecimentos, consulte a
+\href{https://linorg.usp.br/CTAN/macros/latex/contrib/standalone/standalone.pdf}{documentação}
+da(o) classe\slash pacote. % chktex 36
+
+\subsection{Unidades}\label{sec:unidades}
+
+O pacote
+\href{https://linorg.usp.br/CTAN/macros/latex/contrib/siunitx/siunitx.pdf}{\texttt{siunitx}}
+possui uma interface para lidar com números no meio do texto, bem como
+unidades do Sistema Internacional, e outras ferramentas que são úteis
+para a padronização do estilo, já que as alterações podem ser feitas
+globalmente.%
+
+
+\begin{description}
+	\item [Utilize \latexinline/\num/ para inserir números com casas decimais
+	      e/ou com mais de quatro dígitos] O \TeX\ insere um espaço após a vírgula
+	      no modo matemático, o que é indesejado quando estamos escrevendo números
+	      com casas decimais, pois diferente do inglês (e outras línguas) que utilizam
+	      o \enquote{\texttt{.}} como separador de casa decimáis, a vírgula é quem cumpre
+	      esse papel. Além disso, números que possuem mais de quatro algarismos devem
+	      possuir um \enquote{separador}, que neste caso usamos \enquote{\texttt{.}}.
+	      O comando \latexinline/\num/ faz essa conversão para nós, por isto, deve ser
+	      utilizado na insersão de números nestes dois casos.
+
+	      A diferença pode ser observada no seguinte exemplo:
+	      \begin{itemize}
+		      \item \latexinline/\(10000,23\)/ insere \(10000,23\);
+		      \item \latexinline/\num{10000,23}/ insere \num{10000,23}.
+	      \end{itemize}
+
+	\item [Há variações de \latexinline/\num/ que podem ser usadas para montar listas, 
+        intervalos e produtos]\label{dsc:variacoes-num} Os comandos
+	      \latexinline/\numlist{1;2;3;4}/, \latexinline/\numrange{1}{4}/ e
+	      \latexinline/\numproduct{1 x 2 x 3}/ nos dão, respectivamente,
+	      \enquote{\numlist{1;2;3;4}}; \enquote{\numrange{1}{4}};
+	      \enquote{\numproduct{1 x 2 x 3}}.
+
+	\item [Para escrever números em notação científica, pode-se usar \enquote{\texttt{e}} para
+	      a potência de 10]
+	      Escrevendo \latexinline/\num{3e4}/, temos como resultado \num{3e4}. Para potências
+	      negativas, utilize \latexinline/d/ em vez de \latexinline/e/.
+
+	\item [Ângulos devem ser escritos o comando \latexinline/\ang{angulo}/] Para minutos e
+	      segundos, pode-se dividir tanto usando \enquote{\texttt{;}}, quanto \enquote{\texttt{,}}:
+	      \latexinline/\ang{3;2;1}/ nos dá \ang{3;2;1}
+
+	\item [Unidades de medida devem ser escritas com \latexinline/\unit{unidade}/] As unidades
+	      mais comuns já estão definidas como comandos intuitivos (\latexinline/\mm/
+	      para milímetros \latexinline/\s/ para segundos, \ldots). Tabelas com todas as macros
+	      definidas para unidades do pacote estão presentes nas páginas \numrange{7}{13}
+	      da documentação.
+
+	\item [As unidades podem ser modificadas por outros comandos definidos no pacote]
+	      Para levar uma unidade ao quadrado utilize \latexinline/\square/,
+	      \latexinline/\cubic/ para ao cubo, e \latexinline/\per/ para dividir
+	      uma unidade por outra. Comandos do módo matemático também funcionam
+	      (Estão disponíveis exemplos na seção 3.3 da documentação)
+
+	\item [Declare unidades não definidas pela classe] Novas unidades podem ser declaradas
+	      a partir do comando \latexinline/\DeclareSIUnit/, para que evitemos possíveis
+	      conflitos. O comando \latexinline/\unit/ não exige que seu argumento seja um
+	      outro comando, mas a criação destes nos ajuda na padronização.
+
+	\item [Para escrever quantidades, use o comando \latexinline/\qty{num}{unidade}/] O comando
+	      \latexinline/\qty/ é uma combinação de \latexinline/\num/ e \latexinline/\unit/, e
+	      pode ser utilizado tanto no meio do texto quanto no modo matemático. Este é o
+	      principal motivo de usarmos o pacote \verb|siunitx|, por isso, sempre que for
+	      falar de alguma quantidade atrelada à unidade, isto deve ser feito com
+	      \latexinline/\qty/. Como exemplo, \latexinline/\qty{3}{\mm\square\per\second}/
+	      gera \qty{3}{\mm\square\per\second}.
+
+	\item [As variantes de \latexinline/\num/ possuem correspondentes com o comando
+	      \latexinline/\qty/] São definidos \latexinline/\qtylist/, \latexinline/\qtyrange/ e
+	      \latexinline/\qtyproduct/, e funcionam da mesma maneira do que os comandos
+	      equivalentes de número. A diferença é que deve ser adicionado um argumento
+	      a mais com a unidade desejada.
+\end{description}
+
+
+\subsubsection{Valores monetários}
+
+O pacote \href{https://linorg.usp.br/CTAN/macros/latex/contrib/currency/currency_doc.pdf}%
+{\latexinline/currency/}, que utiliza o \verb|siunitx| como base. Com ele definimos comandos
+padrão para lidar com números atrelados a uma determinada moeda. Até o
+momento, estão definidos os comandos para Real, Dólar americano e Euro.
+Os Comandos seguem a lógica \latexinline/\vXYZ{valor}/, onde
+\texttt{XYZ} representa o código ISO da moeda (BRL, USD e EUR,
+respectivamente). Para exemplificar o funcionamento, usaremos a seguir
+o real como unidade, isto é, o código BRL, mas vale para
+qualquer outro código pré-definido.
+
+\begin{description}
+	\item [Alterne entre o uso por extenso ou por símbolo através de opções]
+	      É possível alternar entre diversas formas de inserir o valor, isto é, a opção
+        \enquote{\texttt{@na}} irá digitar usando o nome da moeda, e \enquote{\texttt{@pl}}
+	      fará o mesmo, só que no plural.\footnote{Há também a opção \texttt{@iso}, que usa
+        o código ISO da moeda, mas seu uso não é recomendado.} Com isso, é possível trazer 
+        variedades no texto para que não fique repetitivo. Exemplificando:
+	      \begin{itemize}
+		      \item \latexinline/\vBRL{10003,28}/ gera \vBRL{10003,28}.
+		      \item \latexinline/\vBRL[@na]{1,28}/ gera \vBRL{1,28}.
+		      \item \latexinline/\vBRL[@pl]{10003,28}/ gera \vBRL[@pl]{10003,28}.
+	      \end{itemize}
+
+  \item [Para inserir apenas o símbolo ou o nome da moeda, use \latexinline/\cBRL/]
+        Quando estiver falando da moeda, use este comando com as mesmas opções
+        do anterior. Também é útil em combinação com as
+        \hyperref[dsc:variacoes-num]{variações de \latexinline/\num/}.
+\end{description}
+
+Uma forma de lembrar qual é a diferença entre os dois comandos é ler o \verb|v| de
+\latexinline/\vBRL/ como \emph{value} (valor) e o \verb|c| de 
+\latexinline/\cBRL/ como \emph{currency} (moeda).
+

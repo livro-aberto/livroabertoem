@@ -1,0 +1,42 @@
+% arara: lualatex: {shell: yes, synctex: true}
+%TODO: Criar seção sobre cores e sobre os ambientes do professor
+
+\documentclass{article}
+
+\usepackage{manual-colaboracao-preamble}
+
+\title{Manual para a colaboração no livro do ensino médio do projeto
+	Livro Aberto de Matemática}
+\author{Tarso Boudet Caldas}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+	Este é um manual para a colaboração na produção dos capítulos dos
+	livros do ensino médio da Associação Livro Aberto. Os capítulos
+	presentes no Overleaf utilizam comandos e ambientes próprios para a
+	sintaxe dos livros do projeto, que serão melhor detalhados aqui para
+	facilitar o processo colaborativo.
+
+	Utilizamos como base uma classe de documento, acompanhada de um pacote,
+	chamados \latexinline/livroabertoem.cls/ e
+	\latexinline/livroabertoem-preamble.sty/, respectivamente.
+\end{abstract}
+
+
+\tableofcontents\clearpage
+
+\input{sec-introducao.tex}
+\input{sec-apressados.tex}
+\input{sec-desenvolvimento.tex}
+\input{sec-colaboracao.tex}
+\input{sec-padronizacao.tex}
+\input{sec-referencias.tex}
+\input{sec-conclusao.tex}
+
+\end{document}
+
+
