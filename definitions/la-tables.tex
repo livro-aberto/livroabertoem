@@ -1,6 +1,6 @@
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
 \newcolumntype{e}{>{\(}c<{\)}}
-\newcolumntype{g}[1]{>{\(}e{#1}<{\)}}
+\newcolumntype{E}[1]{>{\(}C{#1}<{\)}}
 
 \@ifpackageloaded{supertabular}{%
   \newcommand{\tbltobecontinued}[1]{%
@@ -31,3 +31,14 @@
     }
   }
 }{}
+
+\newcommand{\listquadroname}{Lista de quadros}
+\newcommand{\quadroname}{Quadro}
+\newcommand{\quadrorefname}{Quadro}
+\newcommand{\chartautorefname}{Quadro}
+\newlistof{listofquadros}{loq}{\listquadroname}
+
+% código retirado de https://tex.stackexchange.com/questions/572654/how-might-the-longtable-environment-have-to-be-modified-to-create-a-longquadro-e
+\newcounter{quadro}
+\newfloat{quadro}{loq}{Quadro}
+\newlistentry{quadro}{loq}{0}

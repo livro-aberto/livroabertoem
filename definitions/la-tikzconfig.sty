@@ -17,16 +17,20 @@
 	shapes,
 	math
 }
+
+
 % Código adaptado de https://tex.stackexchange.com/questions/57737/automatically-set-file-name-of-externalized-graphics-equal-to-the-file-name-of-t
 \newcommand{\includetikzpicture}[2]{
   % \tikzsetnextfilename{#1}%
   \input{#2.tikz}
 }
 
+
 \tikzset{
 	vetor/.style = {->,line width=0.8pt,color=primario,>=latex},
-	ponto/.style = {circle, minimum size=2pt, inner sep=0, draw=black, fill=black, shift only,
-			label={}},
+	ponto/.style = {
+    circle, minimum size=2pt, inner sep=0, draw=black, fill=black, shift only, label={}
+  },
 	eixos/.style = {->},
 	curvafun/.style = {very thick, color=primario},
 	grafica/.style = {line cap=round,line join=round,color=terciario, very thick},

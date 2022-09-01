@@ -94,7 +94,7 @@
     \tikzset{external/export next=false}
     \begin{tikzpicture}[remember picture, overlay]
       \draw [principal,  line width = 3pt] (-\la@student@spinemargin,0) 
-      -- (\la@student@textwidth+\la@student@rightmargin,0);
+      -- (\la@student@textwidth+\la@student@foremargin,0);
 
       \la@bannernamestyle[shift = {(.5\la@student@textwidth-.5\la@bannername@width+\la@bannername@tip,0)}]
     \end{tikzpicture}
@@ -111,7 +111,7 @@
     \tikzset{external/export next=false}
     \begin{tikzpicture}[remember picture, overlay]
       \draw [principal,  line width = 3pt] (-\la@student@spinemargin,0) 
-        -- (\la@student@textwidth+\la@student@rightmargin,0);
+        -- (\la@student@textwidth+\la@student@foremargin,0);
 
       \la@bannernamestyle
     \end{tikzpicture}
@@ -196,7 +196,7 @@
 \newcounter{explore}
 \newcommand{\explore}[1]{%
   % \checkoddpage
-	\sectioncolor{session1}
+	\sectioncolor{explore}
 	\bannername{Explorando}
 	\clearpage
 	\pagestyle{livroaberto}
@@ -208,7 +208,7 @@
 %\begin{macrocode}
 \newcounter{practice}
 \newcommand{\practice}[1]{%
-	\sectioncolor{session2}
+	\sectioncolor{practice}
 	\bannername{Praticando}
   \refstepcounter{practice}
   \la@banner{#1}
@@ -216,7 +216,7 @@
 
 \newcounter{know}
 \newcommand{\know}[1]{%
-	\sectioncolor{session3}
+	\sectioncolor{know}
 	\bannername{Saiba Mais}
   \refstepcounter{know}
   \la@banner{#1}
@@ -224,7 +224,7 @@
 
 \newcounter{arrange}
 \newcommand{\arrange}[1]{%
-	\sectioncolor{session4}
+	\sectioncolor{arrange}
 	\bannername{Organizando}
   \refstepcounter{arrange}
   \la@banner{#1}

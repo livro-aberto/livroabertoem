@@ -2,22 +2,20 @@
   \RequirePackage{anyfontsize}
   \RequirePackage[no-math]{fontspec}
 	\setmainfont{NotoSans-Regular.ttf}[
-		Path = resources/fonts/,
 		BoldFont = {NotoSans-SemiBold.ttf},
 		ItalicFont = {NotoSans-Italic.ttf},
 		BoldItalicFont = {NotoSans-SemiBoldItalic.ttf},
 	]
 	
     \newfontfamily{\taskfont}{NotoSans-Medium.ttf}[
-        Path = resources/fonts/,
         BoldFont = {NotoSans-Bold.ttf},
         ItalicFont = {NotoSans-Italic.ttf},
         BoldItalicFont = {NotoSans-BoldItalic.ttf}
     ]
     
-	\newfontfamily{\subtitlefont}{Montserrat-Bold.ttf}[Path = resources/fonts/]
-	\newfontfamily{\titlefont}{Montserrat-Black.ttf}[Path = resources/fonts/]
-	\newfontfamily{\titlenumfont}{Montserrat-ExtraBold.ttf}[Path = resources/fonts/]
+	\newfontfamily{\subtitlefont}{Montserrat-Bold.ttf}
+	\newfontfamily{\titlefont}{Montserrat-Black.ttf}
+	\newfontfamily{\titlenumfont}{Montserrat-ExtraBold.ttf}
 \else
   \renewcommand\normalfont{\sffamily}
   \renewcommand{\familydefault}{\sfdefault}

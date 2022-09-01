@@ -180,9 +180,12 @@
 	\end{la@volumebox}
 }
 
+\newcounter{project}[chapter]
 \ifdraft
-	\newenvironment{project}{
-		\subsection{Projeto Aplicado} }{}
+	\newenvironment{project}{%
+    \refstepcounter{research}
+		\subsection{Projeto Aplicado} 
+  }{}
 \else
 	% Creates the box with current volume color
 	\newtcolorbox{project}{

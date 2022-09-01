@@ -42,7 +42,7 @@
     \vspace{.5\la@titlebeforeskip}
 	\ifteacherenv\penalty-1000\par
     \teachertitle{#1}{#2}
-    \penalty1000\par
+    \penalty10000\par
     \vspace{.5\la@titleafterskip}
 	\else
 		\la@notteacherenv
@@ -64,6 +64,6 @@
 	\la@teacher@sidetitle{Solução}{#1}
 }{}
 
-\newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Outside teachers's environment}{%
+\newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Fora do ambiente do professor}{%
 		Você deve usar este comando somente no ambiente do professor.}
 }

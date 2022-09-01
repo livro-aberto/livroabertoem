@@ -21,9 +21,8 @@
 		{resources/fonts}
 }
 
-\RequirePackage{multicol}
+% \RequirePackage{multicol}
 \RequirePackage{xstring}
-\RequirePackage{verbatim}
 \RequirePackage{comment} % Comando excludecomment para remover os comandos do material do professor
 \RequirePackage{xpatch}
 \RequirePackage{paracol}

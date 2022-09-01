@@ -1,6 +1,6 @@
 \RequirePackage{tikz}
 \def\input@path{%
-  {figures}
+	{figures}
 }
 
 \input{definitions/la-lists.tex}
@@ -15,10 +15,18 @@
 \RequirePackage{microtype}
 
 \newcommand{\reais}{R\$}
-\DefineCurrency{USD}{name = {dólar}, plural = {dólares}, iso = {USD}, kind = symbol, symbol = {\$}}
-\DefineCurrency{BRL}{name = {real}, plural = {reais}, iso = {BRL}, kind = symbol, symbol = {\reais}}
-\DefineCurrency{EUR}{name={euro}, plural={euros}, symbol={\euro}, iso={EUR}, kind=symbol}
-\CurrencySetup{pre = true, group-separator = {.}, base = {2}}
+\DefineCurrency{USD}{%
+	name = {dólar}, plural = {dólares}, iso = {USD}, kind = symbol, symbol = {\$}
+}
+\DefineCurrency{BRL}{%
+	name = {real}, plural = {reais}, iso = {BRL}, kind = symbol, symbol = {\reais}
+}
+\DefineCurrency{EUR}{%
+	name={euro}, plural={euros}, symbol={\euro}, iso={EUR}, kind=symbol
+}
+\CurrencySetup{%
+	pre = true, group-separator = {.}, base = {2}
+}
 
 \sisetup{
 	per-mode = symbol,
@@ -34,13 +42,14 @@
 \counterwithin{figure}{chapter}
 \renewcommand{\fps@figure}{!htb}
 \renewcommand{\fps@table}{!htb}
+\renewcommand{\fps@quadro}{!htb}
 \g@addto@macro\@floatboxreset\centering
 
 \RequirePackage[brazilian]{babel}
 \babelprovide[transforms = hyphen.repeat]{brazilian}
 \addto\captionsbrazilian{%
-  \renewcommand{\appendixname}{Apêndice}%
-  \renewcommand{\bibname}{Bibliografia}
+	\renewcommand{\appendixname}{Apêndice}%
+	\renewcommand{\bibname}{Bibliografia}
 }
 
 \RequirePackage[
@@ -49,6 +58,7 @@
 ]{biblatex}
 \RequirePackage[portuguese=brazilian]{csquotes}
 
+\defbibheading{bibliography}[\refname]{\section*{#1}}
 
 \input{definitions/la-math.tex}
 
