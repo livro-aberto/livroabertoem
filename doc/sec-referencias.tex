@@ -1,4 +1,296 @@
 \section{Referências Bibliográficas}\label{sec:referencias}
 
+Para os referências Bibliográficas, estamos utilizando Bib\LaTeX\ em
+conjunto com o programa \verb|biber|, que são uma evolução do antigo
+Bib\TeX. Enquanto o
+\href{https://linorg.usp.br/CTAN/macros/latex/contrib/biblatex/doc/biblatex.pdf}{\texttt{biblatex}}
+é o pacote de estilo que faz a formatação da bibliografia no documento,
+o
+\href{http://mirrors.ctan.org/biblio/biber/base/documentation/biber.pdf}{\texttt{biber}}
+é um programa que processa o arquivo \latexinline/.bib/ para que o
+Bib\LaTeX\ possa ler e utilizar a sua interface para lidar com
+Bibliografias de acordo com a configuração desejada. Isto é, o pacote
+Bib\LaTeX\ pode ser utilizado a partir de uma bibliografia processada
+usando o \textbf{programa} Bib\TeX, enquanto uma bibliografia usando o
+\verb|biber| precisa do pacote Bib\LaTeX\ para ser lida corretamente
+pelo \LaTeX.
+
+As bibliografias utilizando Bib\LaTeX\ seguem a mesma sintaxe das que
+usam o Bib\TeX, porém com uma grande expansão dos tipos de referências
+e das entradas de dados, além de ser mais fácil de configurar.
+
+\begin{description}
+	\item [Se você já conhece o sistema Bib\TeX] Não terá grandes dificuldades em montar
+	      as bibliografias no formato Bib\LaTeX. Para uma referência dos diferentes tipos de entradas
+	      e de campos de dados, além dos comandos de referencias base, consulte o documento
+        \empht{\href{https://tug.ctan.org/info/biblatex-cheatsheet/biblatex-cheatsheet.pdf}{Bib\LaTeX\ Cheatsheet}.}
+
+	\item [Caso não tenha muita familiaridade com o Bib\TeX] Uma boa introdução sobre como montar
+	      uma bibliografia é a
+	      \href{https://linorg.usp.br/CTAN/macros/latex/contrib/biblatex-contrib/biblatex-abnt/doc/biblatex-abnt.pdf}{%
+		      documentação do estilo \texttt{biblatex-abnt}%
+	      }, que, apesar de não ser o estilo de bibliografia utilizado neste projeto, as Seções
+	      5 e 6 dão uma explicação básica dos comandos e dos tipos de entradas mais utilizados.
+
+	\item [Se você quer uma referência para se aprofundar no Bib\LaTeX] O documento
+	      \href{https://docs.google.com/viewer?url=https://github.com/PaulStanley/biblatex-tutorial/releases/download/0.2/biblatex-tutorial.pdf}{%
+		      Bib\LaTeX, An Easier Read%
+	      }, de Paul Stanley, traz um tutorial bem completo e de fácil leitura, e se difere
+	      da documentação do pacote, que tem um caráter mais técnico. Porém, é importante
+	      ressaltar que a \textbf{versão mais recente} do documento \textbf{é de 2017}, e por isto
+	      \textbf{está bastante desatualizada}. Devemos portanto, ter isto em mente, já que
+	      o Bib\LaTeX\ é um pacote em constante desenvolvimento.
+
+	      De toda forma, as informações trazidas neste tutorial são, em sua maior
+	      parte, ainda válidas, é podem ser úteis caso se esteja buscando fazer
+	      algo mais específico com a bibliografia e os comandos de citação. Seu texto pode
+        ser aproveitado tanto por iniciantes na criação de bibliografias no \LaTeX, quanto
+        por usuários experientes do Bib\TeX\ e do Bib\LaTeX.
+
+  \item [As entradas devem estar no formato \enquote{stanley2017} ou 
+        \enquote{stanley2017easier-reading}] Isto é, primeiro o nome do autor, depois o ano,
+        seguido de parte do título da obra\footnote{%
+          Opcional no caso de um trabalho do autor na bibliografia, mas 
+          obrigatório no caso de múltiplas obras de um mesmo autor
+        }
+
+	\item [Adicione a bibliografia com o comando \latexinline/\addbibresource/ no preâmbulo]
+	      Preferencialmente dentro do arquivo de estilo do capítulo.
+
+	\item [Insira a bibliografia com o comando \latexinline/\printbibliography/] Este comando
+	      irá criar uma nova seção com a bibliografia, usando apenas os itens citados pelos
+	      pelo documento usando os comandos de citação (\cref{sec:citacoes}). Caso deseje
+	      incluir alguma entrada que não tenha sido citada, basta usar o comando
+	      \latexinline/\nocite/, com as entradas desejadas no argumento, separadas por vírgulas,
+	      ou usando um \enquote{\texttt{*}} dentro argumento (\latexinline/\nocite{*}/),
+	      que irá botar todas as entradas do arquivo de bibliografia.
+
+	\item [Pode-se utilizar mais de uma bibliografia] É possível dividir o conteúdo
+	      bibliográfico em diversos arquivos e imprimir mais de uma bibliografia. Isto
+	      pode ser útil, por exemplo, para criar uma bibliografia diferente para o material
+	      do aluno e do professor, podendo a segunda ser introduzida em alguma página
+	      do professor. Isto pode ser feito incluindo um \emph{label} como opção do comando
+	      \latexinline/\addbibresource/. Para mais informações, consulte as Seções
+	      3.8.1 e 3.8.2 da documentação Bib\LaTeX\ ou o capítulo 7 do tutorial
+	      \emph{Bib\LaTeX, An Easier Read}, citado anteriormente.
+
+	\item [Não é necessário configurar a bibliografia] As configurações criadas pelo pacote
+	      \verb|livroabertoem-preamble| já são suficientes para criar a maior parte dos tipos
+	      de entrada, e as configurações globais não devem ser alteradas. Entretanto, o
+	      Bib\LaTeX\ possui uma grande flexibilidade para criar diferentes tipos de entradas,
+	      sendo possível, por exemplo, criarmos uma para lidar apenas com leis brasileiras.%
+	      \footnote{Não iremos dar exemplos disso, apenas queremos constatar que isto é possível.}
+
+	\item [Faça a configuração em um arquivo \texttt{biblatex.cfg}] Se houver na pasta
+	      principal do projeto um arquivo com este nome, será automaticamente lido como
+	      um arquivo de configurações do Bib\LaTeX. Sendo assim comandos de citações, tipos e
+	      campos de entradas do banco de dados podem ser modificados ou criados dentro
+	      deste arquivo, sem a necessidade de adicionar qualquer outro comando nos arquivos
+	      principais do projeto. Mas \textbf{atenção}, o Overleaf não lê arquivos com a
+	      extensão \verb|.cfg|, por isto, caso queira editar este arquivo, é recomendado que
+	      mude o nome para \verb|biblatex.tex| e depois altere para o nome original.
+\end{description}
+
 \subsection{Citações}\label{sec:citacoes}
 
+As citações devem ser feitas utilizando os comandos do Bib\LaTeX, sendo
+os principais
+\begin{description}
+	\item [\latexinline/\textcite/] Citações no meio do texto. Ficam no formato
+	      Autor (Ano).
+	\item [\latexinline/\parencite/] Citações em parênteses, normalmente utilizadas
+	      no final de uma frase. Ficam no formato (Autor, Ano).
+	\item [\latexinline/\footcite/] Citação na nota de rodapé.
+\end{description}
+Também há o comando \latexinline/\cite/, mas no estilo de citação APA, possui
+a mesma função do \latexinline/\textcite/, porém sem parênteses por volta do ano.
+Este é um comando mais genérico, e que costuma ter funções diferentes em cada estilo de bibliografia escolhido. Por exemplo,
+no estilo \verb|abnt-numeric| insere o número da citação na página de referências.
+Isto deve ser levado em conta na hora de usar este comando, pois caso venha a ser
+escolhido outro formato de bibliografia, o formato da citação também irá mudar.
+
+
+Todos os comandos de citação possuem três argumentos, dois opcionais e
+um obrigatório. O obrigatório é a entrada da bibliografia desejada, e
+pode ser feito uma lista separada por vírgulas com todas as entradas
+que se deseja citar em um comando só (caso se esteja citando duas ou
+mais obras, por exemplo). O primeiro argumento opcional insere texto
+antes da citação, enquanto o segundo insere texto após. Além disso, o
+segundo argumento opcional pode ser utilizado para inserir o número das
+páginas, necessidanto apenas inserir o número. Caso seja utilizado
+apenas um argumento opcional, o comando irá considerar como o elemento
+pós-citação, podendo ser o número de páginas. Exemplificando:
+
+\begin{itemize}
+	\item \latexinline/\textcite{stanley2017}/ resulta em \enquote{\textcite{stanley2017}}.
+	\item \latexinline/\textcite[41-44]{stanley2017}/ resulta em \enquote{\textcite[41-44]{stanley2017}}.
+	\item \latexinline/\textcite[C.f.][41-44]{stanley2017}/ resulta em \enquote{\textcite[C.~f][41-44]{stanley2017}}.
+\end{itemize}
+
+Para citações em parênteses:
+
+\begin{itemize}
+	\item \latexinline/\parencite{stanley2017}/ resulta em \enquote{\parencite{stanley2017}}.
+	\item \latexinline/\parencite[41-44]{stanley2017}/ resulta em \enquote{\parencite[41-44]{stanley2017}}.
+	\item \latexinline/\parencite[C.f.][41-44]{stanley2017}/ resulta em \enquote{\parencite[C.~f.][41-44]{stanley2017}}.
+\end{itemize}
+
+Para ilustrar as diferenças entre os comandos \latexinline/\cite/ e
+\latexinline/\textcite/ no esilo APA\@:
+
+\begin{itemize}
+	\item \latexinline/\cite{stanley2017}/ resulta em \enquote{\cite{stanley2017}}.
+	\item \latexinline/\cite[41-44]{stanley2017}/ resulta em \enquote{\cite[41-44]{stanley2017}}.
+	\item \latexinline/\cite[C.f.][41-44]{stanley2017}/ resulta em \enquote{\cite[C.~f.][41-44]{stanley2017}}.
+\end{itemize}
+
+
+\subsection{\texttt{csquotes}}\label{sec:csquotes}
+
+Além dos comandos para citações já presentes no Bib\LaTeX, usamos o
+pacote
+\href{https://linorg.usp.br/CTAN/macros/latex/contrib/csquotes/csquotes.pdf}{\texttt{csquotes}}
+para integrar esta interface ao ambiente \verb|quote|, além de outros
+comandos úteis para lidar com citações. Já tratamos do comando
+\latexinline/\enquote/ (Veja \cref{sec:formatacao}), vamos agora falar
+dos outros comandos e também dos ambientes do pacote \verb|csquotes|.
+
+\begin{description}
+	\item [Para citações no meio de um parágrafo, use \latexinline/\textquote/\footnote{%
+          Assim como \latexinline/\enquote/, possui uma versão alternativa 
+          \latexinline/\textquote*/ que começa usando aspas simples
+	      }] Este comando possui três argumentos, o obrigatório, com o texto da citação,
+        e dois opcionais, um com o autor original e outro com a pontuação no final da 
+        citação.\footnote{Isto está presente na interface do pacote para que seja possível
+          alterar a ordem da pontuação em relação ao autor} Caso somente um dos argumentos
+          opcionais for usado, será entendido como o de autor da citação.
+        (\citetitle[Veja][Seção 3.3]{csquotes}). A seguir, temos alguns exemplos:
+        \begin{itemize}
+          \item \latexinline/\textquote{texto}/: \textquote{texto}
+          \item \latexinline/\textquote[][.]{texto}/: \textquote[][.]{texto}
+          \item \latexinline/\textquote[Stanley 2017, 41--44]{texto}/: 
+               \textquote[Stanley 2017, 41--44]{texto}
+          \item \latexinline/\textquote[{\cite[41-44]{stanley2017}}][.]{texto}/:\footnote{%
+              Caso queira incluir um comando de citação no autor, o mesmo deve estar
+              entre chaves, porém, na maior parte dos casos, utilizaremos a integração
+              explicada na \cref{sec:integracao-csquotes}.
+            } \textquote[{\cite[41-44]{stanley2017}}]{texto}.
+        \end{itemize}
+
+  \item [Para citações grandes (i.~e. maiores que 4 linhas) utilize o ambiente 
+        \texttt{displayquote}] Este ambiente possui os mesmos argumentos do comando
+        \latexinline/\textquote/, portanto, os exemplos anteriores servem para este 
+        ambiente. A diferença entre os dois comandos é que enquanto um utiliza o
+        comando \latexinline/\enquote/ como base, este utiliza o ambiente \verb|quote| 
+        como base. Segue um exemplo do resultado deste ambiente:
+
+\end{description}
+\begin{center}
+  \begin{minipage}{.4\linewidth}
+\begin{minted}[linenos=false]{latex}
+  \begin{displayquote}[{\cite[41-44]{stanley2017}}][.]
+    There is a big difference in the essential 
+    way in which Bib\LaTeX\ and traditional 
+    Bib\TeX-based systems work. In particular,
+    in Bib\LaTeX\ the external program is used 
+    only to prepare data: the formatting and 
+    output of that data is largely handled 
+    using \LaTeX\ code, whereas in Bib\TeX, most 
+    of the formatting is done by Bib\TeX, 
+    producing a bibliography which is more-or-less 
+    ready to be typeset as it is.
+  \end{displayquote}
+\end{minted}
+\end{minipage}
+\hfill
+\begin{minipage}{.4\linewidth}
+  \begin{displayquote}[{\cite[41-44]{stanley2017}}][.]
+    There is a big difference in the essential 
+    way in which Bib\LaTeX\ and traditional 
+    Bib\TeX-based systems work. In particular,
+    in Bib\LaTeX\ the external program is used 
+    only to prepare data: the formatting and 
+    output of that data is largely handled 
+    using \LaTeX\ code, whereas in Bib\TeX, most 
+    of the formatting is done by Bib\TeX, 
+    producing a bibliography which is more-or-less 
+    ready to be typeset as it is
+  \end{displayquote}
+\end{minipage}
+\end{center}
+\begin{description}
+  \item [Caso a citação esteja em um intermediário entre quatro e cinco linhas, 
+        use \latexinline/\blockquote/] Este comando funciona da mesma forma
+        que os dois anteriores, porém, ele detecta o número de linhas ocupadas
+        pela citação, e caso seja maior do que o definido, passará a usar o ambiente
+        \texttt{displyquote}
+\end{description}
+
+
+Além dos comandos descritos acima, é válido notar que este pacote possui ainda
+comandos para inserção de texto e para elipses, e textos omitidos, sento estes,
+respectivamente, \latexinline{\textins}, \latexinline{\textelp} e \latexinline{\textdel}.
+Todos eles requerem um argumento, sendo que, no caso do primeiro, pode estar vazio.
+
+\begin{description}
+  \item [Para indicarmos a inserção de texto, usamos \latexinline/\textins/] Se for 
+        modificada apenas parte da palavra, o texto inserido deve estar na variante
+        \latexinline/\textins*/. Como exemplo: \latexinline/\textins{texto}/ gera
+        \textins{texto}.
+  \item [O comando \latexineline/\textelp/ não requer texto, mas deve estar acompanhado de
+        chaves, mesmo que vazias] No caso de elipses, o argumento vazio irá apenas inserir
+        \enquote{\textelp{}}, mas se houver algum texto, será tratado como uma inserção
+        logo após a elipse. Caso se queira a inserção \textbf{antes} da elipse, use
+        \latexineline{\textelp*}
+  \item [Para omitir parte de uma palavra, use \latexinline/\textdel/] Este comando faz com que
+        o conteúdo do argumento seja omitido e substituído por chaves vazias. Isto é,
+        \latexinline{texto\textdel{s}} nos dá \enquote{text\textdel{s}}
+\end{description}
+
+\subsubsection{A integração de \texttt{csquotes} com o Bib\LaTeX}%
+\label{sec:integracao-csquotes}
+
+O principal motivo de usarmos o \verb|csquotes| é que os comandos que tratamos 
+anteriormente possuem versões alternativas, respectivamente, \latexinline/\textcquote/,
+\verb|displaycquote| e \latexinline/\blockquote/. Veja que a diferença no nome dos comandos
+é que em vez de terminarem com \enquote{\texttt{quote}}, passam a usar 
+\enquote{\texttt{cquote}} (possível lembrar como \emph{cite quote}). Estes comandos
+substituiem no primeiro argumento opcional, os argumentos de citação, isto é,
+\latex/\textcquote[pre][pos]{entrada}[pontuação]/
+onde as entradas usadas são as do arquivo de bibliografia usado.
+
+Alterando o exemplo anterior para usar \verb|displaycquote|, temos
+
+\begin{center}
+  \begin{minipage}{.4\linewidth}
+\begin{minted}[linenos=false]{latex}
+  \begin{displaycquote}[41-44]{stanley2017}[.]
+    There is a big difference in the essential 
+    way in which Bib\LaTeX\ and traditional 
+    Bib\TeX-based systems work. In particular,
+    in Bib\LaTeX\ the external program is used 
+    only to prepare data: the formatting and 
+    output of that data is largely handled 
+    using \LaTeX\ code, whereas in Bib\TeX, most 
+    of the formatting is done by Bib\TeX, 
+    producing a bibliography which is more-or-less 
+    ready to be typeset as it is
+  \end{displaycquote}
+\end{minted}
+\end{minipage}
+\hfill
+\begin{minipage}{.4\linewidth}
+  \begin{displaycquote}[41-44]{stanley2017}[.]
+    There is a big difference in the essential 
+    way in which Bib\LaTeX\ and traditional 
+    Bib\TeX-based systems work. In particular,
+    in Bib\LaTeX\ the external program is used 
+    only to prepare data: the formatting and 
+    output of that data is largely handled 
+    using \LaTeX\ code, whereas in Bib\TeX, most 
+    of the formatting is done by Bib\TeX, 
+    producing a bibliography which is more-or-less 
+    ready to be typeset as it is
+  \end{displaycquote}
+\end{minipage}
+\end{center}

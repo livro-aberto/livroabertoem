@@ -43,10 +43,12 @@ a leitura por diferentes colaboradores. Estas não são regras, apenas recomenda
 
   \item [Para aspas, utilize \latexinline/\enquote{...}/] O pacote \verb|csquotes|
         possui este comando que pode ser usado em ninho, e irá automatizar
-        a troca de aspas duplas para simples, dependendo do contexto. É recomendado
+        a troca de aspas duplas para simples\footnote{Para usar aspas simples na primeira
+        iteração, utilize a versão alternativa do comando, \latexinline/\enquote*/}, dependendo
+        do contexto. É recomendado
         em relação às aspas padrão do \LaTeX\ (escrito com \verb|``...''|) por
         trazer mais clareza ao código, para facilitar a troca para citações com 
-        referência (Veja \cref{sec:citacoes}), e também elimina a confusão
+        referência (Veja \cref{sec:csquotes}), e também elimina a confusão
         da diferença entre \verb|``...''| e \verb|"..."|.
 
 	\item[Coloque \enquote{\texttt{\%}} no final da linha, caso termine com
@@ -316,7 +318,7 @@ PDF.\@ Por exemplo, \verb|categoria-mulheres-na-maratona.pdf|.
 	      tem que converter a figura \textbf{toda vez que o documento é procesado}, por isso
 	      \textbf{não utilize figuras em PNG}. Caso deseje converter suas figuras, há
 	      diversas de se fazer isso, mas a mais ágil é com o programa
-	      \href{https://github.com/myollie/img2pdf}{\texttt{img2pdf}}, que pode ser instalado%
+	      \href{https://gitlab.mister-muffin.de/josch/img2pdf}{\texttt{img2pdf}}, que pode ser instalado%
 	      \footnote{Requer python e outras dependências e
 		      bibliotecas relacionadas. Consulte a documentação}
 	      usando \mint{bash}/pip3 install img2pdf/
@@ -446,10 +448,10 @@ Elas seguem o padrão:%
         \latexinline/\addlinespace/] Este é um comando que insere uma linha
         horizontal \enquote{invisível}, e serve como uma separação adicional 
         caso haja textos longos.
-	\item O espaço entre colunas pode ser ajustado com o comando
-	      \latexinline/\setlength\tabcolsep{medida}/, onde a \verb|medida| padrão
+	\item [O espaço entre colunas pode ser ajustado com 
+        \latexinline/\setlength\tabcolsep{medida}/], onde a \verb|medida| padrão
 	      é \qty{5}{pt}
-	\item [O espaço geral entre as linhas pode ser alterado com o comando
+	\item [O espaço geral entre as linhas pode ser alterado com
         \latexinline/\renewcommand{\arraystretch}{n}/] Onde \verb|n| multiplica
 	      o valor padrão do espaçamento (útil para tabelas que tenham muito texto
 	      em todas as linhas, mas deve ser dada preferência ao comando
