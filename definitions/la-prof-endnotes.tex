@@ -18,7 +18,7 @@
 \renewcommand*{\pagenotesubhead}[3]{}
 
 \renewcommand*{\notenumintext}[1]{
-  {\noindent\hspace{-2.5pt}\bannernamefont\color{linkscolor} Nota #1}
+  {\par\bannernamefont\color{linkscolor} Nota #1}
 }
 
 \renewcommand*{\notenuminnotes}[1]{
@@ -29,8 +29,10 @@
   (\hyperref[#1]{\pagerefname\ \pageref*{#1}})\space
 }
 
+\newcommand{\teachernotelist}{\la@defaultlist}
 \newcommand{\la@teacher@note}[3]{
 		\leavevmode\pagenote{
+      \teachernotelist%
       \teachertitle[\currentvolcolor]{#1}{#2} #3
 	}
 }

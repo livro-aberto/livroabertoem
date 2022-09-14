@@ -171,7 +171,8 @@
 
 %\begin{macrocode}
 \makepagestyle{livroaberto}
-\ifdraft
+
+\ifnofooter
   \makeevenfoot{livroaberto}{{\footerfont\color{principal}\thepage}}{}{}
   \makeoddfoot{livroaberto}{}{}{{\footerfont\color{principal}\thepage}}
 \else

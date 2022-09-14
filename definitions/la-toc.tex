@@ -31,11 +31,17 @@
 \setlength{\cftbeforebannerskip}{.5em}
 \setlength{\cftbeforeactivityskip}{.25em}
 
-\pretocmd{\tableofcontents}{
-  \teachercol@on
-  \ifteacher\setrmarg{\la@teacher@textwidth}\else\fi
-  % \let\textwidth\la@student@textwidth
-}{}{}
+\def\cftsectionpresnum #1\@cftasnum{}
+
+% \setlength{\cftsectionnumwidth}{2cm}
+% \cftsetindents{section}{1.5em}{3em}
+% \setlength{\cftsectionindent}{3em}
+
+% \pretocmd{\tableofcontents}{
+%   \teachercol@on
+%   \ifteacher\setrmarg{\la@teacher@textwidth}\else\fi
+%   % \let\textwidth\la@student@textwidth
+% }{}{}
 
 % \renewcommand{\cftdot}{}
 % \setpnumwidth{2.55em}

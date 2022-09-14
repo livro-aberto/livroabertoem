@@ -173,20 +173,21 @@
     \def\@currentlabelname{#1}
     \addcontentsline{toc}{banner}{\la@bannername: #1}
     \vspace{\la@titlebeforeskip}
-    \par\penalty-200\la@bannerstyle{#1}
+    \par\penalty-500\la@bannerstyle{#1}\penalty500\par
     \ifdraft\else
-    \vspace*{\la@titleafterskip}
+      \vspace*{\la@titleafterskip}
     \fi
     \la@defaultlist
     \color{black}
+    \par
 }
 
 \newcommand{\la@largebanner}{
   \def\@currentlabelname{\la@bannername}
   \addcontentsline{toc}{section}{\la@bannername}
   \vspace{\la@titlebeforeskip}
-  \par\penalty-200\la@largebannerstyle\par
-  \vspace*{\la@titleafterskip}
+  \par\penalty-300\la@largebannerstyle\penalty500\par
+  \vspace{\la@titleafterskip}
   \la@defaultlist
   \color{black}
 }
