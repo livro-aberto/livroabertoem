@@ -13,7 +13,7 @@
 
 \setlength{\la@teacher@colsep}{\la@student@foremargin+\la@teacher@innermargin}
 \setlength{\la@teacher@textwidth}{
- 	 \la@teacher@pagewidth
+	\la@teacher@pagewidth
 	-\la@student@textwidth
 	-\la@teacher@colsep
 	-\la@teacher@spinemargin
@@ -36,56 +36,123 @@
 \makepagestyle{teacherpage}
 
 \ifdraft
-% \makeevenfoot{teacherpage}{{\footerfont\color{\currentvolcolor}\thepage}}{}{}
-% \makeoddfoot{teacherpage}{}{}{{\footerfont\color{\currentvolcolor}\thepage}}
+	% \makeevenfoot{teacherpage}{{\footerfont\color{\currentvolcolor}\thepage}}{}{}
+	% \makeoddfoot{teacherpage}{}{}{{\footerfont\color{\currentvolcolor}\thepage}}
 \else
-\makeevenfoot{teacherpage}{}{\la@evenpagenumber[\currentvolcolor]}{}
-\makeoddfoot{teacherpage}{}{\la@oddpagenumber[\currentvolcolor]}{}
+	\makeevenfoot{teacherpage}{}{\la@evenpagenumber[\currentvolcolor]}{}
+	\makeoddfoot{teacherpage}{}{\la@oddpagenumber[\currentvolcolor]}{}
 \fi
 
-\newenvironment{la@teacherpage}[1]{%
-  \ifafterteacherintroduction
-  \afterteacherintroductionfalse
-  \else
-    \cleardoublepage
-  \fi
-  \thispagestyle{teacherpage}
-  \pagestyle{teacherpage}
-  \sectioncolor{\currentvolcolor}
-  \teacherpagetrue
-  \la@plainsection*{#1}
-}{
-  \clearpage
-  \teacherpagefalse
+\newcounter{stupagecount}
+\newcounter{tchrpagecount}
+
+\newcommand{\la@switchteacherpnum}{%
+	\ifteacherpnum\else
+		\setcounter{stupagecount}{\value{page}}
+		\setcounter{tchrpagecount}{\value{stupagecount}}
+		\ifodd\c@page
+			\clearpage\leavevmode\thispagestyle{empty}\clearpage
+			\addtocounter{stupagecount}{2}
+			\addtocounter{tchrpagecount}{1}
+		\else
+			\null\clearpage
+			\addtocounter{stupagecount}{1}
+		\fi
+		\gdef\thepage{\thetchrpagecount.\alph{page}}
+		\setcounter{page}{1}
+		\global\teacherpnumtrue
+	\fi
 }
 
-\newenvironment{teachersection}[1]{
-\begin{la@teacherpage}{Para o professor: #1}
-    \addcontentsline{toc}{section}{Para o professor: #1}
-}{\end{la@teacherpage}\afterteachersectiontrue}
+\newcommand{\la@switchstupnum}{%
+	\ifteacherpnum
+		\ifodd\c@page
+		\else
+			\leavevmode\thispagestyle{empty}\clearpage
+		\fi
+		\renewcommand{\thepage}{\arabic{page}}
+		\setcounter{page}{\value{stupagecount}}
+		\global\pnumberswitchtrue
+		\global\teacherpnumfalse
+	\fi
+}
 
-\newenvironment{ExerciseAnswers}{
-\begin{la@teacherpage}{Solução dos exercícios}
-    \addcontentsline{toc}{subsection}{Solução dos exercícios}
-    \la@exerciselist
-}{\end{la@teacherpage}\afterteachersectiontrue}
+\newenvironment{la@teacherpage}[1]{%
+	\thispagestyle{teacherpage}
+	\pagestyle{teacherpage}
+	\sectioncolor{\currentvolcolor}
+	\teacherpagetrue
+	\la@plainsection*{#1}
+}{
+	\teacherpagefalse\clearpage
+}
+
+\newcommand{\la@preteachersection}{%
+	\ifodd\c@page
+		\clearpage
+	\else
+		\ifdim\pagetotal=\z@\else
+			\ifteacherpnum\else
+				\setcounter{tchrpagecount}{\value{page}}
+				\setcounter{stupagecount}{\value{page}}
+				\addtocounter{stupagecount}{1}
+				\clearpage
+				\gdef\thepage{\thetchrpagecount.\alph{page}}
+				\setcounter{page}{1}
+				\global\teacherpnumtrue
+			\fi
+			\leavevmode\thispagestyle{empty}\clearpage
+		\fi\fi
+}
+
+
+\newenvironment{teachersection}[1]{%
+	\la@preteachersection
+	\begin{la@teacherpage}{Para o professor: #1}
+		% \addcontentsline{toc}{banner}{Para o professor: #1}
+		}{%
+	\end{la@teacherpage}
+}
+
+\newenvironment{longteachersection}[1]{
+	\la@switchteacherpnum
+	\begin{la@teacherpage}{Para o professor: #1}
+		% \addcontentsline{toc}{banner}{Para o professor: #1}
+		}{
+	\end{la@teacherpage}
+	\afterteacherintroductiontrue%
+}
+
+\newenvironment{ExerciseAnswers}{%
+	\la@switchteacherpnum
+	\begin{la@teacherpage}{Solução dos exercícios}
+		\addcontentsline{toc}{banner}{Solução dos exercícios}
+		\la@exerciselist
+		}{%
+	\end{la@teacherpage}
+	\afterteacherintroductiontrue%
+}
 
 \newenvironment{teacherintroduction}{
-  \begin{la@teacherpage}{Introdução ao Professor}
-    \addcontentsline{toc}{section}{Introdução ao Professor}
-}{\end{la@teacherpage}\afterteacherintroductiontrue}
-
-\newenvironment{longteacher}[1]{
-    \teacherenvtrue
-    \begin{la@teacherpage}{#1}
-}{
-    \end{la@teacherpage}
-    \clearpage\thispagestyle{livroaberto}\teachercol@on
+	\la@switchteacherpnum
+	\begin{la@teacherpage}{Introdução ao Professor}
+		\addcontentsline{toc}{section}{Introdução ao Professor}
+		}{
+	\end{la@teacherpage}
+	\afterteacherintroductiontrue%
 }
 
+\newenvironment{longteacher}[1]{
+	\teacherenvtrue\aftersectionfalse
+	\la@switchteacherpnum
+	\begin{la@teacherpage}{#1}
+		}{
+	\end{la@teacherpage}
+	\la@switchstupnum
+}
 
 \newcommand{\la@notteacherpage}{\ClassError{livroabertoem}{Fora da página do professor}{%
-	Você deve usar este comando apenas na página do professor.}
+		Você deve usar este comando apenas na página do professor.}
 }
 
 % paracol definitions
@@ -100,22 +167,21 @@
 \makepsmarks{livroaberto}{\la@teacher@backgroundcolor{boxbackground}}
 \makepsmarks{teacherpage}{\la@teacher@backgroundcolor{boxbackground}}
 
-\renewcommand{\teachercol@on}{     
-    \ifteacher\ifparacol\else
-		\paracol{2} % starts double column at the student's main text.
-		\paracoltrue
-	\fi\else\fi
+\renewcommand{\teachercol@on}{
+	\ifteacher\ifparacol\else
+			\paracol{2} % starts double column at the student's main text.
+			\paracoltrue
+		\fi\else\fi
 }
 
 \renewcommand{\teachercol@off}{
-    \ifteacher\ifparacol
-		\endparacol
-		\paracolfalse
-	\else\fi\else\fi
+	\ifteacher\ifparacol
+			\endparacol
+			\paracolfalse
+		\else\fi\else\fi
 }
 
 
 \AtEndDocument{
-	\flushpage
-    \teachercol@off%
+	\endparacol
 }

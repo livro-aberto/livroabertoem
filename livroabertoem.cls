@@ -32,21 +32,20 @@
 \newif\ifdraft\draftfalse
 \newif\ifparacol\paracolfalse
 \newif\ifteacher\teacherfalse
+\newif\ifnofooter\nofooterfalse
 \newif\ifteacherpage\teacherpagefalse
+\newif\ifteacherpnum\teacherpnumfalse
+\newif\ifpnumberswitch\pnumberswitchfalse
 \newif\ifteachersection\teachersectionfalse
-\newif\ifafterteachersection\afterteachersectionfalse
-\newif\ifafterteacherintroduction\afterteacherintroductiontrue
+\newif\ifafterteacherintroduction\afterteacherintroductionfalse
 
-\DeclareOption{draft}
-{
-	\drafttrue
+\DeclareOption{draft}{
+	\nofootertrue\drafttrue
 }
-\DeclareOption{rascunho}
-{
-	\drafttrue
+\DeclareOption{rascunho}{
+	\nofootertrue\drafttrue
 }
-\DeclareOption{nofonts}
-{
+\DeclareOption{nofonts}{
 	\fontsfalse
 }
 
@@ -61,18 +60,18 @@
 \input{definitions/la-volume.tex}
 \input{definitions/la-fonts.tex}
 
-\DeclareOption{teacher}
-{
+\DeclareOption{teacher}{
 	\teachertrue
 	\input{class-options/la-professor.tex}
 }
-\DeclareOption{professor}
-{
+\DeclareOption{professor}{
 	\teachertrue
 	\input{class-options/la-professor.tex}
+}
+\DeclareOption{nofooter}{%
+  \nofootertrue%
 }
 \ProcessOptions%
-
 
 \ifteacher\else
 	\excludecomment{teacherpage}

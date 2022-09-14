@@ -125,13 +125,28 @@
 \newif\ifaftersection
 \setsecheadstyle{\sectiontitlefont\raggedright}
 \setsubsecheadstyle{\subsectiontitlefont\raggedright}
-\let\la@plainsection\section
- \pretocmd{\section}{%
-    \afterteachersectionfalse
-    \afterteacherintroductionfalse
-    \ifteacherpage\teacherpagefalse
-    \else\cleardoublepage\fi
-    \ifteacher\la@teacher@backgroundcolor{boxbackground}\else\fi
+
+\newcommand{\la@presection}{
+    \ifodd\c@page
+      \ifdim\pagetotal=\z@\else
+        \clearpage\leavevmode\thispagestyle{empty}\clearpage
+      \fi
+    \else
+      \clearpage
+    \fi
+    \ifteacherpnum
+      \renewcommand{\thepage}{\arabic{page}}
+      \setcounter{page}{\value{stupagecount}}
+      \teacherpnumfalse
+    \fi
+    \ifteacherpage\teacherpagefalse\fi
+    \ifteacher\la@teacher@backgroundcolor{boxbackground}\fi
+}
+
+\let\la@plainsection\section%
+  \pretocmd{\section}{%
+    \la@presection
+    \thispagestyle{livroaberto}
     \pagestyle{livroaberto}
 	\aftersectiontrue
   \color{black}
@@ -195,10 +210,8 @@
 %\begin{macrocode}
 \newcounter{explore}
 \newcommand{\explore}[1]{%
-  % \checkoddpage
 	\sectioncolor{explore}
 	\bannername{Explorando}
-	\clearpage
 	\pagestyle{livroaberto}
   \refstepcounter{explore}
   \la@banner{#1}

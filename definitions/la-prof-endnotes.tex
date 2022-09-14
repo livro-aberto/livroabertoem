@@ -3,12 +3,14 @@
 
 % % Redefine as configurações da página de notas para sair do paracol e passar a utilizar multicols
 \renewcommand*{\notedivision}{
-    \teachersection{\notesname}
+    \la@switchteacherpnum
+    \la@teacherpage{\notesname}
+    \addcontentsline{toc}{section}{Notas}
     \sectioncolor{\currentvolcolor}
 }
 
 \apptocmd{\printpagenotes}{
-    \endteachersection
+    \endla@teacherpage%
 }{}{}
 
 \renewcommand*{\notesname}{Notas}

@@ -56,11 +56,13 @@
 	style = apa,
 	backend = biber
 ]{biblatex}
-\RequirePackage[portuguese=brazilian]{csquotes}
-
 \defbibheading{bibliography}[\refname]{\section*{#1}}
 
+\RequirePackage[portuguese=brazilian]{csquotes}
+\renewcommand{\mkblockquote}[4]{{\enquote{#1}}#2#3#4}
+\renewcommand*{\mkenddispquote}[2]{#2#1}
+\SetBlockThreshold{4}
+\SetCiteCommand{\parencite}
+
 \input{definitions/la-math.tex}
-
 \input{definitions/la-hypersetup.tex}
-
