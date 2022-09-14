@@ -9,6 +9,7 @@
 
 \newcommand{\la@chapter@illustration}{
 	\ifdefined\la@chapterillustration
+  \tikzset{external/export next = false}
 		\begin{tikzpicture}[remember picture, overlay]
 			\node [anchor = east, inner sep = 0pt] at (current page.east) {
 				\includegraphics[height = \la@student@pageheight]{\la@chapterillustration}
@@ -95,6 +96,7 @@
 		% \undef\la@chapterbecause
   %   \else\fi
 		\la@chapter@illustration
+    \tikzset{external/export next = false}
 		\begin{tikzpicture}[remember picture, overlay]
 			\fill [\currentvolcolor] (current page.south west)
 			-- ($(current page.south west) + (0,\la@chapterbannerheight)$)

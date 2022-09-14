@@ -34,6 +34,10 @@
 	eixos/.style = {->},
 	curvafun/.style = {very thick, color=primario},
 	grafica/.style = {line cap=round,line join=round,color=terciario, very thick},
-	box/.style = {inner sep = 3mm, inner ysep = 3mm}
+	box/.style = {inner sep = 3mm, inner ysep = 3mm},
+  external/prefix = {figuras/tikz/},
+  external/system call={
+    lualatex \tikzexternalcheckshellescape -halt-on-error -interaction=batchmode -jobname "\image" "\texsource"
+  }
 }
 
