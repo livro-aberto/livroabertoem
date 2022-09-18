@@ -39,9 +39,9 @@
 		underlay boxed title = {%
 				\coordinate (fnw) at (frame.north west);
 				\filldraw [draw = primario, fill = primario]
-				($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (6pc,0) % Up from frame and left
-				.. controls +(1.5pc,-1pt) and ($(fnw) + (10.5pc,-1pt)$) .. % curve going down
-				($(fnw) + (12pc, -1pt)$) -- cycle;
+				($(fnw) + (.2pt,0)$) -- ++ (0,20pt) -- ++ (6pc,0) % Up from frame and left chktex 8
+				.. controls +(1.5pc, -1pt) and ($(fnw) + (10.5pc, -1pt)$) .. % curve going down chktex 8 chktex 36 chktex 12 chktex 26
+				($(fnw) + (12pc, -1pt)$) -- cycle; % chktex 8
 			}
 	}
 \fi
@@ -69,32 +69,8 @@
 	\la@author
 }
 
-% \titleclass{\la@chapter}{page}[\chapter]
-% \titlespacing{\la@chapter}{0pt}{0pt}{0pt}
-% \titleformat{\la@chapter}[hang]{\chaptertitlefont}{\thela@chapter}{0pt}{
-% }
 
-\renewcommand{\chapter}[1]{
-  \cleartooddpage%
-	\def\@currentchaptertitle{#1}
-	\refstepcounter{chapter}
-  \pagestyle{empty}
-	\addcontentsline{toc}{chapter}{\chaptername\space\thechapter: #1}
-	\ifdraft
-		\noindent{\huge\color{principal}\bfseries\chaptername\space\thechapter: #1}\\
-		\noindent{\renewcommand{\and}{\par}\semihuge\color{black}\bfseries\la@chapterauthor}
-		\vspace{\la@titleafterskip}
-		\pagestyle{empty}
-		\ifdefined\la@chapterwhat\par\la@chapterwhat\else\fi
-		\ifdefined\la@chapterbecause\la@chapterbecause\else\fi
-    \clearpage
-	\else
-  %   \ifteacher
-		% \ifdefined\la@chapterwhat\par\la@chapterwhat\par\else\fi
-		% \ifdefined\la@chapterbecause\la@chapterbecause\else\fi
-		% \undef\la@chapterwhat
-		% \undef\la@chapterbecause
-  %   \else\fi
+\newcommand{\la@chaptercover}[1]{%
 		\la@chapter@illustration
     \tikzset{external/export next = false}
 		\begin{tikzpicture}[remember picture, overlay]
@@ -115,19 +91,52 @@
 			]	at ($(current page.south east) + (-30pt,.5\la@chapterbannerheight)$) {
 				\parbox{.425\paperwidth}{\raggedleft\chapterauthorfont\la@chapterauthor}};
 		\end{tikzpicture}
-		\ifteacher\flushpage\else\clearpage\fi
-    \ifdefined\la@author\credits\clearpage\else\fi
-    \ifdefined\la@chapterwhat%
-        \la@chapterwhat%
-        \ifdefined\la@chapterbecause
-          \la@chapterbecause%
-        \else\fi
-      \ifteacher\flushpage\else\clearpage\fi
-    \else\fi
-	\fi
-    \undef\la@chapterwhat
-    \undef\la@chapterbecause
+    \ifteacher\flushpage\else\clearpage\fi
 }
+
+\newcommand{\la@chapterboxhook}{%
+  \ifdefined\la@chapterwhat%
+      \la@chapterwhat%
+      \ifdefined\la@chapterbecause
+        \la@chapterbecause%
+      \else\fi
+    \ifteacher\flushpage\else\clearpage\fi
+  \else\fi
+  \undef\la@chapterwhat
+  \undef\la@chapterbecause
+}
+
+
+\newcommand{\la@chapterhook}{
+  \la@creditshook
+  \la@chapterboxhook
+}
+
+\ifsinglechapter%
+\renewcommand{\chapter}[1]{%
+  \ClassError{livroaberto}{Opção `singlechapter` selecionada}{% chktex 33
+    Inicie o capítulo usando apenas o comando `\volume`% chktex 33
+  }
+}
+\else
+  \renewcommand{\chapter}[1]{%
+    \cleartooddpage%
+    \def\@currentchaptertitle{#1}
+    \refstepcounter{chapter}
+    \pagestyle{empty}
+    \addcontentsline{toc}{chapter}{\chaptername\space\thechapter: #1}
+    \ifdraft
+      \noindent{\huge\color{principal}\bfseries\chaptername\space\thechapter: #1}\\
+      \noindent{\renewcommand{\and}{\par}\semihuge\color{black}\bfseries\la@chapterauthor}
+      \vspace{\la@titleafterskip}
+      \pagestyle{empty}
+      \la@chapterboxhook
+    \else
+      \la@chaptercover{#1}
+      \la@chapterhook
+    \fi
+  }
+\fi
 
 \chapterstyle{livroaberto}
 \pagestyle{livroaberto}

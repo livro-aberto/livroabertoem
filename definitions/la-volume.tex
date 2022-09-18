@@ -15,11 +15,7 @@
 
 \newlength{\la@volume@titlewidth}
 
-\newcounter{volume}
-\newcommand{\volume}[1]{
-	\def\@currentvoltitle{#1}
-	\refstepcounter{volume}
-	\ifdraft
+\newcommand{\la@draftvolume}{
 		\thispagestyle{empty}
     \begin{center}
       \begin{minipage}{.7\textwidth}
@@ -32,8 +28,18 @@
         Submeta suas dúvidas e/ou problemas no nosso repositório no GitHub: \url{https://github.com/livro-aberto/livroabertoem/issues}
       \end{minipage}
     \end{center}
-		% \newpage
-	\else
+}
+
+\newcommand{\la@volumeauthor}{%
+  \ifsinglechapter%
+    \la@author \\
+    Associação Livro Aberto
+  \else%
+    Associação Livro Aberto
+  \fi
+}
+
+\newcommand{\la@volumecover}[1]{
 		\pagecolor{\currentvolcolor}
 		\thispagestyle{empty}
     \tikzset{external/export next=false}
@@ -60,11 +66,22 @@
 				font = \vphantom{Ag}\volumeauthorfont, text width = .60\la@student@textwidth,
 				align = left
 			] at ($(current page.south west) + (\la@student@foremargin, \la@student@lowermargin)$)
-			{Associação Livro Aberto};
+			{\la@volumeauthor};
 		\end{tikzpicture}
 		\newpage
 		\pagecolor{white}
 		\pagestyle{empty}
+}
+
+\newcounter{volume}
+\newcommand{\volume}[1]{
+	\def\@currentvoltitle{#1}
+	\refstepcounter{volume}
+	\ifdraft
+		\la@draftvolume	
+	\else
+    \la@volumecover{#1}
 		\ifteacher\teachercol@on\fi
+    \ifsinglechapter\la@chapterhook\fi
 	\fi
 }

@@ -1,4 +1,3 @@
-\setcounter{tocdepth}{3}
 \let\l@subsection\l@paragraph
 \let\l@subsubsection\l@paragraph
 
@@ -33,30 +32,13 @@
 
 \def\cftsectionpresnum #1\@cftasnum{}
 
-% \setlength{\cftsectionnumwidth}{2cm}
-% \cftsetindents{section}{1.5em}{3em}
-% \setlength{\cftsectionindent}{3em}
+\addtodef{\tableofcontents}{\endparacol}{\paracol}
 
-% \pretocmd{\tableofcontents}{
-%   \teachercol@on
-%   \ifteacher\setrmarg{\la@teacher@textwidth}\else\fi
-%   % \let\textwidth\la@student@textwidth
-% }{}{}
-
-% \renewcommand{\cftdot}{}
-% \setpnumwidth{2.55em}
-% \setrmarg{3.55em}
-% \let\oldcftchapterfont\cftchapterfont%
-
-% % Alinhamento à esquerda dos itens da toc 
-% % https://tex.stackexchange.com/questions/283730/left-align-toc-items-when-using-tableofcontents
-% \bgroup%
-% \advance\@flushglue by \@tocrmarg%
-% \xdef\@tocrmarg{\the\@flushglue}%
-% \egroup%
-
-% \settocpreprocessor{chapter}{%
-% 	\let\tempf@rtoc\f@rtoc%
-% 	\def\f@rtoc{%
-% 		\texorpdfstring{\MakeTextUppercase{\tempf@rtoc}}{\tempf@rtoc}}%
-% }
+% \ifsinglechapter%
+%   \setcounter{tocdepth}{2}
+%   \let\l@section\l@chapter
+%   \let\l@banner\l@section
+%   \let\l@activity\l@banner
+% \else
+%   \setcounter{tocdepth}{3}
+% \fi

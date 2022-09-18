@@ -125,6 +125,9 @@
 \newif\ifaftersection
 \setsecheadstyle{\sectiontitlefont\raggedright}
 \setsubsecheadstyle{\subsectiontitlefont\raggedright}
+\ifsinglechapter
+  \renewcommand{\thesection}{\arabic{section}}
+\fi
 
 \newcommand{\la@presection}{
     \ifodd\c@page
@@ -173,7 +176,7 @@
     \def\@currentlabelname{#1}
     \addcontentsline{toc}{banner}{\la@bannername: #1}
     \vspace{\la@titlebeforeskip}
-    \par\penalty-500\la@bannerstyle{#1}\penalty500\par
+    \par\penalty-5000\la@bannerstyle{#1}\penalty10000\par
     \ifdraft\else
       \vspace*{\la@titleafterskip}
     \fi
@@ -186,7 +189,7 @@
   \def\@currentlabelname{\la@bannername}
   \addcontentsline{toc}{section}{\la@bannername}
   \vspace{\la@titlebeforeskip}
-  \par\penalty-300\la@largebannerstyle\penalty500\par
+  \par\penalty-5000\la@largebannerstyle\penalty10000\par
   \vspace{\la@titleafterskip}
   \la@defaultlist
   \color{black}
@@ -198,7 +201,7 @@
         \clearpage
         \addcontentsline{toc}{section}{Exercícios}
     }{
-        \penalty-200
+        \penalty-5000
         \addcontentsline{toc}{banner}{Exercícios}
   }
   \vspace{\la@titlebeforeskip}

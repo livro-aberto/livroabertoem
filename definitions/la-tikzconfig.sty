@@ -25,7 +25,7 @@
   \input{#2.tikz}
 }
 
-
+% Set generic styles
 \tikzset{
 	vetor/.style = {->,line width=0.8pt,color=primario,>=latex},
 	ponto/.style = {
@@ -35,9 +35,32 @@
 	curvafun/.style = {very thick, color=primario},
 	grafica/.style = {line cap=round,line join=round,color=terciario, very thick},
 	box/.style = {inner sep = 3mm, inner ysep = 3mm},
+}
+
+% Set externalization
+\tikzset{
   external/prefix = {figuras/tikz/},
   external/system call={
     lualatex \tikzexternalcheckshellescape -halt-on-error -interaction=batchmode -jobname "\image" "\texsource"
   }
 }
 
+% Set flowchart
+\tikzset{
+  startstop/.style = {
+    rectangle, rounded corners, minimum width=3cm,
+    minimum height=1cm, text centered, draw=black, fill=red!30
+  }
+  io/.style = { %input/output
+    trapezium, trapezium left angle=70, trapezium right angle=110,
+    minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30
+  }
+  process/.style = {
+    rectangle, minimum width=3cm, minimum height=1cm,
+    text centered, draw=black, fill=orange!30
+  }
+  decision/.style = {
+    diamond, minimum width=3cm, minimum height=1cm,
+    text centered, draw=black, fill=green!30
+  }
+}

@@ -33,8 +33,10 @@
 \newif\ifparacol\paracolfalse
 \newif\ifteacher\teacherfalse
 \newif\ifnofooter\nofooterfalse
+\newif\iftcolorbox\tcolorboxfalse
 \newif\ifteacherpage\teacherpagefalse
 \newif\ifteacherpnum\teacherpnumfalse
+\newif\ifsinglechapter\singlechapterfalse
 \newif\ifpnumberswitch\pnumberswitchfalse
 \newif\ifteachersection\teachersectionfalse
 \newif\ifafterteacherintroduction\afterteacherintroductionfalse
@@ -48,6 +50,9 @@
 \DeclareOption{nofonts}{
 	\fontsfalse
 }
+\DeclareOption{singlechapter}{
+  \singlechaptertrue
+}
 
 \ProcessOptions%
 
@@ -56,9 +61,11 @@
 \input{definitions/la-section.tex}
 \input{definitions/la-toc.tex}
 \input{definitions/la-environments.tex}
+\input{definitions/la-credits.tex}
 \input{definitions/la-chapter.tex}
 \input{definitions/la-volume.tex}
 \input{definitions/la-fonts.tex}
+\input{definitions/la-floats.tex}
 
 \DeclareOption{teacher}{
 	\teachertrue

@@ -1,47 +1,49 @@
 \RequirePackage{amsmath,amsthm,mathtools}
 
-	\DeclareMathOperator{\sen}{sen}
-	\DeclareMathOperator{\tg}{tg}
-	\DeclareMathOperator{\cotg}{cotg}
-	\DeclareMathOperator{\cosec}{cosec}
-	\DeclareMathOperator{\arcsen}{arcsen}
-	\DeclareMathOperator{\arctg}{arctg}
-	\DeclareMathOperator{\senh}{senh}
-	\DeclareMathOperator{\tgh}{tgh}
-	\DeclareMathOperator{\mdc}{mdc}
-	\DeclareMathOperator{\mmc}{mmc}
-	\DeclareMathOperator{\med}{med}
-	\DeclareMathOperator{\rad}{rad}
-	% \DeclareMathOperator{\si}{Si}
-	\DeclareMathOperator{\dirac}{\delta}
-	\DeclareMathOperator{\mmu}{\mu}
-	\renewcommand{\Im}{\operatorname{Im}}
-	\DeclareMathOperator{\D}{D}
-	\DeclareMathOperator{\CD}{CD}
-	\DeclareMathOperator{\area}{\text{Area}\,}
-	\newcommand{\R}{\mathbb{R}}
-	\newcommand{\Q}{\mathbb{Q}}
-	\newcommand{\Z}{\mathbb{Z}}
-	\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\sen}{sen}
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\DeclareMathOperator{\cosec}{cosec}
+\DeclareMathOperator{\arcsen}{arcsen}
+\DeclareMathOperator{\arctg}{arctg}
+\DeclareMathOperator{\senh}{senh}
+\DeclareMathOperator{\tgh}{tgh}
+\DeclareMathOperator{\mdc}{mdc}
+\DeclareMathOperator{\mmc}{mmc}
+\DeclareMathOperator{\med}{med}
+\DeclareMathOperator{\rad}{rad}
+% \DeclareMathOperator{\si}{Si}
+\DeclareMathOperator{\dirac}{\delta}
+\DeclareMathOperator{\mmu}{\mu}
+\DeclareMathOperator{\D}{D}
+\DeclareMathOperator{\CD}{CD}
+\DeclareMathOperator{\area}{\text{Área}\,}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\renewcommand{\Im}{\operatorname{Im}}
+\renewcommand{\Re}{\operatorname{Re}}
 
 
 \iffonts
-\RequirePackage{unicode-math}
-\setmathfont{latinmodern-math.otf}
+  \RequirePackage{unicode-math}
+  \setmathfont{STIXtwoMath-regular.otf}
 
-\setmathfont{Noto Sans Math}[
-    range={
-        it/{num,latin}->sfit,
-        it/{greek}->up,
-        up/{greek},
-        up/{num,latin}->sfup,
-        bb/{num,latin}->bb,
-        bb/{greek}->sfbb,
-        bbit/{num,latin}->sfbbit,
-        bbit/{greek}->sfbbit
-    }
-]
+  \setmathfont{Noto Sans Math}[
+      range={
+          it/{num,latin}->sfit,
+          it/{greek}->up,
+          up/{greek},
+          up/{num,latin}->sfup,
+          bb/{num,latin}->bb,
+          bb/{greek}->sfbb,
+          bbit/{num,latin}->sfbbit,
+          bbit/{greek}->sfbbit
+      }
+  ]
+  \setmathfont{NotoSans-Italic}[Colour=blue,range=it/{latin,greek,Greek,Latin}]
 \else
-\RequirePackage{amssymb}
+  \RequirePackage{amssymb}
 \fi
-

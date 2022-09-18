@@ -1,68 +1,68 @@
 % arara: lualatex: {interaction: nonstopmode}
 
-\documentclass[professor]{livroabertoem}
+\documentclass[professor,nofonts]{livroabertoem}
 
 \usepackage{livroabertoem-preamble}
 \usepackage{lipsum}
 
-\footericon{estprob}
-\chapterillustration{estprob-illustration}
-\volumeillustration{estprob}
-\volumecolor{volume2}
+% \footericon{funcoes-footericon}
+% \chapterillustration{funcoes-chapillustration}
+% \volumeillustration{funcoes-volillustration}
+\volumecolor{volume4}
 
 \author{Tarso Boudet Caldas \and Tarso Caldas}
 \chapterwhat{\lipsum[5]}
 \chapterbecause{\lipsum[7]}
 \begin{document}
 
-\frontmatter
 
 \volume{Probabilidade e Estatística}
-\tableofcontents*
+\tableofcontents
 
-\mainmatter
+% \mainmatter
+
 \chapter{A Natureza da Estatística}
-% \credits
 
-\taskintoc
 
 \begin{teacherintroduction}
-\lipsum[2]
+	\lipsum[2]
 
-\begin{habilities}
-  \hability{101}
-\end{habilities}
+	\begin{habilities}
+		\hability{101}
+	\end{habilities}
 
-\begin{habilities}[EF]
-  \hability[05]{04}
-\end{habilities}
+	\begin{habilities}
+		\efhability{01}{04}
+	\end{habilities}
 
-\lipsum[3-5]
+	\lipsum[3-15]
 
 \end{teacherintroduction}
 
 \section{A Natureza da Estatística}
 
-\lipsum[1-3]
+\begin{longteachersection}{A Natureza da estatística}
+	\lipsum[3-15]
+\end{longteachersection}
 
 \explore{A Natureza da Estatística}
 
 \lipsum[1]
 \[
-    a^2 + b^2 \in \times = c^2 + 3 + 4
+	a^2 + b^2 \in \times = c^2 + 3 + 4
 \]
 
 \begin{task}{Triângulos}
-\begin{teacher}
-  \objectives{Triângulos}
-  \lipsum[12]
-  \sugestions{Triângulos}
-  \lipsum[13]
-  \answer{Triângulos}
-  \lipsum[13]
-\end{teacher}
+	\begin{teacher}
+		\objectives{Triângulos}
+		\lipsum[12]
+		\sugestions{Triângulos}
+		\lipsum[13]
+		\answer{Triângulos}
+		\lipsum[13]
+	\end{teacher}
 
-\lipsum[2]
+	\lipsum[2]
 \end{task}
 
 \lipsum[3]
@@ -70,96 +70,95 @@
 \arrange{A Natureza da Estatística}
 
 \begin{example}{Triângulos}
-  \lipsum[4]
+	\lipsum[4]
 \end{example}
 
 \newpage
 
 \begin{knowledge}
-  \lipsum[6]
+	\lipsum[6]
 \end{knowledge}
 
 \practice{A Natureza da Estatística}
 \begin{observation}{Triângulos}
-  \lipsum[5]
+	\lipsum[5]
 \end{observation}
 \begin{reflection}
-  \lipsum[6]
+	\lipsum[6]
 \end{reflection}
 
-\begin{teachersection}{A Natureza da Estatística}
-
-\lipsum[1-7]
-
-\end{teachersection}
-\section{A Natureza da Estatística}
-
-\lipsum[1-3]
-
-\explore{A Natureza da Estatística}
-
-\lipsum[1]
-\[
-    a^2 + b^2 \in \times = c^2 + 3 + 4
-\]
-
-\begin{task}{Triângulos}
-
-\begin{teacher}
-  \objectives{Triângulos}
-  \lipsum[12]
-  \sugestions{Triângulos}
-  \lipsum[13]
-  \answer{Triângulos}
-  \lipsum[13]
-\end{teacher}
-
-\lipsum[2]
-\end{task}
-
-\lipsum[3]
-
-\arrange{A Natureza da Estatística}
-
-\begin{example}{Triângulos}
-  \lipsum[4]
-\end{example}
-
-\newpage
-
-\know{A Natureza da Estatística}
-\begin{research}
-  \lipsum[6]
-\end{research}
-
-\begin{project}
-  \lipsum[7]
-\end{project}
-
-
-\begin{knowledge}
-\lipsum[5]
-\end{knowledge}
-
-\begin{reflection}
-\lipsum[6]
-\end{reflection}
-
-\begin{definition}{Ácido}
-\lipsum[18]
-\end{definition}
-\begin{theorem}{Pitágoras}
-
-\end{theorem}
-
-\exercise
-
-\begin{enumerate}
-  \item \lipsum[7]
-  \item \lipsum[8]
-  \item \lipsum[9]
-  \item \lipsum[10]
-\end{enumerate}
+% \section{A Natureza da Estatística}
+%
+% \begin{teachersection}{A Natureza da Estatística}
+%
+% 	\lipsum[1-7]
+%
+% \end{teachersection}
+%
+% \explore{A Natureza da Estatística}
+%
+% \lipsum[1]
+% \[
+% 	a^2 + b^2 \in \times = c^2 + 3 + 4
+% \]
+%
+% \begin{task}{Triângulos}
+%
+% 	\begin{teacher}
+% 		\objectives{Triângulos}
+% 		\lipsum[12]
+% 		\sugestions{Triângulos}
+% 		\lipsum[13]
+% 		\answer{Triângulos}
+% 		\lipsum[13]
+% 	\end{teacher}
+%
+% 	\lipsum[2]
+% \end{task}
+%
+% \lipsum[3]
+%
+% \arrange{A Natureza da Estatística}
+%
+% \begin{example}{Triângulos}
+% 	\lipsum[4]
+% \end{example}
+%
+% \newpage
+%
+% \know{A Natureza da Estatística}
+% \begin{research}
+% 	\lipsum[6]
+% \end{research}
+%
+% \begin{project}
+% 	\lipsum[7]
+% \end{project}
+%
+%
+% \begin{knowledge}
+% 	\lipsum[5]
+% \end{knowledge}
+%
+% \begin{reflection}
+% 	\lipsum[6]
+% \end{reflection}
+%
+% \begin{definition}{Ácido}
+% 	\lipsum[18]
+% \end{definition}
+% \begin{theorem}{Pitágoras}
+%
+% \end{theorem}
+%
+% \exercise
+%
+% \begin{enumerate}
+% 	\item \lipsum[7]
+% 	\item \lipsum[8]
+% 	\item \lipsum[9]
+% 	\item \lipsum[10]
+% \end{enumerate}
 
 % \printpagenotes
 

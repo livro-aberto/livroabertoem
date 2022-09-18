@@ -1,5 +1,18 @@
 \newif\ifteacherenv\teacherenvfalse
+
+\newcommand{\la@teachertcolorbox}{
+  \iftcolorbox%
+    \ClassError{livroabertoem}{%
+    Ambiente do professor dentro de caixa}{%
+      O ambiente teacher não pode ficar dentro das caixas criadas\MessageBreak
+      usando tcolorbox. Coloque-o imediatamente antes da caixa\MessageBreak
+      que se deseja referenciar.
+    }
+  \fi
+}
+
 \newenvironment{la@teacher}{%
+  \la@teachertcolorbox
 	\teacherenvtrue
 	\raggedright
 	\la@widelist
@@ -31,19 +44,22 @@
 	\vbox{
     \color{#1}\bfseries\vspace{1em}
     {\Large\selectfont #2}\par
-    \vspace{-.8\baselineskip}
+    \vspace{-.5\baselineskip}
     \rule{\la@teacher@textwidth}{3pt}\par
-    \vspace{-.6\baselineskip}
+    \vspace{-.3\baselineskip}
     {\large\RaggedRight #3}\par
-  }%\normalfont\small\color{black}
+  }
+}
+
+\newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Fora do ambiente do professor}{%
+  Você deve usar este comando somente no ambiente do professor.}
 }
 
 \newcommand{\la@teacher@sidetitle}[2]{%
-    \vspace{.5\la@titlebeforeskip}
-	\ifteacherenv\penalty-1000\par
+    \vspace{.3\la@titlebeforeskip}
+	\ifteacherenv\penalty-5000\par
     \teachertitle{#1}{#2}
     \penalty10000\par
-    \vspace{.5\la@titleafterskip}
 	\else
 		\la@notteacherenv
 	\fi
@@ -63,7 +79,3 @@
 \newenvironment{answer}[1]{%
 	\la@teacher@sidetitle{Solução}{#1}
 }{}
-
-\newcommand{\la@notteacherenv}{\ClassError{livroabertoem}{Fora do ambiente do professor}{%
-		Você deve usar este comando somente no ambiente do professor.}
-}

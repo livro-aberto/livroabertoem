@@ -39,15 +39,14 @@
 
 \ifdraft
 	\newenvironment{la@sectionbox}[2]{%
-		\subsection{{\color{\currentcolor} #2: #1}}
+		\subsection{{\color{\currentcolor} #2: #1}\global\tcolorboxtrue}
   }{
-      \par{\color{cinza}\rule{\linewidth}{1pt}}\normalfont
-
+      \par{\color{cinza}\rule{\linewidth}{1pt}}\normalfont\global\tcolorboxfalse
   }
 	\newenvironment{la@volumebox}[1]{%
-		\subsection{{\color{\currentvolcolor} #1}}
+		\subsection{{\color{\currentvolcolor} #1}\global\tcolorboxtrue}
 	}{
-	\par{\color{cinza}\rule{\linewidth}{1pt}}\normalfont
+	\par{\color{cinza}\rule{\linewidth}{1pt}}\normalfont\global\tcolorboxfalse
 }
 \else
 	% Creates the box with section colors for examples and observations
@@ -72,15 +71,16 @@
 				($(fne) + (-12pc, -1pt)$) -- cycle;
 
 				\node [anchor = south east, font = \boxnamefont\vphantom{Ag}] at ($(frame.north east) + (0,-1pt)$) {#2};
-			}
+			},
+    before upper = {\tcolorboxtrue}
 	}
 
-\newcommand{\la@box@icon}{%
-	\ifdefined\la@boxicon
-		\includegraphics[width=22pt]{resources/figures/\la@boxicon-\currentvolcolor.pdf}
-		\undef\la@boxicon
-	\else\fi
-}
+  \newcommand{\la@box@icon}{%
+    \ifdefined\la@boxicon
+      \includegraphics[width=22pt]{resources/figures/\la@boxicon-\currentvolcolor.pdf}
+      \undef\la@boxicon
+    \else\fi
+  }
 
 	% Creates the box with current volume color and icon
 	\newtcolorbox{la@volumebox}[1]{
@@ -101,7 +101,9 @@
 				.. controls +(1.5pc, -1pt) and ($(fnw) + (10.5pc,-1pt)$) .. % curve going down
 				($(fnw) + (12pc, -1pt)$) -- cycle;
 				\node [overlay, left of = fnw, node distance = 18pt, yshift = 9pt] {\la@box@icon};
-			}
+			},
+    before upper = \tcolorboxtrue,
+    after upper = \tcolorboxfalse%
 	}
 
 \fi

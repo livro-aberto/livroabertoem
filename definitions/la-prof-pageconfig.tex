@@ -167,6 +167,14 @@
 \makepsmarks{livroaberto}{\la@teacher@backgroundcolor{boxbackground}}
 \makepsmarks{teacherpage}{\la@teacher@backgroundcolor{boxbackground}}
 
+\newlength{\paracolparskip}
+\setlength{\paracolparskip}{.5\parskip}
+\definecolumnpreamble{12}{%
+    \setlength{\parskip}{\paracolparskip}
+    \renewcommand{\thefigure}{P.\arabic{figure}}
+    \renewcommand{\thetable}{P.\arabic{table}}
+}
+
 \renewcommand{\teachercol@on}{
 	\ifteacher\ifparacol\else
 			\paracol{2} % starts double column at the student's main text.
@@ -183,5 +191,5 @@
 
 
 \AtEndDocument{
-	\endparacol
+	\endparacol\let\clearpage\relax\let\newpage\relax
 }

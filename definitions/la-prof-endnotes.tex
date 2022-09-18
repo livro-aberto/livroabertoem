@@ -23,17 +23,23 @@
 
 \renewcommand*{\notenuminnotes}[1]{
   {\hspace{-2.5pt}\bannernamefont\color{\currentvolcolor} Nota #1.} \space
+  \par\penalty10000\vspace*{-\parskip}
 }
 
 \renewcommand\printpageinnoteshyperref[1]{%
   (\hyperref[#1]{\pagerefname\ \pageref*{#1}})\space
 }
 
-\newcommand{\teachernotelist}{\la@defaultlist}
+ 
+\newlength{\teachernoteafterskip}
+\setlength{\teachernoteafterskip}{\la@titlebeforeskip}
+\newcommand{\teachernotelist}{\la@widelist}
 \newcommand{\la@teacher@note}[3]{
 		\leavevmode\pagenote{
       \teachernotelist%
-      \teachertitle[\currentvolcolor]{#1}{#2} #3
+      \teachertitle[\currentvolcolor]{#1}{#2}
+      \penalty10000\par #3 \par
+      \vspace*{\teachernoteafterskip}
 	}
 }
 

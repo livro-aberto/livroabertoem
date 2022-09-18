@@ -5,7 +5,6 @@
 
 \input{definitions/la-lists.tex}
 \input{definitions/la-tables.tex}
-\input{definitions/la-credits.tex}
 
 \RequirePackage{definitions/la-tikzconfig}
 \RequirePackage{float}
@@ -38,12 +37,6 @@
 	retain-zero-uncertainty,
 	drop-zero-decimal=false
 }
-
-\counterwithin{figure}{chapter}
-\renewcommand{\fps@figure}{!htb}
-\renewcommand{\fps@table}{!htb}
-\renewcommand{\fps@quadro}{!htb}
-\g@addto@macro\@floatboxreset\centering
 
 \RequirePackage[brazilian]{babel}
 \babelprovide[transforms = hyphen.repeat]{brazilian}
